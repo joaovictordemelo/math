@@ -1,0 +1,194 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=25mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,booktabs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[hidelinks]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Q}{\mathbb Q}\newcommand{\F}{\mathbb F}\newcommand{\Z}{\mathbb Z}
+\newcommand{\Sha}{\mathop{\text{\fontencoding{U}\fontfamily{wncy}\selectfont\symbol{88}}}}
+\renewcommand{\Sha}{\mathrm{Sha}}
+\newcommand{\Sel}{\operatorname{Sel}}\newcommand{\Gal}{\operatorname{Gal}}\newcommand{\GL}{\operatorname{GL}}\newcommand{\loc}{\operatorname{loc}}\newcommand{\rk}{\operatorname{rank}}
+\title{An exact Frobenius density formula\\ for the residual Selmer defect}
+\author{Jo\~ao V\'ictor de Mello}
+\date{November 25, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $E/\Q$ be an elliptic curve with surjective $p$-adic Galois representation at an odd prime $p$, and put $r=\rk E(\Q)$ and $s=\dim_{\F_p}\Sha(E)[p]$. We prove that the natural density of primes with regular unipotent residual Frobenius, $v_p(\#E(\F_q))=e$, vanishing Mordell--Weil localization, and nonzero Selmer localization is exactly $p^{-r-e-1}(1-p^{-s})$. We also give the joint distribution of the ranks of the two localization maps, and a finite-tuple rank formula. All identities follow unconditionally from the indicated image hypothesis, without assuming the finiteness of $\Sha(E)$ or the Birch--Swinnerton-Dyer conjecture.
+\end{abstract}
+
+\section{Introduction}
+Fix an odd prime $p$, write $V=E[p]$, and assume that the residual representation $\rho_p:G_{\Q}\to\GL(V)$ is surjective. Let
+\[
+ W=E(\Q)/pE(\Q),\qquad S=\Sel_p(E/\Q),\qquad
+ s=\dim_{\F_p}\Sha(E/\Q)[p].
+\]
+The Kummer map embeds $W$ into $S$. Surjectivity excludes rational $p$-torsion, so $\dim W=r$ and $\dim S=r+s$. At a good prime $q\ne p$, let $g_q=\rho_p(\operatorname{Frob}_q)$, defined up to conjugacy, and write
+\[
+ L_q=H^1_{\mathrm{ur}}(\Q_q,V)\simeq V/(g_q-1)V.
+\]
+The local Kummer condition equals this unramified subgroup. In particular, the localization of $S$ lands in $L_q$. Call $q$ \emph{silent} if $\loc_q W=0$, and \emph{detecting} if it is silent but $\loc_q S\ne0$. These definitions do not depend on a choice of basis.
+
+The use of Chebotarev to find primes with prescribed cohomological localizations is standard in Euler and Kolyvagin system theory \cite{MR}. Related density computations for reductions of rational points appear in \cite{LP}. The purpose of this note is to make the relative localization problem quantitative, including its dependence on the unknown residual Tate--Shafarevich dimension. We give a full proof of the formulas; their priority as explicit formulas has not been established.
+
+\begin{theorem}[Residual defect density]\label{main}
+Assume further that $\rho_{p^\infty}:G_{\Q}\to\GL_2(\Z_p)$ is surjective. For an integer $e\geq1$, let $\mathcal U_e$ be the good primes $q\ne p$ for which $g_q$ is nonidentity unipotent and $v_p(\#E(\F_q))=e$. Then
+\begin{align}
+ \operatorname{dens}(\mathcal U_e)&=p^{-e-1},\\
+ \operatorname{dens}\{q\in\mathcal U_e:\loc_q W=0\}&=p^{-r-e-1},\\
+ \operatorname{dens}\{q\in\mathcal U_e:\loc_q S=0\}&=p^{-r-s-e-1},\\
+ \operatorname{dens}\{q\in\mathcal U_e:q\text{ detecting}\}
+ &=\boxed{\dfrac{1-p^{-s}}{p^{r+e+1}}.}\label{density}
+\end{align}
+All densities are natural densities relative to the set of rational primes.
+\end{theorem}
+
+\section{Affine Galois independence}
+We first prove the finite Galois statement underlying the formulas. Let $D\subset H^1(\Q,V)$ be any finite-dimensional $\F_p$-subspace, and put $d=\dim D$. Choose cocycle representatives $c_1,\ldots,c_d$ of a basis of $D$ and set $F=\Q(E[p])$. Define
+\[
+ \varphi:G_{\Q}\longrightarrow V^d\rtimes\GL(V),\qquad
+ \sigma\longmapsto ((c_i(\sigma))_{i=1}^d,\rho_p(\sigma)).
+\]
+The cocycle identity makes $\varphi$ a group homomorphism. Its finite image cuts out a Galois extension $M/\Q$ containing $F$.
+
+\begin{lemma}\label{affine}
+The homomorphism $\varphi$ is surjective. In particular,
+\[
+ \Gal(M/\Q)\simeq V^d\rtimes\GL_2(\F_p).
+\]
+\end{lemma}
+\begin{proof}
+Put $G=\GL(V)$. The central element $-I$ acts as $-1$ on $V$, and central elements act trivially on group cohomology with the simultaneous action on arguments and coefficients. Thus $-2$ annihilates $H^1(G,V)$, so that this group is zero. Inflation--restriction now shows that restriction to $G_F$ is injective on $H^1(\Q,V)$.
+
+On $G_F$, each cocycle is a homomorphism. The image $U$ of their joint restriction is an $\F_p[G]$-submodule of $V^d$. This module is a direct sum of copies of the simple module $V$, with $\operatorname{End}_G(V)=\F_p$. If $U$ were proper, the quotient would admit a nonzero map to $V$. Composing with the quotient map would give coefficients $a_i\in\F_p$, not all zero, with $\sum_i a_ic_i|_{G_F}=0$. This contradicts the independence of the classes and the injectivity just proved. Hence $U=V^d$. The image of $\varphi$ projects onto $G$ and contains its entire translation kernel, which proves the assertion.
+\end{proof}
+
+\begin{lemma}[Uniform localization]\label{uniform}
+For each conjugacy class $\mathcal C\subset\GL(V)$, let $k=\dim V/(g-1)V$ for $g\in\mathcal C$. Conditional on residual Frobenius lying in $\mathcal C$, any basis-invariant rank condition on the localization $D\to L_q$ has the probability obtained by a uniformly random $k\times d$ matrix over $\F_p$.
+\end{lemma}
+\begin{proof}
+Exclude the finitely many primes ramified in $M$ or $E$, and the prime $p$. By Lemma~\ref{affine}, above a fixed $g\in\mathcal C$ all $d$ translation vectors occur with equal multiplicity. Evaluation of an unramified cocycle at Frobenius identifies its local class with the translation vector modulo $(g-1)V$. Each column is consequently uniform on a $k$-dimensional space, independently of the other columns. Conjugating Frobenius induces a common isomorphism on the local quotient and adds coboundaries, so the rank events are conjugacy-invariant. The Chebotarev density theorem \cite{Milne} turns the finite group proportions into natural densities.
+\end{proof}
+
+\section{The joint localization-rank distribution}
+Let $a_q=\dim\loc_q W$ and $b_q=\dim\loc_q S-a_q$. For nonnegative integers $m,n,j$ write
+\[
+ R_{m,n}(j)=p^{-mn}\prod_{i=0}^{j-1}
+ \frac{(p^m-p^i)(p^n-p^i)}{p^j-p^i},
+\]
+with empty product equal to one, and set the value to zero for $j>\min(m,n)$. This is the proportion of $m\times n$ matrices of rank $j$: factor a rank-$j$ matrix as a full-column-rank matrix times a full-row-rank matrix, then divide by the number of changes of basis in the middle $j$-space.
+
+\begin{theorem}[Joint rank law]\label{rank}
+Under residual surjectivity alone, the natural density of primes with $\dim L_q=k$, $a_q=a$ and $b_q=b$ is
+\begin{equation}\label{joint}
+ \boxed{w_k R_{k,r}(a)R_{k-a,s}(b)},
+\end{equation}
+where, putting $G=\GL_2(\F_p)$,
+\begin{equation}\label{weights}
+ w_2=\frac1{|G|},\qquad w_1=\frac{p^2-p-1}{p(p-1)^2},\qquad
+ w_0=1-w_1-w_2.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Choose a basis of $S$ beginning with a basis of $W$. By Lemma~\ref{uniform}, conditional on $k$, the first $r$ columns of the localization matrix have rank $a$ with probability $R_{k,r}(a)$. Given those columns, project the remaining $s$ columns onto the quotient by their image. They remain independent uniform vectors in dimension $k-a$, giving the second rank factor.
+
+It remains to count $g\in G$ by the dimension of its fixed space. Only $I$ has fixed dimension two. Fixed dimension one occurs for the $p^2-1$ nonidentity unipotents, and for the conjugacy classes of $\operatorname{diag}(1,\lambda)$, $\lambda\in\F_p^\times\setminus\{1\}$. Each of these $p-2$ classes has size $p(p+1)$. Dividing their total by $|G|=p(p-1)^2(p+1)$ gives \eqref{weights}.
+\end{proof}
+
+\begin{corollary}\label{all}
+Without any $p$-adic image assumption beyond residual surjectivity, the density of all detecting primes is
+\[
+ \sum_{k=1}^{2}w_kp^{-kr}(1-p^{-ks}).
+\]
+It is zero if and only if $\Sha(E)[p]=0$.
+\end{corollary}
+\begin{proof}
+For fixed $k$, the first $r$ columns all vanish with probability $p^{-kr}$. Conditional on that event, the remaining $s$ columns are not all zero with probability $1-p^{-ks}$. Positivity of $w_1$ proves the equivalence.
+\end{proof}
+
+\section{The refined valuation formula}
+We now assume full $p$-adic image and prove Theorem~\ref{main}. The additional input is independence of the residual affine extension from the higher torsion fields.
+
+\begin{lemma}\label{disjoint}
+For $M$ as in Lemma~\ref{affine} and every $h\geq1$,
+\[
+ M\cap\Q(E[p^h])=F.
+\]
+\end{lemma}
+\begin{proof}
+The Galois group of the intersection over $F$ is a common quotient of $V^d$ and the congruence kernel of $\GL_2(\Z/p^h\Z)\to\GL_2(\F_p)$. This common quotient is an elementary abelian $p$-group. On the first kernel, a lift of the central residual matrix $-I$ acts by $-1$. On the second kernel we may use the central integral lift $-I$, so the induced conjugation is trivial. The action on the common abelian quotient is independent of the chosen lifts. Thus it must be simultaneously $-1$ and $+1$. Since $p$ is odd, the quotient is trivial.
+\end{proof}
+
+The class of nonidentity unipotents has density $1/[p(p-1)]$. Fix one such matrix and conjugate it to $u=\left(\begin{smallmatrix}1&1\\0&1\end{smallmatrix}\right)$. For $h=e+1$, a uniformly random lift $A=\left(\begin{smallmatrix}a&b\\c&d\end{smallmatrix}\right)$ modulo $p^h$ has $b$ a unit and $c\in p\Z/p^h\Z$. Holding $a,b,d$ fixed, the quantity
+\[
+ \det(I-A)=(1-a)(1-d)-bc
+\]
+is uniform in $p\Z/p^h\Z$. All lifts are invertible because their reduction is invertible. Hence the conditional probability that $v_p(\det(I-A))=e$ is $(p-1)/p^e$. The characteristic polynomial of Frobenius identifies $\det(I-A)$ with $\#E(\F_q)$ modulo $p^h$.
+
+By Lemma~\ref{disjoint}, the translation vectors from Lemma~\ref{affine} remain uniform independently of this lift condition. Here $k=1$, so the probabilities of silence on $W$ and on $S$ are $p^{-r}$ and $p^{-r-s}$, respectively. Multiplying these factors by
+\[
+ \frac{1}{p(p-1)}\frac{p-1}{p^e}=p^{-e-1}
+\]
+proves every formula in Theorem~\ref{main}. \qed
+
+\begin{corollary}[Density inversion]\label{inverse}
+Let $\delta_W(e)$ and $\delta_S(e)$ be the densities of the silent sets for $W$ and $S$ inside $\mathcal U_e$, respectively, measured among all rational primes. Then
+\[
+ \boxed{s=\log_p\!\left(\frac{\delta_W(e)}{\delta_S(e)}\right).}
+\]
+Equality of these densities for a single $e\geq1$ is therefore equivalent to
+\[\Sel_p(E)=E(\Q)/pE(\Q).\]
+\end{corollary}
+
+\section{Finite tuples and simultaneous detection}
+The same argument yields a formula for ordered tuples of distinct primes. Give $m$-tuples from $\mathcal U_e$ with entries at most $X$ the uniform counting measure, and let $X\to\infty$. Each local space is one-dimensional. Define the combined evaluation maps $W\to\bigoplus_{i=1}^mL_{q_i}$ and $S\to\bigoplus_{i=1}^m L_{q_i}$.
+
+\begin{theorem}[Simultaneous saturation law]
+For $m\geq r$, conditional on the combined evaluation on $W$ being injective, the limiting proportion of tuples for which evaluation on $S$ is injective is
+\begin{equation}\label{tuple}
+ \boxed{\prod_{i=0}^{s-1}(1-p^{i-(m-r)})}\qquad(m\geq r+s),
+\end{equation}
+and is zero if $r\leq m<r+s$.
+\end{theorem}
+\begin{proof}
+Chebotarev for the fixed finite compositum $M\Q(E[p^{e+1}])$ gives product distributions for distinct ordered tuples: omitting repeated primes affects a vanishing proportion as $X\to\infty$. In each coordinate the localization row is uniform after choosing an identification of the Frobenius coinvariant line; all the events under consideration are unchanged by row rescaling. Thus the joint evaluation is represented by a uniform $m\times(r+s)$ matrix. Conditional on the first $r$ columns having full rank, the remaining $s$ columns project to independent uniform vectors in dimension $m-r$. Their full-rank probability is precisely \eqref{tuple}.
+\end{proof}
+
+\section{Application to the curve of conductor 389}
+Consider $E:y^2+y=x^3+x^2-2x$. The LMFDB \cite{LMFDB} records rank two, trivial rational torsion, generators $(0,0),(1,0)$, and maximal individual prime-adic images. Thus for every odd prime $p$ and $e\geq1$, the detecting-prime density is exactly
+\[
+ \frac{1-p^{-s}}{p^{e+3}},\qquad s=\dim_{\F_p}\Sha(E)[p].
+\]
+For $e=1$ a prime $q\equiv1\pmod p$ with $v_p(\#E(\F_q))=1$ necessarily has nonidentity unipotent residual Frobenius. This case permits a direct check of the rational silence condition. If $N_q=\#E(\F_q)$, the $p$-primary part of $E(\F_q)$ has order $p$, and silence is equivalent to
+\[
+ [N_q/p](0,0)=[N_q/p](1,0)=O\quad\text{in }E(\F_q).
+\]
+We enumerated good primes $q\leq50\,000$ with $q\equiv1\pmod p$ and $v_p(N_q)=1$, using exact point counts from the quadratic character sum for $4x^3+4x^2-8x+1$ and exact finite-field elliptic addition. The results are as follows.
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+$p$ & eligible primes & silent primes & observed fraction & predicted limit $p^{-2}$\\
+\midrule
+5 & 202 & 8 & $0.03960$ & $0.04000$\\
+7 & 105 & 0 & $0$ & $0.02041$\\
+11 & 45 & 2 & $0.04444$ & $0.00826$\\
+\bottomrule
+\end{tabular}
+\end{center}
+The eight silent primes for $p=5$ are $6691,17971,18121,20261,26251,29021,35911,39551$. For $p=11$ they are $19009,47939$. These small finite samples test only Mordell--Weil silence, not the presence or absence of extra Selmer classes. In addition, exhaustive enumeration of $\GL_2(\F_p)$ at $p=3,5,7,11$ confirms the fixed-space counts in \eqref{weights}.
+
+\section{Scope and the remaining arithmetic problem}
+The density formulas quantify the exact residual obstruction to Mordell--Weil saturation. They apply to a fixed curve and a fixed residual prime; no probabilistic assumption about the distribution of Tate--Shafarevich groups is made. The formulas do not compute $s$ independently: evaluating the detecting-prime condition requires access to the full Selmer group, or an independent arithmetic characterization of its localizations. Proving that every silent prime is also silent on $S$ would settle $\Sha(E)[p]=0$, but is not a consequence of the density calculation. In particular, the present note neither proves BSD nor asserts historical novelty of standard ingredients. It supplies an exact, unconditional quantitative criterion under the stated Galois image hypotheses.
+
+\paragraph{Acknowledgment.} Research exposition, proof development and computational checks were prepared with assistance from OpenAI's ChatGPT. This is a research draft, not a peer-reviewed publication.
+\begin{thebibliography}{9}
+\bibitem{MR} B. Mazur and K. Rubin, \emph{Kolyvagin Systems}, Memoirs of the American Mathematical Society \textbf{168}, no. 799 (2004), especially \S3.5.
+\bibitem{LP} D. Lombardo and A. Perucca, \emph{Reductions of points on algebraic groups}, arXiv:1612.02847, \url{https://arxiv.org/abs/1612.02847}.
+\bibitem{Milne} J. S. Milne, \emph{Class Field Theory}, course notes, Chebotarev density theorem, \url{https://www.jmilne.org/math/CourseNotes/cft.html}.
+\bibitem{LMFDB} The LMFDB Collaboration, elliptic curve 389.a1, \url{https://www.lmfdb.org/EllipticCurve/Q/389a1/}, accessed November 25, 2026.
+\end{thebibliography}
+\end{document}
