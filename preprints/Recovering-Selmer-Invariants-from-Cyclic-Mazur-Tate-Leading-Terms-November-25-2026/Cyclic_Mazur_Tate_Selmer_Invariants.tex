@@ -1,0 +1,303 @@
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[letterpaper,margin=1.02in]{geometry}
+\usepackage{microtype}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage{xcolor}
+\hypersetup{pdftitle={Recovering Selmer invariants from cyclic Mazur-Tate leading terms},pdfauthor={Jo\~ao V\'ictor de Mello},pdfsubject={Elliptic curves, Selmer groups, and integral Mazur-Tate elements}}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Z}{\mathbb Z}\newcommand{\Q}{\mathbb Q}\newcommand{\F}{\mathbb F}
+\newcommand{\Sha}{\operatorname{Sha}}
+\newcommand{\Sel}{\operatorname{Sel}}
+\newcommand{\Fitt}{\operatorname{Fitt}}
+\newcommand{\LT}{\operatorname{LT}}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\rk}{\operatorname{rank}}
+\newcommand{\len}{\operatorname{length}}
+\newcommand{\ord}{\operatorname{ord}}
+\title{Recovering Selmer invariants from cyclic\\Mazur--Tate leading terms}
+\author{Jo\~ao V\'ictor de Mello}
+\date{November 25, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $E/\Q$ be a semistable elliptic curve of positive Mordell--Weil rank $r$, and let $p\geq5$ be a good prime with surjective $p$-adic Galois representation, prime-to-$p$ Manin constant and Tamagawa product. Using the finite abelian Fitting-ideal theorem of Bullach and Honnor, the structure theorem of Kim, and the refined nonvanishing theorem of Castella and Sano, we derive an exact minimum formula for the order of $\Sha(E)[p^\infty]$ in terms of the degree-$r$ augmentation classes of ordinary cyclic Mazur--Tate elements. If the primary group is infinite, all these classes vanish. A signed polarization identity passes from mixed Kurihara derivatives to cyclic leading terms, preserving their full integral precision and imposing no restriction $r<p$. We also obtain higher Fitting-ideal bounds and sharp minima for polarized coefficients. Exact modular-symbol computations illustrate the method, including certificates at the 19 primes omitted from the conductor-389 calculation of Stein and Wuthrich. No Birch--Swinnerton-Dyer or height nondegeneracy hypothesis is assumed.
+\end{abstract}
+
+\section{Introduction}
+The classical Birch--Swinnerton-Dyer conjecture relates the order of the Tate--Shafarevich group of an elliptic curve to the leading coefficient of its complex $L$-function. The finite-layer refinements of Mazur and Tate \cite{MT} replace the analytic variable by an augmentation filtration on a finite group ring. Refined Iwasawa theory has made it possible to extract remarkably precise information on Selmer groups from modular symbols \cite{Kur,Kim}. The present note concerns a different representation of that information: leading terms in \emph{cyclic} finite group rings, allowing the conductor and the degree of the extension to vary.
+
+Let $E/\Q$ be semistable, let $N$ be its conductor, and assume that $r=\rk E(\Q)>0$. Fix $p\geq5$ such that the image of the Galois representation on $T_pE$ is $\mathrm{GL}_2(\Z_p)$. We write
+\[
+ X=\Sel_{p^\infty}(E/\Q)^\vee,\qquad
+ X\simeq \Z_p^d\oplus\bigoplus_{i=1}^{s}\Z_p/p^{a_i}\Z_p,
+ \quad 1\leq a_1\leq\cdots\leq a_s.
+\]
+The Pontryagin dual is denoted by $(-)^\vee$. Here $d\geq r$, and $d=r$ if and only if $\Sha(E)[p^\infty]$ is finite. In that case its order is $p^{a_1+\cdots+a_s}$.
+
+Throughout, a horizontal cyclic extension $K/\Q$ has degree $p^m$, $m\geq1$, and squarefree conductor $M$ with $(M,Np)=1$. Put $G_K=\Gal(K/\Q)$, $A_K=\Z_p[G_K]$, and let $I_K$ be its augmentation ideal. Choose a generator $\gamma$ of $G_K$. With the standard N\'eron-period normalization, write $\Theta_K$ for the Mazur--Tate element. We use the convention that its summands are indexed by the cyclotomic automorphisms $\sigma_a$ rather than their inverses. All valuation statements are invariant under changing this convention.
+
+We will prove that $\Theta_K\in I_K^d$ and that, for every positive integer $j$, the quotient $I_K^j/I_K^{j+1}$ is canonically cyclic of order $p^m$ once $\gamma$ is fixed. For $1\leq j\leq d$, denote the coefficient of $(\gamma-1)^j$ in the image of $\Theta_K$ in this quotient by $c_j(K)$. Its valuation is understood to be $+\infty$ when it is zero; otherwise it is an integer in $[0,m-1]$. Define
+\begin{equation}
+ \lambda_j(E,p)=\min_{K} v_p(c_j(K)),\qquad 1\leq j\leq d. \label{lambda}
+\end{equation}
+
+\begin{theorem}[Cyclic leading-term minimum]\label{main}
+Assume further that $p$ is good for $E$ and that the Manin constant is prime to $p$. Let $\tau=v_p(\prod_{\ell\mid N}c_\ell(E))$. Then $\lambda_j(E,p)=+\infty$ for $1\leq j<d$, and
+\begin{equation}
+ b\leq\lambda_d(E,p)\leq b+\tau,
+ \qquad b=\sum_{i=1}^s a_i. \label{sandwich}
+\end{equation}
+The upper bound can be witnessed by a cyclic extension whose conductor has exactly $d$ prime factors. In particular, if $\tau=0$, then
+\begin{equation}
+ \boxed{\displaystyle
+ \lambda_r(E,p)=
+ \begin{cases}
+ v_p(\#\Sha(E)[p^\infty]),&\Sha(E)[p^\infty]\text{ finite},\\
+ +\infty,&\Sha(E)[p^\infty]\text{ infinite}.
+ \end{cases}}\label{mainformula}
+\end{equation}
+\end{theorem}
+
+The one-sided inequalities of this note apply also at multiplicative primes under the hypotheses of the Fitting-ideal theorem; the exact minimum in Theorem~\ref{main} uses the good-prime cases of the refined nonvanishing theorem. The new step is an elementary integral polarization argument relating two kinds of finite-layer invariants. It is not a new proof of the deep arithmetic theorems on which it relies.
+
+\section{Integral cyclic augmentation quotients}
+\begin{lemma}\label{cycliclemma}
+For $A=\Z_p[C_{p^m}]$, $T=\gamma-1$, and $I=(T)$, the map
+\[
+ \Z/p^m\Z\longrightarrow I^j/I^{j+1},\qquad u\longmapsto uT^j,
+\]
+is an isomorphism for every $j\geq1$.
+\end{lemma}
+\begin{proof}
+Let $\mathcal N=1+\gamma+\cdots+\gamma^{p^m-1}$. Rationally, multiplication by $T^j$ vanishes exactly on the trivial-character component of $\Q_p[C_{p^m}]$. Hence its kernel in $A$ is $\Z_p\mathcal N$. It follows that
+\[
+ I^j/I^{j+1}\simeq A/(I+\operatorname{Ann}_A(T^j))
+ = A/(I,\mathcal N)\simeq\Z_p/p^m\Z_p.
+\]
+This also proves that the identification holds even when $j\geq p$.
+\end{proof}
+Changing $\gamma$ to $\gamma^u$, $u\in(\Z/p^m\Z)^\times$, rescales $T^j$ by $u^j$ in the associated graded group. Thus the valuation of an actual leading term is intrinsic. In contrast, an arbitrary Taylor coefficient of a polynomial representative need not be intrinsic at degree $j\geq p$. Lemma~\ref{cycliclemma} avoids that difficulty entirely.
+
+\section{The Fitting-ideal lower bound}
+For an abelian $p$-extension $K/\Q$, put $X_K=\Sel_{p^\infty}(E/K)^\vee$. Bullach and Honnor \cite[Thm.~1.4(b), Rem.~1.5(a)]{BH} prove, for their Hypothesis~1.2, that $\Theta_K^\#\in\Fitt^0_{A_K}(X_K)$, with $\#$ induced by inversion. In the semistable case, $\Theta_K$ differs from $\Theta_K^\#$ by a unit, and the same inclusion holds for $\Theta_K$. In our setting their hypothesis is satisfied: $p>3$, the image contains $\mathrm{SL}_2(\Z_p)$, and a $p$-extension cannot contain a primitive $p$-th root of unity. We use the theorem also for elementary products of cyclic $p$-extensions.
+
+\begin{proposition}[Base-field arithmetic bound]\label{fitt}
+Let $K$ be a finite abelian $p$-extension satisfying the above conductor and representation hypotheses, and let $I$ be the augmentation ideal of $A=\Z_p[\Gal(K/\Q)]$. Then
+\begin{equation}
+ \Theta_K\in I^d\prod_{i=1}^s(I,p^{a_i}).\label{fittmain}
+\end{equation}
+For cyclic $K$ of degree $p^m$, its degree-$d$ leading coefficient is divisible by $p^b$ in $\Z/p^m\Z$, where $b=\sum_i a_i$.
+\end{proposition}
+\begin{proof}
+The image of $G_K$ on $E[p]$ contains $-I$: indeed its index in the full residual group divides a power of $p$. As $p$ is odd, $E(K)[p]=0$. Thus $E(K)[p^\infty]=0$, and restriction on the primary Selmer groups is injective by inflation--restriction and the functoriality of the local Kummer conditions. Dualizing gives a surjection $X_K\twoheadrightarrow X$ of $A$-modules, where $I$ acts trivially on $X$. Fitting ideals are monotone under surjections. The elementary divisor decomposition of $X$ therefore gives
+\[
+ \Theta_K\in\Fitt_A^0(X_K)\subseteq\Fitt_A^0(X)
+ = I^d\prod_{i=1}^s(I,p^{a_i}).
+\]
+Modulo $I^{d+1}$ only the term $p^bI^d$ remains. Lemma~\ref{cycliclemma} yields the assertion for cyclic $K$.
+\end{proof}
+This argument gives an immediate finiteness certificate, even without the good-reduction hypothesis of Theorem~\ref{main}.
+\begin{corollary}[Finite integral certificate]\label{cert}
+Suppose $K$ is cyclic of degree $p^m$, and $c_r(K)\neq0$ with $v=v_p(c_r(K))<m$. Then
+\begin{equation}
+ \#\Sha(E)[p^\infty]\leq p^{2\lfloor v/2\rfloor}.\label{bound}
+\end{equation}
+In particular a valuation-one witness implies $\Sha(E)[p^\infty]=0$.
+\end{corollary}
+\begin{proof}
+If $d>r$, Proposition~\ref{fitt} would force $c_r(K)=0$. Hence $d=r$, and the Kummer exact sequence shows that the primary Tate--Shafarevich group is finite of order $p^b$. Proposition~\ref{fitt} implies $b\leq v$. The Cassels--Tate pairing on this finite primary group is nondegenerate and alternating \cite{Cassels}; hence $b$ is even, proving \eqref{bound}.
+\end{proof}
+\begin{remark}
+No truncation condition such as $r<p$ is necessary in Corollary~\ref{cert}. One must, however, extract an actual graded augmentation class, rather than a noncanonical Taylor coefficient.
+\end{remark}
+
+\section{Signed polarization without factorial denominators}
+Let $k\geq1$, let $M=q_1\cdots q_k$ be a product of distinct good primes away from $p$, and suppose $p^m\mid q_i-1$ for each $i$. Let $L$ be the compositum of the unique degree-$p^m$ subfields of $\Q(\zeta_{q_i})$. The Chinese remainder theorem gives $\Gal(L/\Q)\simeq C_{p^m}^k$. Fix generators $\gamma_i$ of these factors and let $z_i(a)$ denote the exponent of the image of $\sigma_a$ in the $i$th factor. With $w(a/M)=[a/M]^+$ denoting the N\'eron-normalized plus symbol, the projection to $\Gal(L/\Q)$ is
+\begin{equation}
+ \Theta_L=\sum_{a\in(\Z/M\Z)^\times}w(a/M)\prod_{i=1}^k\gamma_i^{z_i(a)}.\label{multi}
+\end{equation}
+The minus symbols cancel since $L$ is real. Define its squarefree mixed coefficient by
+\begin{equation}
+ D_{M,m}=\sum_{a\in(\Z/M\Z)^\times}w(a/M)\prod_{i=1}^kz_i(a)
+ \pmod{p^m}.\label{mixed}
+\end{equation}
+For $\epsilon=(\epsilon_1,\ldots,\epsilon_k)\in\{\pm1\}^k$, let $K_\epsilon$ be the cyclic degree-$p^m$ quotient corresponding to $\gamma_i\mapsto\gamma^{\epsilon_i}$. This field has conductor exactly $M$, since each local inertia factor maps surjectively. Accordingly, its Mazur--Tate element is the image of \eqref{multi}; no additional Euler factor arises from dropping a conductor prime. Identify all the cyclic group rings using the indicated generator $\gamma$.
+
+\begin{theorem}[Integral polarization]\label{polar}
+The signed sum
+\begin{equation}
+ Z_{M,m}=2^{-k}\sum_{\epsilon\in\{\pm1\}^k}
+ \left(\prod_{i=1}^k\epsilon_i\right)\Theta_{K_\epsilon}
+ \label{polarized}
+\end{equation}
+belongs to $I^k$, and its degree-$k$ augmentation coefficient is exactly $D_{M,m}$ in $\Z/p^m\Z$. This identity holds for arbitrary $k$, including $k\geq p$.
+\end{theorem}
+\begin{proof}
+Expand \eqref{polarized} using \eqref{multi}. For each $a$, the signed sum of its group-ring terms factors into the product
+\begin{equation}
+ \prod_{i=1}^k\frac{\gamma^{z_i(a)}-\gamma^{-z_i(a)}}2.\label{product}
+\end{equation}
+Since $p$ is odd, all denominators are units. Each factor belongs to $I$ and is congruent to $z_i(a)T$ modulo $I^2$. Hence \eqref{product} is congruent to $(\prod_i z_i(a))T^k$ modulo $I^{k+1}$. Summing and using Lemma~\ref{cycliclemma} proves the formula.
+\end{proof}
+
+When $k=d$, Proposition~\ref{fitt} shows that every individual $\Theta_{K_\epsilon}$ already belongs to $I^d$. Thus the extraction in Theorem~\ref{polar} is linear on the individual leading terms, and
+\begin{equation}
+ D_{M,m}=2^{-d}\sum_{\epsilon}
+ \left(\prod_i\epsilon_i\right)c_d(K_\epsilon)\pmod{p^m}.
+ \label{leadpolar}
+\end{equation}
+In particular, a mixed coefficient with finite valuation $v<m$ forces at least one cyclic leading coefficient to have valuation at most $v$. This conclusion is not a diagonal substitution, which can introduce factorial denominators or lose integral precision.
+
+\section{Sharp minima and higher Fitting ideals}
+We now specify the external arithmetic inputs that give sharpness. Let $\mathcal N_1$ denote the squarefree products of primes $q\nmid Np$ satisfying $q\equiv1\pmod p$ and $a_q(E)\equiv q+1\pmod p$. For $M\in\mathcal N_1$, set
+\[
+ J_M=\sum_{q\mid M}(q-1,a_q(E)-q-1)\Z_p.
+\]
+The Kurihara number $\widetilde\delta_M$ is the expression \eqref{mixed} in $\Z_p/J_M$, with primitive-root discrete logarithms. It agrees with $D_{M,m}$ modulo $p^m$ whenever $J_M\subseteq p^m\Z_p$. Write $\partial^{(k)}$ for the minimum of the valuations of these Kurihara numbers over conductors with $k$ prime factors, and $\partial^{(\infty)}$ for the minimum over all orders; valuations of zero classes are infinite.
+
+Kim \cite[Thm.~1.8]{Kim} identifies the first nonvanishing order with $d$ and proves
+\begin{equation}
+ \Fitt^k_{\Z_p}(X)=p^{\partial^{(k)}-\partial^{(\infty)}}\Z_p
+ \quad(k\geq d,\ k\equiv d\bmod2),\label{kim}
+\end{equation}
+provided the Kurihara collection is not identically zero. Castella and Sano \cite[Thm.~B]{CS} establish the refined nonvanishing assertion
+\[
+ \partial^{(\infty)}=\tau
+\]
+under residual surjectivity, prime-to-$p$ Manin constant and either good ordinary reduction or good supersingular reduction with squarefree $N$. Thus these inputs apply to the good primes in Theorem~\ref{main}. We use the same plus-symbol normalization as in these results.
+
+\begin{proof}[Proof of Theorem~\ref{main}]
+The lower bound and the vanishing for $j<d$ follow from Proposition~\ref{fitt}. Equation \eqref{kim} at $k=d$ implies $\partial^{(d)}=b+\tau$. Choose a conductor $M\in\mathcal N_1$ with exactly $d$ prime factors attaining that finite valuation. Write $J_M=p^m\Z_p$; then $m>b+\tau$, and every prime factor of $M$ is $1$ modulo $p^m$. The corresponding $D_{M,m}$ has valuation $b+\tau$. Equation \eqref{leadpolar} gives a cyclic field $K_\epsilon$ of this conductor with $v_p(c_d(K_\epsilon))\leq b+\tau$. This proves \eqref{sandwich}. If $d=r$ and $\tau=0$, the two bounds agree, and the Kummer sequence identifies $p^b$ with the order of the finite primary Tate--Shafarevich group. If $d>r$, the primary group is infinite and every $c_r$ vanishes. This proves \eqref{mainformula}.
+\end{proof}
+
+There is also an exact higher-invariant version of this argument. For $k\geq d$ define
+\[
+ b_k=\sum_{i=1}^{\max\{s-(k-d),0\}}a_i,
+\]
+with $b_k=0$ for an empty sum. Then $\Fitt^k_{\Z_p}(X)=(p^{b_k})$. Put $b_k=+\infty$ for $k<d$. Let $\mu_k$ be the minimum valuation of \eqref{mixed}, equivalently of the degree-$k$ term of \eqref{polarized}, over all squarefree conductors with exactly $k$ prime factors and all $m\geq1$ for which $q_i\equiv1\pmod{p^m}$. There is no restriction on the traces of the auxiliary primes in this minimum.
+
+\begin{theorem}[Higher polarized profile]\label{profile}
+Under the hypotheses of Theorem~\ref{main}, $\mu_k=+\infty$ if $k<d$ and $\mu_k\geq b_k$ if $k\geq d$. For $k\geq d$ of the same parity as $d$ one has
+\begin{equation}
+ b_k\leq\mu_k\leq b_k+\tau.\label{profilebound}
+\end{equation}
+In particular, if $\tau=0$, the polarized minima determine all elementary divisors of $X$.
+\end{theorem}
+\begin{proof}
+For the lower bound, use the square-zero quotient of the multivariable group ring
+\[
+ B=(\Z/p^m\Z)[t_1,\ldots,t_k]/(t_1^2,\ldots,t_k^2),\quad
+ \gamma_i\mapsto1+t_i.
+\]
+This is well-defined since $(1+t_i)^{p^m}=1$ in $B$. Let $J=(t_1,\ldots,t_k)$. By Proposition~\ref{fitt}, the projected element belongs to $J^d\prod_i(J,p^{a_i})$. If $k<d$, the ideal is zero. Otherwise a term that contributes to the coefficient of $t_1\cdots t_k$ can select at most $k-d$ of the $s$ factors from $J$. Its remaining $p$-power factors therefore have total exponent at least $b_k$. This proves divisibility by $p^{b_k}$ modulo $p^m$. If a coefficient is nonzero, its valuation must be at least $b_k$. For $k\equiv d\pmod2$, the Kim and Castella--Sano equalities give a Kurihara witness of valuation $b_k+\tau$, which is an admissible coefficient for $\mu_k$. This proves \eqref{profilebound}.
+
+When $\tau=0$, the least index with finite $\mu_k$ is $d$. The torsion elementary divisors occur in equal pairs, by the generalized Cassels--Tate structure in \cite[Thm.~1.8]{Kim}. The difference $\mu_{d+2j}-\mu_{d+2j+2}$ is twice the next largest elementary-divisor exponent. Reading the positive differences until the first zero value recovers the entire finite torsion module.
+\end{proof}
+\begin{remark}
+Theorem~\ref{profile} is a repackaging of the existing sharp higher-Fitting-ideal theorem via ordinary cyclic elements and integral polarization; it does not claim that the underlying Selmer-structure formula is new. The lower bound from Proposition~\ref{fitt} is valid without the upper-bound input. There is no bound here on the size of a conductor at which the minimum is attained.
+\end{remark}
+
+\section{An application to the elliptic curve of conductor 389}
+Let $E:y^2+y=x^3+x^2-2x$. It has rank two, trivial rational torsion, modular degree 40, Manin constant 1 and Tamagawa product 1. Its individual $p$-adic images are maximal, as recorded in the LMFDB \cite{LMFDB}. For a prime $q\equiv1\pmod{p^m}$, write $g$ for a primitive root mod $q$ and $z(a)=\log_g(a)\bmod p^m$ with representatives in $[0,p^m-1]$. Since $2<p$, the degree-two augmentation coefficient is computed by
+\begin{equation}
+ C_2=\sum_{a=1}^{q-1} w(a/q)\binom{z(a)}{2}\pmod{p^m}.\label{calc}
+\end{equation}
+We use the primitive integral plus Manin eigenfunctional, normalized by the value 2 at the generator indexed by $(1,384)$. For the arithmetic certificates below $p>5$: the modular degree is prime to $p$, so the modular parametrization induces a surjection on first homology over $\Z_p$ by the degree push--pull identity. The real-period functional on this lattice is primitive up to a factor of 2; integrality of the N\'eron-period symbols follows from residual irreducibility and the Manin-constant hypothesis. Thus the primitive eigenfunctional used here and the N\'eron-normalized symbol differ by a $p$-adic unit. The eigenfunctional is reconstructed and checked by exact Manin relations and Hecke eigenvalues in the accompanying code. The plus eigenspace subject to those relations is one-dimensional, as certified by row reduction modulo 16231 and the existence of the integral eigenvector. No floating-point period evaluation is used.
+
+\subsection{Integral certificates invisible modulo $p$}
+The following computations have $C_0=0$ and $C_1\equiv0\pmod{p^2}$; every $C_2$ has valuation one. The last two columns give its unreduced integer value in the computational normalization and its residue mod $p^2$.
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+$p$ & $q$ & $g$ & $C_2$ & $C_2\bmod p^2$\\ \midrule
+7&7253&2&34706&14\\
+11&12343&7&437118&66\\
+13&2029&2&60866&26\\
+17&13873&5&$-1779526$&136\\
+19&16607&5&$-3690332$&171\\
+23&392519&7&$-6426936$&414\\
+\bottomrule
+\end{tabular}
+\end{center}
+Corollary~\ref{cert} proves primary vanishing in each case, although the mod-$p$ quadratic coefficients all vanish. These particular primary components were already known to vanish; the point is the alternative certificate.
+
+\subsection{The exceptions in Stein--Wuthrich's computation}
+Stein and Wuthrich \cite[Thm.~12.3, Rem.~12.4]{SW} treated 389a1 at many ordinary primes, leaving the difficult ordinary prime 16231 and excluding bad and supersingular primes. Their method involved the cyclotomic $p$-adic regulator. The following table gives independent horizontal certificates, re-evaluated in full by the accompanying code, at all 19 omitted primes in the range $5\leq p<48859$. The Fitting-ideal lower bound applies at each of these primes, including the multiplicative prime 389, since the representation and extension conditions of \cite[Hyp.~1.2]{BH} hold. The result does not require the good-reduction hypothesis of the sharpness theorem.
+
+\begin{center}
+\begin{tabular}{rrr@{\qquad}rrr}
+\toprule
+$p$ & $q$ & $C_2\bmod p$ & $p$ & $q$ & $C_2\bmod p$\\ \midrule
+107&643&22&14633&292661&8405\\
+389&9337&299&15101&30203&667\\
+599&4793&207&16231&97387&455\\
+1049&2099&236&28591&514639&11834\\
+2957&41399&548&30671&61343&17370\\
+6661&146543&6546&30869&432167&21577\\
+8263&33053&3081&31799&63599&26791\\
+9397&37589&1139&34781&208687&15456\\
+9551&114613&4128&36263&217579&3691\\
+&&&45161&270967&8045\\
+\bottomrule
+\end{tabular}
+\end{center}
+In particular, the prime $p=16231$ is certified by the conductor $97387=6p+1$ with primitive root $2$. The integer coefficients in the computational normalization are
+\[
+ (C_0,C_1,C_2)=(0,-357082,-2822359442),
+ \qquad C_2\equiv455\pmod{16231}.
+\]
+By Corollary~\ref{cert}, $\Sha(E)[16231^\infty]=0$. The same conclusion holds for each prime in the table. We claim these as reproducible applications of the cited Fitting-ideal theorem, not as the first resolution of any particular prime in the literature.
+
+\begin{corollary}
+For each cyclic degree-$p$ field in the last table, $\rk E(K)=2$ and $\Sha(E/K)[p^\infty]=0$.
+\end{corollary}
+\begin{proof}
+Reduce the finite-extension Fitting-ideal inclusion modulo $p$. Over $\F_p[T]/(T^p)$ the module $X_K/pX_K$ is a direct sum of cyclic modules $\F_p[T]/(T^{h_i})$, and its initial Fitting ideal is $(T^{\sum_i h_i})$. The nonzero quadratic term implies $\sum_i h_i\leq2$. Rational points over the base give the opposite lower bound on the free $\Z_p$-rank of $X_K$. Therefore $X_K$ is free of rank two over $\Z_p$. The Kummer sequence over $K$ gives both assertions.
+\end{proof}
+
+\subsection{Direct verification of the polarization identity}
+For pairs of conductor primes, all four signs in Theorem~\ref{polar} can be evaluated separately. The table shows the quadratic residues in the primitive Manin normalization (including one purely algebraic test at $p=5$). The final column was computed directly from the mixed sum, not obtained by subtraction of the cyclic coefficients.
+\begin{center}
+\begin{tabular}{rrlrrrrr}
+\toprule
+$p$&$m$&$M$&$C_{++}$&$C_{+-}$&$C_{-+}$&$C_{--}$&$D_{M,m}$\\\midrule
+5&1&$41\cdot61$&1&4&4&1&1\\
+7&1&$29\cdot43$&2&0&0&2&1\\
+7&2&$197\cdot491$&44&4&4&44&20\\
+11&1&$397\cdot991$&10&1&1&10&10\\
+\bottomrule
+\end{tabular}
+\end{center}
+Each row satisfies $4D_{M,m}=C_{++}-C_{+-}-C_{-+}+C_{--}$ modulo $p^m$. This is a numerical check of the integral identity, not a replacement for its proof.
+
+\section{Relation to earlier results and limitations}
+The main antecedents are the finite-layer conjectures of Mazur and Tate \cite{MT}, the Euler-system work of Kato \cite{Kato}, and Kurihara's higher-Fitting-ideal description \cite{Kur}. Kim and Kurihara \cite{KK} and Emerton, Pollack and Weston \cite{EPW} treat finite cyclotomic layers. Bullach and Honnor \cite{BH} supply the broader abelian Fitting-ideal input used here. Kim's structure theorem \cite{Kim} and the refined nonvanishing theorem of Castella and Sano \cite{CS} supply the sharp upper bound. Burns, Kurihara and Sano \cite{BKS} address the much finer conjectural identification of the actual leading term with a global height regulator. The horizontal $p$-adic $L$-functions of Kriz and Nordentoft \cite{KN} provide a related but distinct method for variation of twisted central values.
+
+The contribution of this note is the cyclic minimum formula \eqref{mainformula}, the polarization bridge \eqref{polarized} and the resulting integral certificate method. The proof relies explicitly on the established results named above (including recent preprints). The search of the literature has not located the precise formulation \eqref{mainformula} with the rank-independent polarization proof, but does not establish historical priority. A referee should examine whether the observation is implicit in earlier refined Iwasawa-theoretic constructions.
+
+The exact minimum does not establish that a degree-$r$ witness exists for every elliptic curve: that assertion would already entail the primary finiteness of $\Sha$. Likewise, no uniform effective upper bound on a witnessing conductor is proved. The complex BSD leading-term formula is not a consequence of the finite-layer equality alone. The independent analytic existence of a small-valuation cyclic witness remains a substantial arithmetic problem.
+
+\paragraph{Reproducibility.} The supplementary files contain the exact integer Manin-symbol routine and the verification script (Python, NumPy, SymPy), together with CSV tables for the integral coefficients, the historical exceptional primes, and the signed polarization calculations. The code checks the primality of each conductor prime, constructs a primitive root, reconstructs the eigenfunctional, and sums all admissible residue classes. It checks the central symbol, the congruence of the linear coefficient, and each polarization identity. The arithmetic implications depend on the precise normalization and hypotheses specified in this paper; numerical tables alone do not establish them.
+
+\begin{thebibliography}{99}
+\bibitem{MT} B. Mazur and J. Tate, \emph{Refined conjectures of the ``Birch and Swinnerton-Dyer type''}, Duke Math. J. \textbf{54} (1987), 711--750. \href{https://doi.org/10.1215/S0012-7094-87-05431-7}{DOI: 10.1215/S0012-7094-87-05431-7}.
+\bibitem{Kato} K. Kato, \emph{$p$-adic Hodge theory and values of zeta functions of modular forms}, Ast\'erisque \textbf{295} (2004), 117--290.
+\bibitem{Cassels} J. W. S. Cassels, \emph{Arithmetic on curves of genus 1. VIII. On conjectures of Birch and Swinnerton-Dyer}, J. Reine Angew. Math. \textbf{217} (1965), 180--199.
+\bibitem{Kur} M. Kurihara, \emph{The structure of Selmer groups of elliptic curves and modular symbols}, in Iwasawa Theory 2012, Springer (2014), 317--356. \href{https://arxiv.org/abs/1407.2465}{arXiv:1407.2465}.
+\bibitem{KK} C.-H. Kim and M. Kurihara, \emph{On the refined conjectures on Fitting ideals of Selmer groups of elliptic curves with supersingular reduction}, Int. Math. Res. Not. (2021), 10559--10599. \href{https://doi.org/10.1093/imrn/rnz129}{DOI: 10.1093/imrn/rnz129}.
+\bibitem{EPW} M. Emerton, R. Pollack and T. Weston, \emph{Explicit reciprocity laws and Iwasawa theory for modular forms}, Duke Math. J. \textbf{174} (2025), no.~11. \href{https://math.bu.edu/people/rpollack/Papers/EPW2.pdf}{Author's manuscript}.
+\bibitem{BH} D. Bullach and M. H. L. Honnor, \emph{On the refined `Birch--Swinnerton-Dyer type' conjectures of Mazur and Tate}, preprint (2025), \href{https://arxiv.org/abs/2511.07203}{arXiv:2511.07203}, especially Hypothesis 1.2, Theorem 1.4 and Remark 1.5.
+\bibitem{Kim} C.-H. Kim, \emph{The structure of Selmer groups and the Iwasawa main conjecture for elliptic curves}, \href{https://arxiv.org/abs/2203.12159}{arXiv:2203.12159}, Theorem 1.8 (version 5).
+\bibitem{CS} F. Castella and T. Sano, \emph{On refined nonvanishing conjectures by Kurihara and Kolyvagin}, preprint (2026), \href{https://arxiv.org/abs/2601.14504}{arXiv:2601.14504}, Theorem B.
+\bibitem{BKS} D. Burns, M. Kurihara and T. Sano, \emph{On derivatives of Kato's Euler system and the Mazur--Tate conjecture}, Int. Math. Res. Not. (2025), rnaf012. \href{https://doi.org/10.1093/imrn/rnaf012}{DOI: 10.1093/imrn/rnaf012}.
+\bibitem{KN} D. Kriz and A. C. Nordentoft, \emph{Horizontal $p$-adic $L$-functions}, \href{https://arxiv.org/abs/2310.20678}{arXiv:2310.20678}.
+\bibitem{SW} W. Stein and C. Wuthrich, \emph{Algorithms for the arithmetic of elliptic curves using Iwasawa theory}, Math. Comp. \textbf{82} (2013), 1757--1792, especially Theorem 12.3 and Remark 12.4. \href{https://wstein.org/papers/mcom2649-iwasawa-alg.pdf}{Published article}.
+\bibitem{LMFDB} LMFDB, elliptic curve \href{https://www.lmfdb.org/EllipticCurve/Q/389a1/}{389.a1 (Cremona 389a1)}, curve data, accessed November 25, 2026.
+\end{thebibliography}
+\end{document}
