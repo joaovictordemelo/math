@@ -5,28 +5,42 @@
 
 ## Overview
 
-This paper establishes an exact Frobenius density formula connecting the Mordell–Weil rank of an elliptic curve to its residual Tate–Shafarevich group.
+This paper establishes an exact Frobenius density formula
+connecting the Mordell–Weil rank of an elliptic curve to
+its residual Tate–Shafarevich group.
 
-Using affine Galois representations, Kummer theory, group cohomology and the Chebotarev density theorem, we derive
+Using affine Galois representations, Kummer theory,
+group cohomology and the Chebotarev density theorem,
+we derive
 
-\[
-\delta_{p,e}(E)=\frac{1-p^{-s}}{p^{r+e+1}},
-\]
+$$
+\delta_{p,e}(E)=\frac{1-p^{-s}}{p^{r+e+1}}.
+$$
 
-where \(r\) is the Mordell–Weil rank and \(s=\dim_{\mathbb F_p}\Sha(E)[p]\).
+Here, $r$ is the Mordell–Weil rank and
 
-Under the stated Galois hypotheses, the vanishing of this density is equivalent to primary Tate–Shafarevich vanishing.
+$$
+s=\dim_{\mathbb{F}_p}\mathrm{Sha}(E)[p].
+$$
 
-The result provides an exact arithmetic reformulation of residual Mordell–Weil saturation without assuming the Birch–Swinnerton-Dyer conjecture or the finiteness of the Tate–Shafarevich group.
+Under the stated Galois hypotheses,
 
-## Contents
+$$
+\delta_{p,e}(E)=0
+\iff
+\mathrm{Sha}(E)[p]=0.
+$$
 
-- Research paper (PDF)
-- LaTeX source
-- Python computational verification
+## Significance
+
+The theorem provides an exact arithmetic reformulation
+of residual Mordell–Weil saturation without assuming
+the Birch–Swinnerton-Dyer conjecture or the finiteness
+of the Tate–Shafarevich group.
 
 ## Status
 
-The density theorem is proved under the stated hypotheses. Historical originality has not been independently established. The full Birch–Swinnerton-Dyer conjecture remains open.
-
-**Keywords:** Birch–Swinnerton-Dyer, elliptic curves, Selmer groups, Frobenius density, Galois cohomology, Mordell–Weil saturation.
+The density theorem is proved under the stated
+hypotheses. Historical originality has not been
+independently established. The full BSD conjecture
+remains open.
