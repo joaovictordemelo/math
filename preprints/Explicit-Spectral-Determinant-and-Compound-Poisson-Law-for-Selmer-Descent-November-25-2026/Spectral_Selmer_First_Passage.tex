@@ -1,0 +1,284 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\newcommand{\Prob}{\mathbb P}
+\newcommand{\Exp}{\mathbb E}
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\Sel}{\operatorname{Sel}}
+\newcommand{\Sha}{\mathop{\mathrm{Sha}}}
+\newcommand{\TV}{d_{\mathrm{TV}}}
+\newcommand{\F}{\mathbb F}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\Q}{\mathbb Q}
+\title{An explicit spectral determinant and compound-Poisson law for Selmer descent}
+\author{Jo\~ao V\'{i}ctor de Mello}
+\date{November 25, 2026}
+\begin{document}
+\maketitle
+\begin{abstract}
+For the nearest-neighbour Selmer-rank Markov chain with upward probability $p^{-j}$ at state $j$, we compute an exact first-passage determinant. Writing $q=p^{-1}$, the determinant of the killed Jacobi operator has the entire expansion
+\[
+ \mathcal D(z)=\sum_{n=0}^{\infty}(-z)^n q^{n^2}
+             \sum_{j=0}^{n}\frac{q^j}{(q^2;q^2)_j}.
+\]
+The formula follows from discrete $q$-Hermite orthogonality and a rank-one resolvent identity. We prove that the excess first-passage time is compound Poisson at every initial dimension, give its exact L\'evy coefficients as differences of spectral traces, and obtain a uniform Poisson approximation and a sharp exponential tail. Under the usual residual Kato primitivity and explicit reciprocity hypotheses, the same laws describe the first nonzero Kurihara number in an iterated Chebotarev experiment. No assertion of universal Tate--Shafarevich finiteness is made.
+\end{abstract}
+
+\section{Introduction}
+Selmer-rank Markov processes arise in the arithmetic of self-dual Galois representations; see Klagsbrun, Mazur and Rubin \cite{KMR}. Birth-and-death passage times, their spectral factorizations and their divisibility properties have an extensive independent history \cite{Fill,VanDoorn}. The objective here is not to introduce a new rank model or a new general passage-time theory. Rather, we compute the particular spectral determinant of the Selmer-rank chain explicitly and derive consequences for a stopped arithmetic experiment.
+
+Fix $0<q<1/2$. (For arithmetic applications $q=1/p$ for a prime $p\geq 5$.) Let $(X_t)_{t\geq0}$ be the Markov chain on $\Z_{\geq0}$, with $0$ absorbing and, for $j\geq1$,
+\begin{equation}\label{eq:chain}
+ \Prob(X_{t+1}=j-1\mid X_t=j)=1-q^j,\qquad
+ \Prob(X_{t+1}=j+1\mid X_t=j)=q^j.
+\end{equation}
+Starting at $d\geq1$, define $\tau_d=\inf\{t:X_t=0\}$ and $U_d=(\tau_d-d)/2$. The variable $U_d$ counts upward steps before absorption. We use the notation $(a;b)_n=\prod_{i=0}^{n-1}(1-ab^i)$ and $(a;b)_\infty=\prod_{i\geq0}(1-ab^i)$.
+
+For $j\geq0$, let $J_j$ be the symmetric Jacobi operator on $\ell^2(\{j,j+1,\ldots\})$ with diagonal zero and off-diagonal entries
+\begin{equation}\label{eq:weights}
+ a_i=\sqrt{q^i(1-q^{i+1})}\quad (i\geq j).
+\end{equation}
+These are the reversible symmetrizations of the indicated restrictions of the transition matrix, with $J_0$ corresponding to the chain before making state zero absorbing. The killed operator is $J_1$. Since $\sum_i a_i<\infty$, each $J_j$ is trace class. Its spectrum is symmetric by conjugation with the diagonal sign operator. Define
+\begin{equation}\label{eq:det}
+ D_j(z)=\prod_{\lambda\in\operatorname{Spec}(J_j),\ \lambda>0}(1-z\lambda^2),
+\end{equation}
+with eigenvalues counted with multiplicity. The product converges locally uniformly, defines an entire function and equals $\det(I-wJ_j)$ when $w^2=z$. We write $\mathcal D=D_1$.
+
+\section{Passage-time determinants}
+\begin{lemma}\label{lem:detrec}
+For all $j\geq0$ and $z\in\mathbb C$,
+\begin{equation}\label{eq:detrec}
+ D_j(z)=D_{j+1}(z)-za_j^2D_{j+2}(z),\qquad
+ D_j(z)\longrightarrow1\quad(j\to\infty),
+\end{equation}
+where convergence is locally uniform.
+\end{lemma}
+\begin{proof}
+For finite principal truncations, expansion of the tridiagonal determinant along its first row gives the recurrence. Their trace-norm convergence follows from the summability of the off-diagonal entries. Fredholm determinant continuity gives the result, including the stated limit because $\|J_j\|_1\leq2\sum_{i\geq j}a_i\to0$.
+\end{proof}
+
+\begin{theorem}[Exact first-passage law]\label{thm:pgf}
+For every $d\geq1$ and $0\leq z\leq1$,
+\begin{equation}\label{eq:pgf}
+ \boxed{\Exp[z^{U_d}]=(q;q)_d\frac{D_{d+1}(z)}{D_1(z)}.}
+\end{equation}
+In particular, $D_1(1)=(q;q)_\infty$.
+\end{theorem}
+\begin{proof}
+For a chain started at $j\geq1$, let $H_j$ be the time to reach $j-1$. Before this time, at every state $i\geq j$ the expected increment is at most $-(1-2q^j)$. Stopping at $H_j\wedge M$ and summing expected increments gives $\Exp[H_j\wedge M]\leq(1-2q^j)^{-1}$. Thus $H_j$ is almost surely finite, and the same bound holds for its expectation. In particular, $\tau_d$ is almost surely finite. Put $F_j(z)=\Exp[z^{(H_j-1)/2}]$. First-step decomposition and the strong Markov property give
+\[
+ F_j(z)=(1-q^j)+zq^jF_{j+1}(z)F_j(z).
+\]
+To solve this recurrence rigorously, kill paths that reach a finite upper boundary $L+1$ before $j-1$. Set $F_{L+1}=0$ for this auxiliary problem. The recurrence and Lemma~\ref{lem:detrec}, with finite determinants ending at $L$, give by descending induction
+\[
+ F_j^{[L]}(z)=(1-q^j)\frac{D_{j+1}^{[L]}(z)}{D_j^{[L]}(z)}.
+\]
+Indeed the recurrence is $F_j=(1-q^j)/(1-zq^jF_{j+1})$. All finite denominators are nonzero on $[0,1]$: the finite substochastic killed transition matrices have spectral radius strictly less than one.
+
+For the infinite operator $J_1$, put $A=\sum_{i\geq1}a_i^2=q/(1-q)-q^3/(1-q^2)$. Symmetry of the spectrum gives $\|J_1\|^2\leq A<1$ for $q<1/2$. The same holds for its compressions. Thus the infinite denominators do not vanish on $[0,1]$. Monotone convergence of the killed path sums and determinant convergence prove the ratio formula for $F_j$.
+
+The passages from $d$ to $d-1$, then to $d-2$, and so on, are independent by the strong Markov property. Their excess times add. Multiplying the ratios telescopes and proves \eqref{eq:pgf}. At $z=1$, the generating function equals one; letting $d\to\infty$ and using Lemma~\ref{lem:detrec} yields $D_1(1)=(q;q)_\infty$.
+\end{proof}
+
+\section{An explicit \texorpdfstring{$q$}{q}-series for the killed determinant}
+The main formula below uses the precise coefficients in \eqref{eq:weights}, rather than only the general theory of tridiagonal operators.
+
+\begin{theorem}[Explicit determinant]\label{thm:qseries}
+For every $z\in\mathbb C$,
+\begin{equation}\label{eq:qseries}
+ \boxed{\mathcal D(z)=\sum_{n=0}^{\infty}(-z)^n q^{n^2}
+                   \sum_{j=0}^{n}\frac{q^j}{(q^2;q^2)_j}.}
+\end{equation}
+Moreover, for each integer $k\geq0$ there is exactly one zero of $\mathcal D$ in $(q^{-2k},q^{-2k-2})$, and these are all its zeros. Each is simple.
+\end{theorem}
+\begin{proof}
+Consider first $J_0$. Its monic orthogonal polynomials satisfy
+\[
+ h_{n+1}(x)=xh_n(x)-q^{n-1}(1-q^n)h_{n-1}(x),\quad h_0=1,\ h_1=x.
+\]
+These are precisely the discrete $q$-Hermite I polynomials (the recurrence also follows by comparing coefficients in their explicit finite sum). Their orthogonality measure is supported at $\{\pm q^k:k\geq0\}$, with mass proportional to $q^k(q^{2k+2};q^2)_\infty$ at each sign, by the classical orthogonality formula \cite[\S18.27(vii)]{DLMF}. The vector at state zero is cyclic for $J_0$, since each $a_i$ is nonzero. Polynomials are dense in the $L^2$ space of this finite measure on a compact set. The orthogonality recurrence therefore realizes $J_0$ as multiplication by $x$. Its nonzero spectrum consists exactly of $\pm q^k$, with multiplicity one. Hence
+\begin{equation}\label{eq:D0}
+ D_0(z)=(z;q^2)_\infty.
+\end{equation}
+
+Let $w_k$ denote the combined normalized mass at $\pm q^k$. The $q$-binomial theorem \cite[\S17.5]{DLMF} gives
+\[
+ w_k=(q;q^2)_\infty\frac{q^k}{(q^2;q^2)_k},\qquad
+ \sum_{k=0}^{\infty}w_k=1.
+\]
+For $|z|<1$, the resolvent at state zero is
+\begin{align*}
+ M(z)&=\langle e_0,(I-\sqrt z J_0)^{-1}e_0\rangle
+      =\sum_{k=0}^{\infty}\frac{w_k}{1-zq^{2k}}\\
+     &=\sum_{n=0}^{\infty}(q;q^2)_n z^n.
+\end{align*}
+Here the last identity follows by expanding each denominator and using the $q$-binomial theorem with argument $q^{2n+1}$; the even moments are $(q;q^2)_n$. The use of $\sqrt z$ is immaterial, by symmetry. Cramer's rule for a finite principal truncation and trace-norm convergence (or the Schur complement) yield
+\begin{equation}\label{eq:resolvent}
+ D_1(z)=(z;q^2)_\infty M(z).
+\end{equation}
+Since $(q;q^2)_n=(1-q^{2n-1})(q;q^2)_{n-1}$ for $n\geq1$, the series satisfies
+\[
+ (1-z)M(z)=1-qzM(q^2z).
+\]
+Multiplying by $(q^2z;q^2)_\infty$ and using \eqref{eq:resolvent} proves the entire-function identity
+\begin{equation}\label{eq:functional}
+ D_1(z)=(q^2z;q^2)_\infty-qzD_1(q^2z).
+\end{equation}
+Write $D_1(z)=\sum_{n\geq0}c_nz^n$. Euler's $q$-binomial expansion for the first term gives $c_0=1$ and
+\[
+ c_n=\frac{(-1)^n q^{n(n+1)}}{(q^2;q^2)_n}-q^{2n-1}c_{n-1}\qquad(n\geq1).
+\]
+Dividing by $(-1)^nq^{n^2}$ telescopes the recurrence, proving \eqref{eq:qseries}. The inner sums are bounded independently of $n$, so the displayed series converges locally uniformly in the entire plane.
+
+To locate the zeros, extend $M$ meromorphically using its positive-mass partial fractions. On each interval $(q^{-2k},q^{-2k-2})$, it is strictly increasing, because its derivative is a sum of positive terms. It tends to $-\infty$ at the left endpoint from the right and $+\infty$ at the right endpoint from the left. Hence it has exactly one zero, which is simple. By \eqref{eq:resolvent} the same is true of $D_1$ on each such interval. At a pole of $M$, its nonzero residue cancels the simple zero of $(z;q^2)_\infty$, leaving a nonzero value. For $0\leq z<1$ the partial fractions are positive. Finally, \eqref{eq:det} shows that $D_1$ has no zeros other than the positive real reciprocals of the squared eigenvalues. This completes the proof.
+\end{proof}
+
+\section{An exact compound-Poisson law}
+\begin{theorem}[L\'evy coefficients]\label{thm:poisson}
+For $d\geq1$ define
+\begin{equation}\label{eq:levy}
+ \boxed{\nu_{k,d}=\frac{1}{2k}\bigl(\tr J_1^{2k}-\tr J_{d+1}^{2k}\bigr),\quad k\geq1.}
+\end{equation}
+These numbers are nonnegative and summable. The excess descent time has the compound-Poisson representation
+\begin{equation}\label{eq:compound}
+ U_d\overset{\mathrm{law}}{=}\sum_{k\geq1} k N_k,
+ \qquad N_k\ \text{independent},\quad N_k\sim\mathrm{Poisson}(\nu_{k,d}).
+\end{equation}
+The total intensity and its first-jump coefficient are explicit:
+\begin{align}
+ \Lambda_d&=\sum_{k\geq1}\nu_{k,d}=-\log(q;q)_d,\label{eq:intensity}\\
+ \nu_{1,d}&=\frac{q(1-q^d)}{1-q}-\frac{q^3(1-q^{2d})}{1-q^2}.\label{eq:firstjump}
+\end{align}
+\end{theorem}
+\begin{proof}
+For each $k$, the trace of $J_j^{2k}$ is the sum of weights of closed walks of length $2k$ on the states $j,j+1,\dots$; an edge $(i,i+1)$ has positive weight $a_i$. All walks in the tail are included among the full walks. Thus their trace difference is nonnegative, as claimed. This argument can be justified by finite truncations and trace-norm convergence. Further, $\|J_1\|<1$ ensures summability of the trace-power series (bound the higher powers by $\|J_1\|^{2k-2}\tr J_1^2$).
+
+The logarithm of the determinant ratio in \eqref{eq:pgf} gives
+\[
+ \log\Exp[z^{U_d}]=\log(q;q)_d+\sum_{k\geq1}\nu_{k,d}z^k.
+\]
+At $z=1$ this proves \eqref{eq:intensity}. Consequently the generating function is $\exp(\sum_{k\geq1}\nu_{k,d}(z^k-1))$, which is the generating function of \eqref{eq:compound}. In that sum only finitely many $N_k$ are nonzero almost surely, by summability. Finally $\tr J_j^2=2\sum_{i\geq j}a_i^2$; taking the difference and summing geometric series proves \eqref{eq:firstjump}.
+\end{proof}
+
+\begin{corollary}[Uniform Poisson approximation]\label{cor:pois}
+For every $d\geq1$,
+\begin{equation}\label{eq:tvpoi}
+ \TV(\mathcal L(U_d),\mathrm{Poisson}(\Lambda_d))
+ \leq1-\exp[-(\Lambda_d-\nu_{1,d})]
+ \leq1-\exp[-B(q)],
+\end{equation}
+where
+\[
+ B(q)=-\log(q;q)_\infty-\frac q{1-q}+\frac{q^3}{1-q^2}
+      =\frac12q^2+O(q^3)\quad(q\to0).
+\]
+\end{corollary}
+\begin{proof}
+In the representation \eqref{eq:compound}, compare $\sum kN_k$ with $\sum N_k$, a Poisson variable of mean $\Lambda_d$. They agree whenever no jump of size at least two occurs. This event has probability $\exp[-(\Lambda_d-\nu_{1,d})]$. Each trace difference increases with $d$ and tends to the full trace. Hence $\sum_{k\geq2}\nu_{k,d}\leq\sum_{k\geq2}\nu_{k,\infty}=B(q)$. The expansion follows from $-\log(q;q)_\infty=q+\tfrac32q^2+O(q^3)$ and $\sum_{i\geq1}a_i^2=q+q^2+O(q^3)$.
+\end{proof}
+
+In particular, the entire excess law admits an approximation of order $p^{-2}$ in total variation, uniformly over the initial Selmer dimension. The coefficients also give an exact recursive computation of the distribution: if $P_{k,d}=\Prob(U_d=k)$, differentiation of the generating function yields
+\[
+ P_{0,d}=(q;q)_d,\qquad kP_{k,d}=\sum_{i=1}^{k}i\nu_{i,d}P_{k-i,d}.
+\]
+This compound-Poisson specialization is consistent with general infinite-divisibility results for first passages; the explicit trace weights and uniform approximation here use the particular Selmer transition probabilities.
+
+\section{Limit law and optimal tail}
+\begin{theorem}\label{thm:limit}
+Write $\alpha_i=\lambda_i(J_1)^2$ for the squared positive eigenvalues in decreasing order. Then there is a finite random variable $U_\infty$ with
+\begin{align}
+ \Exp[z^{U_\infty}]&=\frac{(q;q)_\infty}{\mathcal D(z)}
+ =\prod_{i\geq1}\frac{1-\alpha_i}{1-z\alpha_i},\label{eq:limit}\\
+ \TV(\mathcal L(U_d),\mathcal L(U_\infty))&\leq\frac{q^{d+1}}{1-q}.\label{eq:tv}
+\end{align}
+In particular $U_\infty$ is the sum of independent geometric random variables with parameters $\alpha_i$ (mass $(1-\alpha_i)\alpha_i^k$ at $k\geq0$).
+\end{theorem}
+\begin{proof}
+Couple all $U_d$ by using the independent excess times $(H_j-1)/2$ from successive passages. Their expectations sum to a finite number, since $\Exp[(H_j-1)/2]\leq q^j/(1-2q^j)$. Thus their infinite sum defines $U_\infty$. The probability that the tail sum past $d$ is nonzero is at most $\sum_{j>d}q^j$, because a passage has excess zero exactly when its first step is down. This proves \eqref{eq:tv}. Taking limits in \eqref{eq:pgf} proves the first ratio in \eqref{eq:limit}, and $D_1(1)=(q;q)_\infty$ proves its product form. The geometric representation follows since $\sum_i\alpha_i/(1-\alpha_i)<\infty$.
+\end{proof}
+
+\begin{theorem}[Sharp tail rate]\label{thm:tail}
+Let $\alpha=\|J_1\|^2$, the reciprocal of the first positive zero of \eqref{eq:qseries}. For every fixed $d\geq1$ there exists $c_d>0$ such that
+\[
+ \Prob(U_d=k)\sim c_d\alpha^k,\qquad
+ \Prob(\tau_d\geq d+2k)\sim\frac{c_d}{1-\alpha}\alpha^k,
+\]
+where
+\[
+ c_d=\frac{(q;q)_dD_{d+1}(\alpha^{-1})}{\prod_{i\geq2}(1-\alpha_i/\alpha)}.
+\]
+Furthermore,
+\begin{equation}\label{eq:sharp}
+ q+q^2-q^3-q^5\leq\alpha\leq\frac q{1-q}-\frac{q^3}{1-q^2}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+The eigenvector recurrence for the irreducible Jacobi matrix shows that each nonzero eigenvalue is simple, since an eigenvector is uniquely determined by its first coordinate. Its largest positive eigenvalue is strictly larger than that of any proper tail compression: equality in the Rayleigh quotient would make an extended tail eigenvector an eigenvector for the full matrix with its first coordinate zero, which is impossible. Therefore $D_{d+1}(\alpha^{-1})>0$. The ratio in \eqref{eq:pgf} has a simple pole at $\alpha^{-1}$ and no other singularity of that modulus. Subtracting $c_d/(1-\alpha z)$ leaves a function analytic in a strictly larger disk; Cauchy's coefficient estimate gives the stated asymptotic, and summing gives the tail. The lower bound in \eqref{eq:sharp} follows from the largest eigenvalue of the leading three-by-three principal minor (its square is $a_1^2+a_2^2$), and the upper bound follows from half the trace of $J_1^2$. In particular $\alpha=q+q^2+O(q^3)$.
+\end{proof}
+
+\section{Arithmetic interpretation and limitations}
+Let $E/\Q$ be an elliptic curve of rank $r$, $V=E[p]$, and $p\geq5$. The following application uses explicit arithmetic hypotheses: the $p$-adic representation is surjective, the residual classical Selmer structure is self-dual, and the residual canonical Kato system has the primitive stub-module property and an integral singular reciprocity map at $p$ identifying nonvanishing of its singular localization with nonvanishing of the residual Kurihara number. The last two inputs are supplied in the applicable good-reduction, non-anomalous cases by the results of Kim \cite[Theorem 2.6, Proposition 2.9, Theorem 3.11]{Kim} and the refined nonvanishing theorem of Castella--Sano \cite[Theorem B]{CS}, with the requisite prime-to-$p$ Tamagawa and Manin constant hypotheses. We state the arithmetic application with these inputs explicit, not as a new proof of those theorems.
+
+Choose auxiliary primes $\ell$ of good reduction with regular unipotent residual Frobenius and $v_p(\#E(\F_\ell))=1$. For a squarefree product $m$ of chosen primes let $S(m)$ be the Selmer group with transverse rather than finite local conditions at primes dividing $m$. At an additional auxiliary prime the finite and transverse local spaces are complementary isotropic lines in the two-dimensional local cohomology with its symmetric Tate pairing. Poitou--Tate duality (see also \cite{MR}) gives the two possibilities: if the localization of $S(m)$ is nonzero, switching conditions lowers its dimension by one; if it is zero, switching raises the dimension by one. In the second case the relaxed localization image is an isotropic line distinct from the finite line, hence the transverse line.
+
+Here is the justification for the probability in \eqref{eq:chain}. For a basis of $S(m)$ of size $j$, restriction of its cocycles to $\Q(E[p^2])$ is independent: the central scalar $-I$ annihilates first cohomology of the finite torsion-field Galois group by Sah's lemma. The joint restriction has image $V^{\oplus j}$, since it is a Galois-stable submodule and any proper submodule would give a nonzero linear relation among the cocycles by absolute irreducibility. Thus, for each fixed Frobenius matrix modulo $p^2$ satisfying the auxiliary conditions, its possible translations range uniformly over $V^{\oplus j}$ in the joint finite extension. Projecting to the one-dimensional coinvariant line gives uniform localization coordinates. The probability that every coordinate is zero is $p^{-j}$, by Chebotarev. Iterating these conditional densities, with the previously chosen primes fixed at each step, defines the arithmetic sampling law. It is not a claim about simultaneous uniform conductor cutoffs.
+
+To identify the stopping event, the primitive stub-module theorem gives nonzero residual Kato classes precisely at vertices with zero $p$-strict Selmer group. At such a vertex the $p$-relaxed group has dimension one. The classical Selmer group is the kernel of singular localization on that group. Thus the singular localization of the primitive generator is nonzero exactly when the classical group vanishes. The integral reciprocity hypothesis then identifies this with nonvanishing of the residual Kurihara number $\overline\delta_m$. This proves the following application.
+
+\begin{corollary}\label{cor:arithmetic}
+Under the stated arithmetic inputs, the first nonzero Kurihara number in iterated auxiliary-prime sampling has hitting-time distribution \eqref{eq:pgf}, starting from
+\[
+ d=\dim_{\F_p}\Sel_p(E)=r+\dim_{\F_p}\Sha(E)[p].
+\]
+For $d=0$ the first passage is already complete, and the excess is zero. For $d\geq1$, the law of its excess over $d$ has the compound-Poisson coefficients \eqref{eq:levy} and approximation \eqref{eq:tvpoi}.
+\end{corollary}
+
+In particular $\Prob(\tau_d=d)=(q;q)_d$ and the drift estimate yields
+\[
+ 0\leq\Exp[\tau_d]-d\leq\sum_{j\geq1}\frac{2q^j}{1-2q^j}
+ \leq\frac{2p}{(p-1)(p-2)}<1 \quad(p\geq5).
+\]
+Hence $\dim_{\F_p}\Sha(E)[p]=\lfloor\Exp[\tau_d]\rfloor-r$. These formulas describe a descent with an unknown initial state. They do not independently bound that state, so they do not imply the finiteness of $\Sha(E)$ or a proof of BSD. In particular, the exact laws are compatible both with a trivial and with a nontrivial residual Tate--Shafarevich group.
+
+\section{Numerical verification}
+Two independent calculations were performed: first, exact rational enumeration of first-hitting paths was compared with finite determinant coefficient extraction, for $p\in\{3,5,7,11,17\}$, $d\in\{2,4,8\}$ and $0\leq k\leq10$ (165 of 165 equalities). Second, the first zero of the explicit $q$-series was located by high-precision bisection and compared with the leading eigenvalue of an 80-by-80 Jacobi truncation. Table~\ref{tab:nums} reports numerical values; the first two methods for $\alpha$ agree to the displayed precision. The final column is the uniform bound in \eqref{eq:tvpoi}. The expectation in the table follows by logarithmic differentiation of \eqref{eq:pgf}, namely
+\[
+ \Exp[\tau_d]=d+\tr[J_1^2(I-J_1^2)^{-1}]-\tr[J_{d+1}^2(I-J_{d+1}^2)^{-1}].
+\]
+\begin{table}[ht]
+\centering
+\begin{tabular}{rrrrr}
+\toprule
+$p$ & $\alpha$ & $\Exp[\tau_2]$ & $\Lambda_\infty$ & $1-e^{-B(q)}$\\
+\midrule
+3 & .414014679 & 3.389604111 & .579593381 & .114196422\\
+5 & .233097983 & 2.605008067 & .273999052 & .031815282\\
+7 & .160667260 & 2.382086641 & .178175674 & .014380792\\
+11 & .098479558 & 2.218347119 & .104435714 & .005179828\\
+17 & .062090871 & 2.132379974 & .064307114 & .002009340\\
+31 & .033266096 & 2.068819517 & .033865634 & .000565743\\
+\bottomrule
+\end{tabular}
+\caption{Spectral and compound-Poisson quantities. The $p=3$ row concerns the probability model only; the arithmetic application above uses $p\geq5$.}\label{tab:nums}
+\end{table}
+The accompanying \texttt{Selmer\_First\_Passage\_Verification.py} reproduces both tests, using Python with NumPy, SciPy and mpmath. It does not compute elliptic-curve Selmer groups or certify new Tate--Shafarevich components.
+
+\paragraph{Scope and related work.} The use of a rank-chain model follows \cite{KMR}; spectral passage-time formulas and infinite divisibility have classical antecedents \cite{Fill,VanDoorn,Feller}. The contribution presented here is a concrete specialization: the explicit determinant series \eqref{eq:qseries}, the trace formula \eqref{eq:levy} with exact intensity, and the dimension-uniform error estimate \eqref{eq:tvpoi}, together with their stated arithmetic application. Historical priority for this combination has not been established. The manuscript was prepared with AI assistance and is intended for mathematical review before submission.
+
+\begin{thebibliography}{9}
+\bibitem{KMR} Z. Klagsbrun, B. Mazur and K. Rubin, \emph{A Markov model for Selmer ranks in families of twists}, Compos. Math. \textbf{150} (2014), 1077--1106. \href{https://doi.org/10.1112/S0010437X13007896}{doi:10.1112/S0010437X13007896}.
+\bibitem{Fill} J. A. Fill, \emph{The passage time distribution for a birth-and-death chain: strong stationary duality gives a first stochastic proof}, J. Theoret. Probab. \textbf{22} (2009), 543--557. \href{https://arxiv.org/abs/0707.4042}{arXiv:0707.4042}.
+\bibitem{VanDoorn} E. A. van Doorn, \emph{Birth--death processes and associated polynomials}, J. Comput. Appl. Math. \textbf{153} (2003), 497--506. \href{https://doi.org/10.1016/S0377-0427(02)00959-4}{doi:10.1016/S0377-0427(02)00959-4}.
+\bibitem{DLMF} NIST Digital Library of Mathematical Functions, \href{https://dlmf.nist.gov/17.5}{\S17.5}, and \href{https://dlmf.nist.gov/18.27}{\S18.27(vii)}, discrete $q$-Hermite polynomials and $q$-binomial identities.
+\bibitem{Feller} W. Feller, \emph{An Introduction to Probability Theory and Its Applications}, Vol. I, 3rd ed., Wiley, 1968.
+\bibitem{MR} B. Mazur and K. Rubin, \emph{Kolyvagin systems}, Mem. Amer. Math. Soc. \textbf{168} (2004), no. 799. \href{https://doi.org/10.1090/memo/0799}{doi:10.1090/memo/0799}.
+\bibitem{Kim} C.-H. Kim, \emph{The structure of Selmer groups and the Iwasawa main conjecture for elliptic curves}, \href{https://arxiv.org/abs/2203.12159v4}{arXiv:2203.12159v4}.
+\bibitem{CS} F. Castella and T. Sano, \emph{On refined nonvanishing conjectures by Kurihara and Kolyvagin}, preprint, 2026. \href{https://arxiv.org/abs/2601.14504}{arXiv:2601.14504}.
+\end{thebibliography}
+\end{document}
