@@ -1,0 +1,232 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=26mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype,amsmath,amssymb,amsthm,mathtools,booktabs}
+\usepackage[colorlinks=true,linkcolor=black,citecolor=black,urlcolor=blue!45!black]{hyperref}
+\usepackage{xcolor,fancyhdr}
+\hypersetup{pdftitle={Integral character congruences and conductor bounds for higher Heegner capitulation},pdfauthor={João Víctor de Mello}}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\scshape Integral character congruences}\fancyhead[R]{\small J. V. de Mello}\fancyfoot[C]{\thepage}\setlength{\headheight}{14pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Zp}{\mathbb Z_p}\newcommand{\Qp}{\mathbb Q_p}\newcommand{\Fp}{\mathbb F_p}
+\newcommand{\Sha}{\mathop{\mathrm{Sha}}}\newcommand{\Gal}{\operatorname{Gal}}\newcommand{\ord}{\operatorname{ord}}\newcommand{\Tr}{\operatorname{Tr}}\newcommand{\im}{\operatorname{im}}\newcommand{\rk}{\operatorname{rank}}
+\title{Integral character congruences and\\conductor bounds for higher Heegner capitulation}
+\author{Jo\~ao V\'ictor de Mello}
+\date{November 26, 2026}
+\begin{document}
+\maketitle\thispagestyle{plain}
+\begin{abstract}
+We study integral Galois lattices underlying derived Heegner points over finite abelian $p$-extensions. Separation of rational character components yields a lattice whose first cohomology is elementary abelian, thereby locating all higher-order cohomological torsion in an invariant integral congruence quotient. Combining the abelian group-ring conductor with explicit Kolyvagin derivative valuations, we obtain a characterwise bound on the order of an invariant derived point's connecting class. A trace-compression identity shows that lower-precision multiples of such a class descend to explicitly bounded-degree subextensions. In the cyclic case we give an exact saturation formula, and construct extremal lattices demonstrating the sharp limitations of purely representation-theoretic arguments. These statements provide sufficient conditions for primary Tate--Shafarevich finiteness if an independent uniform arithmetic divisibility estimate holds for a generating family of derived Heegner classes. No such uniform estimate is assumed in the algebraic theorems or proved for actual Heegner points here.
+\end{abstract}
+\smallskip\noindent\textbf{Keywords.} Heegner points; Kolyvagin derivatives; integral representations; group-ring conductors; Mordell--Weil groups; Tate--Shafarevich groups.\\
+\textbf{MSC 2020.} 11G05, 11R34, 20C10, 20J06, 11G40.
+
+\section{Introduction}
+The finiteness of $\Sha(E/K)[p^\infty]$ is a fundamental arithmetic problem for an elliptic curve $E$ over a number field $K$. Higher derived Heegner points provide a way to formulate it as a question about the integral location of points in Mordell--Weil groups over ring class fields. Kim's recent preprint \cite{kim}, especially Question 4.6, explicitly raises this problem in arbitrary rank. The present work concerns the integral lattice obstruction, independently of the construction of a Heegner system itself.
+
+A rational decomposition into Galois characters does not necessarily split over $\Zp$. We exploit the distinction using a maximal-order enlargement and its conductor, a classical construction in integral representation theory \cite{nickel,adem}. Our contribution is the explicit combination of these tools with the character values of multivariable Kolyvagin derivative operators and a precision-compression identity. The formulas below apply to arbitrary points satisfying the stated invariance condition; application to a Heegner system requires checking that condition and the appropriate normalizations. Historical priority of these deductions has not been established.
+
+\section{The integral obstruction}
+Fix an odd prime $p$, a finite abelian $p$-group $G=\prod_{i=1}^t C_{p^{a_i}}$, and a finite free $\Zp$-module $M$ with a $G$-action. Put $A=\sum_i a_i$, and write $\sigma_i$ for the chosen generators. Define
+\begin{equation}
+ B=M/M^G,\qquad W=B\otimes_{\Zp}\Qp.
+\end{equation}
+The submodule $M^G$ is saturated (if $pm$ is fixed, then $m$ is fixed). Thus $B$ is free and $W^G=0$, by semisimplicity. The long exact sequence gives an injection $H^1(G,M)\hookrightarrow H^1(G,B)$, since $H^1(G,M^G)=0$.
+
+Let $\Sigma$ be the set of nontrivial rational irreducible character components occurring in $W$. A representative $\chi$ of each Galois orbit has order $p^{j_\chi}$, coefficient field $F_\chi=\Qp(\zeta_{p^{j_\chi}})$, and ring of integers $O_\chi=\Zp[\zeta_{p^{j_\chi}}]$. With $e_\chi$ the rational idempotent and $m_\chi=\dim_{F_\chi} e_\chi W$, put
+\begin{equation}
+ B^\sharp=\bigoplus_{\chi\in\Sigma}O_\chi e_\chi B,
+ \qquad C_G=B^\sharp/B.
+\end{equation}
+The quotient is a finite $p$-primary group with a $G$-action.
+
+\begin{theorem}[Character separation]\label{thm:sep}
+There is an isomorphism of abelian groups
+\begin{equation}
+ H^1(G,B^\sharp)\simeq\bigoplus_{\chi\in\Sigma}\Fp^{m_\chi}.
+\end{equation}
+The connecting homomorphism $\delta:C_G^G\to H^1(G,B)$ is injective and
+\begin{equation}\label{eq:glue}
+ \boxed{pH^1(G,B)\subseteq\delta(C_G^G).}
+\end{equation}
+In particular, $\exp H^1(G,M)$ divides $p\exp(C_G^G)$, with the exponent of the trivial group taken as $1$.
+\end{theorem}
+\begin{proof}
+Averaging gives $H^1(G,W)=0$. Since $W^G=0$, the connecting map identifies $H^1(G,B^\sharp)$ with $(W/B^\sharp)^G$. In the $\chi$-component, the image of $G$ contains a primitive $p^{j_\chi}$-th root of unity. Hence invariant cosets are exactly
+\[
+ (\zeta_{p^{j_\chi}}-1)^{-1}B^\sharp_\chi/B^\sharp_\chi,
+ \qquad B^\sharp_\chi=O_\chi e_\chi B.
+\]
+This quotient is an $m_\chi$-dimensional vector space over the residue field $\Fp$, since $B^\sharp_\chi$ is free over the discrete valuation ring $O_\chi$. The first assertion follows by taking the direct sum. Now the exact sequence $0\to B\to B^\sharp\to C_G\to0$ yields
+\[
+ 0\longrightarrow C_G^G\xrightarrow{\delta} H^1(G,B)
+ \longrightarrow H^1(G,B^\sharp).
+\]
+The last group is killed by $p$, proving \eqref{eq:glue}. The injection from $H^1(G,M)$ proves the exponent bound.
+\end{proof}
+
+\begin{corollary}
+If $H^1(G,M)$ contains a class of order $p^k$, then $C_G^G$ contains an element of order at least $p^{k-1}$ (for $k=1$ this is vacuous).
+\end{corollary}
+\begin{proof} The image of the class in $H^1(G,B)$ has the same order, and its $p$-multiple lies in the injective image of $C_G^G$.\end{proof}
+
+\section{A characterwise conductor theorem}
+\subsection{Integral Fourier inversion}
+For each $\chi\in\Sigma$, let $\mathfrak D_\chi$ denote the different of $O_\chi/\Zp$. The following is the abelian component of the classical central conductor formula; we include a direct proof.
+\begin{lemma}[Conductor inclusion]\label{lem:cond}
+For every occupied character,
+\begin{equation}\label{eq:cond}
+ p^A\mathfrak D_\chi^{-1}B^\sharp_\chi\subseteq B.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Embed $a\in\mathfrak D_\chi^{-1}$ into the $\chi$-factor of $\Qp[G]$, with all other components zero. The Fourier inverse of $p^Ae_\chi a$ is
+\[
+ \sum_{g\in G}\Tr_{F_\chi/\Qp}\bigl(a\chi(g^{-1})\bigr)g.
+\]
+Every coefficient is integral by the definition of the inverse different. Thus the element acts integrally on $B$. Since $\mathfrak D_\chi^{-1}$ is an $O_\chi$-ideal, its products with $O_\chi e_\chi B$ are also covered by the argument, yielding \eqref{eq:cond}.
+\end{proof}
+Normalize the valuation by $v_p(p)=1$ (cf. \cite{serre}). The cyclotomic different has valuation $j_\chi-1/(p-1)$: indeed, at a primitive $p^j$-th root $\zeta$ the derivative of $\Phi_{p^j}$ is $p^j\zeta^{p^j-1}/(\zeta^{p^{j-1}}-1)$. Hence the right divisibility threshold in \eqref{eq:cond} is
+\begin{equation}\label{eq:threshold}
+ A-j_\chi+\frac{1}{p-1}.
+\end{equation}
+
+\subsection{Valuations of Kolyvagin derivatives}
+Define, for each factor, the derivative and norm in the group ring:
+\[
+ D_i=\sum_{h=1}^{p^{a_i}-1}h\sigma_i^h,\qquad
+ N_i=\sum_{h=0}^{p^{a_i}-1}\sigma_i^h,\qquad D=\prod_{i=1}^tD_i.
+\]
+Direct multiplication gives $(\sigma_i-1)D_i=p^{a_i}-N_i$. For the general arithmetic framework of Kolyvagin systems, see \cite{mr}. Given a point $y\in M$, fix $1\le b\le\min_i a_i$ and assume
+\begin{equation}\label{eq:inv}
+ Dy\bmod p^bM\in(M/p^bM)^G.
+\end{equation}
+Let $\xi_b$ be its connecting class in $H^1(G,M)[p^b]$. Its cocycle is $g\mapsto (g-1)Dy/p^b$.
+
+Write $p^{j_{\chi,i}}$ for the order of $\chi(\sigma_i)$, so $j_\chi=\max_i j_{\chi,i}$. A trivial character value gives $\chi(D_i)=p^{a_i}(p^{a_i}-1)/2$; a nontrivial value gives $\chi(D_i)=p^{a_i}/(\chi(\sigma_i)-1)$. Thus
+\begin{equation}\label{eq:loss}
+ v_p(\chi(D))=A-\lambda_\chi,\qquad
+ \lambda_\chi=\sum_{i:j_{\chi,i}>0}\frac{1}{p^{j_{\chi,i}-1}(p-1)}.
+\end{equation}
+For $\bar y$ the image of $y$ in $B$, denote by $\nu_\chi(y)$ the minimum valuation of the coordinates of $e_\chi\bar y$ in an $O_\chi$-basis of $B^\sharp_\chi$. This is basis-independent; it is nonnegative and is $+\infty$ for the zero vector.
+
+\begin{theorem}[Character-conductor annihilation]\label{thm:bound}
+Under \eqref{eq:inv}, set
+\begin{equation}\label{eq:h}
+ h_b(y)=\max\left(\{0\}\cup\left\{
+ \left\lceil b-j_\chi+\lambda_\chi+\frac1{p-1}-\nu_\chi(y)\right\rceil:
+ e_\chi\bar y\ne0\right\}\right).
+\end{equation}
+Then
+\begin{equation}\label{eq:main}
+ \boxed{\ord(\xi_b)\mid p^{\min\{b,h_b(y)\}}.}
+\end{equation}
+\end{theorem}
+\begin{proof}
+In $H^1(G,B)\simeq (W/B)^G$, the image of $\xi_b$ is represented by $x=D\bar y/p^b$ modulo $B$. For each nonzero projected component,
+\[
+ v_p(p^{h_b(y)}e_\chi x)=h_b(y)+A-b-\lambda_\chi+\nu_\chi(y).
+\]
+By \eqref{eq:h} this is at least the threshold \eqref{eq:threshold}. Lemma \ref{lem:cond} shows $p^{h_b(y)}e_\chi x\in B$. Summing proves $p^{h_b(y)}x\in B$. The injection $H^1(G,M)\hookrightarrow H^1(G,B)$ therefore gives $p^{h_b(y)}\xi_b=0$. The original connecting class is also killed by $p^b$, proving \eqref{eq:main}.
+\end{proof}
+
+\begin{corollary}[High-conductor vanishing]\label{cor:high}
+Suppose $t\le p-2$. Then
+\[
+ \ord(\xi_b)\mid p^{\min\{b,\max(\{0\}\cup\{b-j_\chi+1:e_\chi\bar y\ne0\})\}}.
+\]
+In particular, if all nonzero character projections have $j_\chi\ge b+1$, the class vanishes. More generally, if all have $j_\chi\ge b-C+1$ for a nonnegative integer $C$, then $p^C\xi_b=0$.
+\end{corollary}
+\begin{proof} In \eqref{eq:loss}, $\lambda_\chi+1/(p-1)\le(t+1)/(p-1)\le1$. Use $\nu_\chi(y)\ge0$ in Theorem \ref{thm:bound}.\end{proof}
+
+\section{Precision compression by trace}
+For $1\le u\le b$ let $H_u=p^uG$ (in multiplicative notation the subgroup of $p^u$-th powers), $M_u=M^{H_u}$, and $G_u=G/H_u\simeq(C_{p^u})^t$. Let $y_u=\sum_{h\in H_u}hy$ and let $D^{(u)}$ denote the product of the derivative operators in $G_u$.
+
+\begin{theorem}[Precision compression]\label{thm:compress}
+The point $D^{(u)}y_u$ is invariant modulo $p^uM_u$. If $\xi_u'$ denotes its connecting class in $H^1(G_u,M_u)$, then
+\begin{equation}\label{eq:compress}
+ \boxed{\operatorname{inf}_{G_u}^{G}(\xi_u')=p^{b-u}\xi_b.}
+\end{equation}
+\end{theorem}
+\begin{proof}
+In the $i$-th factor, express each integer $h$ uniquely as $r+kp^u$ with $0\le r<p^u$ and $0\le k<p^{a_i-u}$. Coefficientwise reduction gives
+\[
+ D_i\equiv \left(\sum_{r=0}^{p^u-1}r\sigma_i^r\right)
+ \left(\sum_{k=0}^{p^{a_i-u}-1}\sigma_i^{kp^u}\right)
+ \pmod{p^u\Zp[G]}.
+\]
+Multiplication over $i$ yields $Dy\equiv D^{(u)}y_u\pmod{p^uM}$. The latter vector belongs to $M_u$. Invariance modulo $p^uM$ follows from \eqref{eq:inv}; since $M_u\cap p^uM=p^uM_u$, it is invariant modulo $p^uM_u$. The two connecting cocycles at precision $p^u$ differ by a coboundary, and the cocycle of $Dy$ at this precision is $p^{b-u}$ times its cocycle at precision $p^b$. This is exactly \eqref{eq:compress}.
+\end{proof}
+
+\section{An exact cyclic formula and sharpness}
+Assume in this section $G=C_{p^a}$ with generator $\sigma$ and $D=\sum_{h=1}^{p^a-1}h\sigma^h$. For $\bar y\in B$ let $J_y\subseteq\{1,\ldots,a\}$ denote its nonzero rational cyclotomic components and $c(y)=|J_y|$. Set
+\[
+ W_y=\Qp[G]\bar y,\qquad A_y=\Zp[G]\bar y,\qquad
+ N_y=B\cap W_y,\qquad T_y=N_y/A_y.
+\]
+The quotient $T_y$ is finite, and $\eta_p(y)=\log_p\#T_y^G$.
+\begin{theorem}[Exact cyclic compensation]\label{thm:cyclic}
+Assume \eqref{eq:inv} holds. Then
+\begin{equation}\label{eq:cyclic}
+ \boxed{\ord(\xi_b)=p^{\max\{0,\,b-a+c(y)-\eta_p(y)\}}.}
+\end{equation}
+\end{theorem}
+\begin{proof}
+If $\bar y=0$ the assertion follows from the injection into $H^1(G,B)$. Otherwise $A_y$ is isomorphic to $\Zp[X]/(F_y)$, with $F_y=\prod_{j\in J_y}\Phi_{p^j}(X)$: the annihilator of the cyclic generator is exactly this monic polynomial ideal, by division and rational semisimplicity. All its components are nontrivial, so its norm is zero. Cyclic cohomology yields
+\[
+ H^1(G,A_y)=A_y/(\sigma-1)A_y\simeq\Zp/p^{c(y)}\Zp,
+\]
+ generated by $\bar y$. In the exact sequence for $A_y\subset N_y$, the kernel of $H^1(G,A_y)\to H^1(G,N_y)$ is the injective image of $T_y^G$, since $N_y^G=0$. The quotient $B/N_y$ is torsion-free and has no rational invariants, so $H^1(G,N_y)\hookrightarrow H^1(G,B)$. Thus $[\bar y]$ has order $p^{c(y)-\eta_p(y)}$ in $H^1(G,B)$. Finally $(\sigma-1)D\bar y=p^a\bar y$; the image of $\xi_b$ in $H^1(G,B)$ is represented by $p^{a-b}\bar y$ in the cyclic cohomology formula. Injectivity from $H^1(G,M)$ proves \eqref{eq:cyclic}.
+\end{proof}
+
+\begin{example}[Extremal multivariable lattices]\label{ex:sharp}
+For arbitrary $t,b\ge1$ take $G=(C_{p^b})^t$ and
+\[
+ M=\bigotimes_{i=1}^t\Zp[C_{p^b}]/(N_i),\qquad y=1^{\otimes t}.
+\]
+Here $M^G=0$. Each norm $N_i$ acts as zero, hence $(\sigma_i-1)Dy=p^b\prod_{j\ne i}D_j y$. This verifies \eqref{eq:inv}. Write $m=p^b$. In the basis $1,\sigma_i,\ldots,\sigma_i^{m-2}$ of the $i$-th quotient, the coefficient of $\sigma_i^{m-2}$ in $D_i$ is $-1$, using $N_i=0$. Consequently $Dy$ is primitive in $M$ and $Dy/p^b+M$ has order exactly $p^b$. Since $M^G=0$, the connecting class has this same order. No universal bound on the orders of such derived classes follows from the group-ring identities alone.
+\end{example}
+
+\subsection{Exact finite verification}
+The accompanying script computes remainders of $D$ modulo $\prod_{j\in J}\Phi_{p^j}$ using integer polynomial arithmetic, with no floating-point approximation. For every nonempty support $J\subseteq\{1,\ldots,a\}$, $a\le3$, and every $b\le a$, it measures the minimum $p$-adic valuation of the coefficients of this remainder. Since the test lattice is the cyclic orbit lattice itself, $\eta=0$. The predicted order exponent in \eqref{eq:cyclic} is $\max(0,b-a+|J|)$. All 84 cases agreed; 30 additional single-factor trace-compression tests, for $a\le4$, verified the coefficient congruence used in Theorem \ref{thm:compress}.
+\begin{center}
+\begin{tabular}{rrrr}\toprule
+$p$ & Cyclic cases & Trace cases & Disagreements\\\midrule
+3&28&10&0\\5&28&10&0\\7&28&10&0\\\midrule
+Total&84&30&0\\\bottomrule
+\end{tabular}
+\end{center}
+These are exact tests on algebraic model lattices, not computations of actual Heegner points or of elliptic curve Tate--Shafarevich groups.
+
+\section{Arithmetic application and the remaining estimate}
+Let $L/K$ be a finite abelian $p$-extension, $E/K$ an elliptic curve, and assume $E(L)[p]=0$. Take $M=E(L)\otimes_{\mathbb Z}\Zp$. By Mordell--Weil, this is finite free, and flatness of $\Zp$ over $\mathbb Z$ and finite-group cohomology identify $H^1(G,M)$ with the $p$-primary part of $H^1(G,E(L))$. Inflation--restriction identifies the latter with the primary kernel of restriction from $H^1(K,E)$ to $H^1(L,E)$. In particular Theorems \ref{thm:bound} and \ref{thm:cyclic} apply to capitulation classes obtained by connecting invariant derived points. They do not assert that a general connecting class satisfies the local conditions defining $\Sha$.
+
+In the setting of Theorem \ref{thm:compress}, put $L_u=L^{H_u}$. The fixed lattice $M_u$ is $E(L_u)\otimes\Zp$. Consequently, the lower multiple $p^{b-u}\xi_b$ capitulates over $L_u$, whose degree is $p^{ut}$. If the original class has order $p^b$, these multiples have order precisely $p^u$. This is an arithmetic consequence requiring neither BSD nor finiteness of $\Sha$.
+
+\begin{corollary}[Sufficient uniform divisibility criterion]\label{cor:fin}
+Suppose a family of actual derived classes $\xi_b$ (as above, possibly in different abelian $p$-extensions) maps into $\Sha(E/K)[p^\infty]$ and its images generate the maximal divisible subgroup, or contain that subgroup in their generated group. Assume that for all its nonzero character components there is a uniform real constant $C\ge0$ such that
+\begin{equation}\label{eq:target}
+ \nu_\chi(y_b)\ge b-j_\chi+\lambda_\chi+\frac1{p-1}-C.
+\end{equation}
+Then $\Sha(E/K)[p^\infty]$ is finite.
+\end{corollary}
+\begin{proof}
+Theorem \ref{thm:bound} kills every class in the generating family by $p^{\lceil C\rceil}$. Thus the divisible subgroup is killed by this fixed integer, and is zero. The Pontryagin dual of primary $\Sha$ is finitely generated over $\Zp$ (by the standard Selmer exact sequence and finiteness of the residual Selmer group). Its torsion-free rank must now vanish; hence the primary group is finite.
+\end{proof}
+
+\paragraph{Scope of the Heegner application.} Kim's work \cite{kim} motivates the use of families of derived points to test the divisible Selmer component. To apply Corollary \ref{cor:fin} to that construction one must match its precise normalizations, trace from any prime-to-$p$ parts, and verify that the resulting classes generate the required subgroup. The essential independent arithmetic estimate is \eqref{eq:target}. Neither it nor this full comparison is proved here. Example \ref{ex:sharp} demonstrates why a purely formal argument with the derivative identities cannot establish such a uniform bound for all lattices. The results concern a fixed prime and do not imply global finiteness of $\Sha$, let alone the full BSD leading-term formula.
+
+\section*{Conclusion}
+The character-separation theorem isolates the invariant congruence quotient responsible for higher-order capitulation. The conductor bound makes the obstruction sensitive to the conductor and divisibility of individual character projections, while trace compression controls the field degree needed at lower precision. The exact cyclic formula gives a complementary measure of integral compensation. Together these provide explicit integral criteria for further arithmetic investigation without assuming the desired finiteness result.
+
+\begin{thebibliography}{9}\small
+\bibitem{adem} A. Adem, Cohomological exponents of $\mathbb ZG$-lattices, \emph{J. Pure Appl. Algebra} \textbf{58} (1989), 1--5. \url{https://personal.math.ubc.ca/~adem/ZG-lattices.pdf}.
+\bibitem{kim} C.-H. Kim, On the arithmetic of Tate--Shafarevich groups via Kolyvagin's conjecture, preprint (2026), arXiv:2609.15328v2. \url{https://arxiv.org/abs/2609.15328v2}.
+\bibitem{mr} B. Mazur and K. Rubin, \emph{Kolyvagin Systems}, Mem. Amer. Math. Soc. \textbf{168} (2004), no. 799. \href{https://doi.org/10.1090/memo/0799}{doi:10.1090/memo/0799}.
+\bibitem{nickel} A. Nickel, A conductor formula for completed group algebras, \emph{Doc. Math.} \textbf{19} (2014), 601--627. \url{https://arxiv.org/abs/1202.1091}.
+\bibitem{serre} J.-P. Serre, \emph{Local Fields}, Graduate Texts in Mathematics 67, Springer, 1979.
+\end{thebibliography}
+\end{document}
