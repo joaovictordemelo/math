@@ -1,0 +1,423 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs,array}
+\usepackage[margin=24mm,top=23mm,bottom=24mm]{geometry}
+\usepackage{microtype,xcolor,fancyhdr,hyperref}
+\definecolor{ink}{HTML}{173C43}
+\hypersetup{colorlinks=true,linkcolor=ink,citecolor=ink,urlcolor=ink,pdftitle={Integral Heegner generation and Selmer--norm rigidity over ring class fields},pdfauthor={João Víctor de Mello}}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\scshape Integral Heegner generation}\fancyhead[R]{\small\scshape Selmer--norm rigidity}\fancyfoot[C]{\thepage}\renewcommand{\headrulewidth}{0.35pt}\setlength{\headheight}{14pt}
+\setlength{\parindent}{1.1em}\setlength{\parskip}{2pt}\setlength{\abovedisplayskip}{8pt plus 2pt minus 2pt}\setlength{\belowdisplayskip}{8pt plus 2pt minus 2pt}
+\newtheorem{theorem}{Theorem}[section]\newtheorem{proposition}[theorem]{Proposition}\newtheorem{lemma}[theorem]{Lemma}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Zp}{\mathbb Z_p}\newcommand{\Qp}{\mathbb Q_p}\newcommand{\Fp}{\mathbb F_p}\newcommand{\Q}{\mathbb Q}\newcommand{\Sha}{\operatorname{Sha}}\newcommand{\Sel}{\operatorname{Sel}}\newcommand{\Gal}{\operatorname{Gal}}\newcommand{\Tr}{\operatorname{Tr}}\newcommand{\rk}{\operatorname{rank}}\newcommand{\ord}{\operatorname{ord}}\newcommand{\Hom}{\operatorname{Hom}}\newcommand{\SL}{\operatorname{SL}}\newcommand{\GL}{\operatorname{GL}}\newcommand{\coker}{\operatorname{coker}}\newcommand{\length}{\operatorname{length}}\newcommand{\res}{\operatorname{res}}\newcommand{\cor}{\operatorname{cor}}\newcommand{\Id}{\operatorname{id}}
+\numberwithin{equation}{section}
+\begin{document}
+\thispagestyle{plain}
+\begin{center}
+{\color{ink}\rule{\textwidth}{0.65pt}}\\[11pt]
+{\LARGE\bfseries Integral Heegner Generation and\\[3pt] Selmer--Norm Rigidity over Ring Class Fields}\\[11pt]
+{\large João Víctor de Mello}\\[5pt]
+{\small 26 November 2026}\\[9pt]
+{\color{ink}\rule{\textwidth}{0.65pt}}
+\end{center}
+\begin{abstract}
+We prove a finite-extension criterion for exact integral generation of Mordell--Weil lattices from residual Selmer descent and independent norms of global points. The criterion gives a regular-representation summand over the integral group ring of any finite $p$-group. Applied to Heegner traces at inert auxiliary primes with $p\mid \ell+1$ and $p\nmid a_\ell(E)$, it gives exact ranks, a free rank-one Galois lattice, and vanishing of the $p$-primary Tate--Shafarevich group at every finite layer, under explicit base-field hypotheses. We obtain compatible generators in composita of squarefree ring class fields, rank equality with the analytic order via Gross--Zagier, and a uniform modular-degree bound for generation on the elliptic isotypic component of a modular Jacobian. An explicit application to $37\mathrm{a}1$ at $p=5$ gives an extension of degree $625$ with rank $625$ and trivial $5$-primary Tate--Shafarevich group. We also isolate the residual local obstruction at classical Kolyvagin primes, where the unit-norm argument does not apply. The results concern a restricted, but infinite, arithmetic family and do not establish the general Birch and Swinnerton-Dyer conjecture.
+\end{abstract}
+\noindent\textbf{Keywords.} Heegner points; Selmer groups; ring class fields; Mordell--Weil lattices; Tate--Shafarevich groups; norm maps.\\
+\textbf{MSC 2020.} 11G05, 11G18, 11G40, 11R34, 20C05.
+\section{Introduction and principal results}
+Let $E/\Q$ be a modular elliptic curve, $K$ an imaginary quadratic field satisfying the Heegner hypothesis, and $p$ an odd prime. The classical theory relates the height of the basic Heegner point to a central derivative and, if the point is non-torsion, controls the rank and Tate--Shafarevich group over $K$ \cite{GZ,Kol,Gross}. Over larger ring class fields, the integral structure is a separate question: knowing the rational character ranks is not enough to recover the integral lattice or the cohomology of its norm maps.
+
+The focus here is a finite-level argument which exploits primes at which the Heegner norm factor is a $p$-adic unit. These are different from the primes used to construct classical Kolyvagin derivatives. The unit property permits independent base Selmer classes to be lifted by norms, while the same prime condition eliminates extra local Selmer conditions. The interaction is strong enough to determine the entire residual Selmer representation.
+\subsection{Statement of the arithmetic theorem}
+Throughout the ring class applications let $D_K\ne-3,-4$, and let $K[n]$ denote the ring class field of conductor $n$. Write $y_n\in E(K[n])$ for compatible Heegner points obtained from a fixed modular parametrization, and $P_K=\Tr_{K[1]/K}y_1$. We assume the usual Heegner hypothesis that every prime dividing the conductor $N$ splits in $K$.
+\begin{theorem}[Unit-trace CM generation]\label{main}
+Suppose $p\ge5$, $p\nmid h_K$, $E(K)[p]=0$, and the geometric component groups of $E$ at bad primes over $K$ have orders prime to $p$. Suppose also that
+\begin{equation}\label{base}
+\Sel_p(E/K)=\Fp\delta_p(P_K),\qquad \delta_p(P_K)\ne0.
+\end{equation}
+Let $n$ be squarefree, prime to $pND_K$, and assume that every $\ell\mid n$ is inert in $K$ and satisfies
+\begin{equation}\label{unit}
+p\mid\ell+1,\qquad p\nmid a_\ell(E),\qquad a_\ell(E)=\ell+1-\#E(\mathbb F_\ell).
+\end{equation}
+For every intermediate field $K\subseteq F\subseteq K[n]$ of $p$-power degree, put $G=\Gal(F/K)$ and $z_F=\Tr_{K[n]/F}y_n$. Then the orbit map
+\begin{equation}\label{mainiso}
+\Zp[G]\longrightarrow E(F)\otimes\Zp,\quad a\longmapsto az_F
+\end{equation}
+is an isomorphism. For every $m\ge1$,
+\begin{equation}\label{mainresults}
+\Sel_{p^m}(E/F)\simeq(\mathbb Z/p^m\mathbb Z)[G],\quad
+\Sha(E/F)[p^\infty]=0,\quad \rk E(F)=[F:K].
+\end{equation}
+The norm is onto $E(K)\otimes\Zp$. All these conclusions hold independently of the degree of $F$ or the number of prime factors of $n$.
+\end{theorem}
+The hypothesis $p\nmid h_K$ is convenient for constructing product extensions and is not used in the Selmer--norm argument itself. The component group condition is likewise a transparent sufficient local condition, not a necessary one. Theorem \ref{main} is proved in Section 5 after developing an abstract theorem for finite Galois $p$-extensions.
+
+\subsection{Further results and relation to the literature}
+Section 6 proves existence and a prime density formula, including families of arbitrarily large degree. Sections 7--9 obtain character rank equality, integral compensation, compatible towers and a modular Jacobian statement. Section 10 describes the limitation at classical Kolyvagin primes and Section 11 gives a concrete example.
+
+The main inputs are classical: the Heegner distribution relations \cite{BD}, residual Selmer descent, and the self-injectivity of finite group algebras. Bertolini--Darmon study ring class eigenspaces by Kolyvagin descent; Mazur--Rubin obtain rank growth in anticyclotomic extensions \cite{MRgrowth}; Matar--Nekov\'a\v{r} prove related vanishing and group-ring structure in anticyclotomic $\mathbb Z_p$-towers \cite{MN,MNcorr}. The present treatment isolates a finite-group norm argument for squarefree conductors away from $p$, rather than claiming priority over these established methods. A full priority review remains necessary.
+\section{A finite-group norm rigidity theorem}\label{algebra}
+Let $G$ be a finite $p$-group of order $h$, $k=\Fp$, and $R=k[G]$. Write $N_G=\sum_{g\in G}g$ and $I_G$ for the augmentation ideal. All modules are left modules. We first collect the precise algebraic properties used later.
+\begin{lemma}[Socle and self-injectivity]\label{socle}
+Every nonzero finite $R$-module has a nonzero invariant. The invariant subspace $R^G=kN_G$ is one-dimensional, and $R$ is injective as an $R$-module.
+\end{lemma}
+\begin{proof}
+The augmentation ideal is nilpotent. For instance, induction on $|G|$ uses a central subgroup of order $p$, whose generator $c$ satisfies $(c-1)^p=0$; the quotient algebra by $(c-1)$ is the group algebra of the smaller $p$-group. If $V\ne0$, the last nonzero member of the sequence $I_G^jV$ is annihilated by $I_G$, hence is invariant. In the regular representation, invariance means that all coefficients in the group basis are equal, so $R^G=kN_G$.
+
+For injectivity, the coefficient of the identity defines a functional $\lambda:R\to k$. The pairing $(a,b)\mapsto\lambda(ab)$ is nondegenerate, since the group elements pair with their inverses. It gives the left-module isomorphism $R\simeq\Hom_k(R,k)$, with the usual coinduced action. The latter is injective: the functor $\Hom_R(-,\Hom_k(R,k))$ is naturally $\Hom_k(-,k)$, which is exact. This also proves that every finite direct sum of copies of $R$ is injective.
+\end{proof}
+\begin{theorem}[Regular block and quantitative remainder]\label{block}
+Let $V$ be a finite $k[G]$-module, $d=\dim_k V^G$, and choose $v_1,\ldots,v_s\in V$ with the vectors $N_Gv_i$ linearly independent. Then
+\begin{equation}\label{blockeq}
+V=\bigoplus_{i=1}^s Rv_i\oplus V',\qquad Rv_i\simeq R,\qquad \dim_k(V')^G=d-s.
+\end{equation}
+In particular $s h\le\dim_kV\le d h$. If $s=\dim_kN_G V$ (so the chosen norms span the full norm image), then $N_GV'=0$ and
+\begin{equation}\label{improved}
+\dim_k V\le sh+(h-1)(d-s).
+\end{equation}
+If $s=d$, then $V\simeq R^d$ with the specified generators.
+\end{theorem}
+\begin{proof}
+Define $f:R^s\to V$ by sending the $i$th standard basis vector to $v_i$. The restriction to $(R^s)^G$ is injective by the norm hypothesis. By Lemma \ref{socle}, a nonzero kernel would contain a nonzero invariant, which is impossible. Since $R^s$ is injective, $f$ splits, giving \eqref{blockeq}.
+
+Any finite module $U$ with invariant dimension $a$ embeds into $R^a$. Indeed, choose an isomorphism $U^G\to(R^a)^G$, extend it to $U\to R^a$ by injectivity, and apply the same kernel argument. This proves the dimension bound. If the chosen norms span $N_GV$, then the direct sum decomposition forces $N_GV'=0$. Its embedding into $R^{d-s}$ consequently lands in $\ker N_G$ there. On $R$, $N_Gx=\operatorname{aug}(x)N_G$, so this kernel has dimension $h-1$. Inequality \eqref{improved} follows.
+\end{proof}
+\section{Selmer descent and the integral lifting theorem}\label{selmer}
+Let $A/H$ be an abelian variety over a number field and $F/H$ a finite Galois $p$-extension. Set $G=\Gal(F/H)$, $h=|G|$, $M_F=A(F)\otimes\Zp$, and $V_F=\Sel_p(A/F)$. We use the ordinary Kummer Selmer group at all places, not an ordinary or signed local condition. In particular
+\begin{equation}\label{kummer}
+0\longrightarrow M_F/pM_F\xrightarrow{\delta_p} V_F\longrightarrow\Sha(A/F)[p]\longrightarrow0.
+\end{equation}
+\begin{lemma}[Global restriction and local defects]\label{descent}
+If $A(H)[p]=0$, then $A(F)[p]=0$ and $M_F$ is a finite free $\Zp$-module. For each place $v$ choose $w\mid v$ of $F$, with decomposition group $G_w$. There is an exact sequence
+\begin{equation}\label{defseq}
+0\to\Sel_p(A/H)\xrightarrow{\res} V_F^G
+\xrightarrow{\beta} \bigoplus_v H^1(G_w,A(F_w))[p].
+\end{equation}
+No surjectivity of $\beta$ is asserted. The sum can be restricted to places at which the indicated local group is nonzero.
+\end{lemma}
+\begin{proof}
+If $A(F)[p]\ne0$, its invariants under $G$ are nonzero by Lemma \ref{socle}; these invariants are $A(H)[p]$. This contradiction gives the torsion assertion. The Mordell--Weil theorem then gives freeness of $M_F$. The inflation--restriction sequence for $A[p]$ gives the isomorphism
+\[ H^1(H,A[p])\xrightarrow{\sim} H^1(F,A[p])^G. \]
+An invariant Selmer class over $F$ thus comes from a unique global class $x$ over $H$. Its image $\beta_v(x)$ in $H^1(H_v,A)[p]$ restricts to zero in $H^1(F_w,A)$, by the definition of the Kummer local condition. Local inflation--restriction identifies this kernel with $H^1(G_w,A(F_w))[p]$. Conversely, the vanishing of every such image is precisely membership of $x$ in $\Sel_p(A/H)$. These observations define $\beta$ and prove exactness. Only finitely many places can contribute, by the standard good unramified reduction calculation (see Section 4).
+\end{proof}
+\begin{theorem}[Selmer--norm rigidity]\label{rigidity}
+Suppose $A(H)[p]=0$, and set $d=\dim_k V_F^G$. If $P_1,\ldots,P_s\in M_F$ have linearly independent norm Kummer classes in $\Sel_p(A/H)$, then the map
+\[ \Zp[G]^s\longrightarrow M_F,\qquad (a_i)\longmapsto\sum_i a_iP_i \]
+is a split injection of $\Zp[G]$-lattices. In particular
+\begin{equation}\label{bounds}
+sh\le\rk A(F)\le\dim_k V_F\le dh,\qquad
+\dim_k\Sha(A/F)[p]\le(d-s)h.
+\end{equation}
+If $s=d$, the map is an isomorphism and $\Sha(A/F)[p^\infty]=0$.
+\end{theorem}
+\begin{proof}
+Kummer maps commute with norms and restrictions: $N_G\delta_p(P_i)=\res\,\delta_p(N_{F/H}P_i)$. Lemma \ref{descent} makes these norms independent over $F$. Theorem \ref{block} gives a regular block in $V_F$ contained in $M_F/pM_F$. In particular the proposed integral map is injective modulo $p$; the image is a saturated $\Zp$-sublattice. To see this, choose bases over $\Zp$ and use Smith normal form: all invariant factors of the map are units. An integral splitting as Galois lattices is justified on the next page. The dimension bounds follow from \eqref{kummer} and Theorem \ref{block}. If $s=d$, $V_F$ is exactly the regular block, so \eqref{kummer} forces $\Sha(A/F)[p]=0$. Nakayama's lemma gives integral generation, and the absence of order-$p$ elements implies the vanishing of the entire $p$-primary torsion group.
+\end{proof}
+\subsection{Integral splitting and exact norm criteria}
+For clarity, the integral splitting in Theorem \ref{rigidity} does not use injectivity of $\Zp[G]$ in the category of all modules. Rather, it uses injectivity relative to sequences split over $\Zp$.
+\begin{lemma}\label{relativeinj}
+Let $U=\Zp[G]^s\hookrightarrow M$ be an inclusion of finite free $\Zp$-modules compatible with the $G$-action. If the quotient is $\Zp$-torsion-free, then the inclusion splits $G$-equivariantly.
+\end{lemma}
+\begin{proof}
+The quotient is free, hence every $\Zp$-linear functional on $U$ extends to $M$. For one copy of $\Zp[G]$, let $\lambda$ be the coefficient of the identity. The extension $\widetilde\lambda:M\to\Zp$ defines
+\[ r(m)=\sum_{g\in G}\widetilde\lambda(g^{-1}m)g. \]
+This map is $G$-equivariant by reindexing and restricts to the identity on the chosen copy. For $s$ copies, apply the construction to each coordinate functional, taking its value zero on the other copies. Together they give a retraction $M\to U$. This proves the lemma and completes the integral assertion of Theorem \ref{rigidity}.
+\end{proof}
+\begin{corollary}[Exact norm certificate]\label{certificate}
+Suppose $A(H)[p]=0$, $\Sha(A/H)[p]=0$, and all the local groups on the right of \eqref{defseq} vanish. Put $r=\rk A(H)$. The following conditions are equivalent:
+\begin{enumerate}\setlength{\itemsep}{1pt}
+\item The norm $M_F\to M_H$ is surjective.
+\item The image of $M_F$ under the norm, reduced in $M_H/pM_H$, has dimension $r$.
+\item $M_F$ is free of rank $r$ over $\Zp[G]$ and $\Sha(A/F)[p^\infty]=0$.
+\item $\rk A(F)=rh$.
+\end{enumerate}
+\end{corollary}
+\begin{proof}
+The first two conditions are equivalent by Nakayama. By \eqref{defseq}, $d=r$, and one can choose $r$ points with independent norm Kummer classes under condition (2). Theorem \ref{rigidity} gives (3), which implies (4). For the converse, (4) gives $\dim_k M_F/pM_F=rh$; the upper bound $\dim V_F\le rh$ forces $V_F=M_F/pM_F$. By Lemma \ref{socle} and the embedding into $R^r$ in the proof of Theorem \ref{block}, $V_F\simeq R^r$. The norm image equals its invariant subspace, which under \eqref{defseq} is the image of $M_H/pM_H$. Thus (2) holds. The case $r=0$ follows from the same dimension bound.
+\end{proof}
+\begin{remark}[Role of the base hypotheses]
+The rigidity theorem does not assert that the norm map is always surjective. The existence of independent global norm points is the essential extra input. Nor does a rank bound alone show norm surjectivity unless the bound is attained under exact residual Selmer descent. This prevents replacing the unknown saturation statement by an equivalent but unsupported assertion about rank.
+\end{remark}
+\section{Local arithmetic at unramified and silent primes}\label{local}
+We now give sufficient conditions for the local defect groups in \eqref{defseq} to vanish. These arguments apply to elliptic curves without assumptions on ordinary reduction at $p$.
+\begin{proposition}[Unramified local extension]\label{unram}
+Let $L/k$ be a finite unramified Galois extension of nonarchimedean local fields of $p$-power degree. Let $E/k$ be an elliptic curve whose geometric N\'eron component group has order prime to $p$. Then
+\[ H^1(\Gal(L/k),E(L))=0. \]
+\end{proposition}
+\begin{proof}
+Write $D=\Gal(L/k)$, with residue fields $k_0\subset L_0$. There are the reduction sequences
+\begin{align*}
+0&\to E_1(L)\to E_0(L)\to \widetilde E^{\,0}(L_0)\to0,\\
+0&\to E_0(L)\to E(L)\to \Phi_E(L_0)\to0,
+\end{align*}
+where $E_1$ is the formal subgroup and $\widetilde E^{\,0}$ is the connected special fiber. Surjectivity is the smooth lifting property of the N\'eron model and Lang's theorem over the finite residue field. Unramified base change preserves the N\'eron model and the formal filtration. Each successive formal quotient is an additive $L_0$-module with the natural residue-field Galois action. The normal basis theorem makes it a direct sum of regular additive modules, so its positive-degree cohomology vanishes. A $1$-cocycle in $E_1(L)$ can thus be killed successively modulo each step of the filtration; the corrections converge by completeness. Consequently $H^1(D,E_1(L))=0$.
+
+For the connected special fiber, Lang's theorem and inflation--restriction over finite fields imply $H^1(D,\widetilde E^{\,0}(L_0))=0$. The finite component group is prime to $p$, so multiplication by $|D|$ is invertible on it. Its positive-degree cohomology vanishes by the usual averaging argument. The two reduction sequences now give the assertion.
+\end{proof}
+\begin{proposition}[Silent ramification]\label{silent}
+Let $k$ be a local field of residue characteristic different from $p$, let $E/k$ have good reduction, and let $L/k$ be any finite Galois $p$-extension. If $\widetilde E(k_0)[p]=0$, then $H^1(\Gal(L/k),E(L))=0$.
+\end{proposition}
+\begin{proof}
+The residue extension has $p$-power degree. If $\widetilde E(L_0)[p]$ were nonzero, the finite residue Galois $p$-group would have nonzero invariants, giving nonzero $\widetilde E(k_0)[p]$. Therefore the finite group $\widetilde E(L_0)$ has order prime to $p$. Since the residue characteristic differs from $p$, multiplication by $p$ is an automorphism on the formal group $E_1(L)$. It follows from the good reduction sequence that multiplication by $p$ is an automorphism on $E(L)$ itself. Group cohomology is annihilated by $|\Gal(L/k)|$, a power of $p$, and also admits multiplication by $p$ as an automorphism. Hence it vanishes in positive degrees.
+\end{proof}
+\subsection{The two-prime conditions and a descent corollary}
+For an inert rational prime $\ell$ of good reduction, the residue field of $K$ is $\mathbb F_{\ell^2}$. If $a_\ell$ is the trace of Frobenius over $\mathbb F_\ell$, its two eigenvalues $\alpha,\beta$ satisfy $\alpha+\beta=a_\ell$ and $\alpha\beta=\ell$. Hence
+\begin{equation}\label{count}
+\begin{aligned}
+\#E(\mathbb F_{\ell^2})&=(1-\alpha^2)(1-\beta^2)\\
+&=\ell^2+1-(a_\ell^2-2\ell)=(\ell+1)^2-a_\ell^2.
+\end{aligned}
+\end{equation}
+When $\ell+1\equiv0\pmod p$ and $a_\ell\not\equiv0\pmod p$, equation \eqref{count} gives a nonzero residue modulo $p$. Thus these inert primes are silent in the sense of Proposition \ref{silent}. At a classical Kolyvagin prime the second congruence is reversed: $a_\ell\equiv0\pmod p$. In that case the same calculation instead shows that local $p$-torsion is present.
+\begin{corollary}[Exact Selmer descent in the silent family]\label{localcor}
+Let $F/K$ be a finite Galois $p$-extension unramified outside inert good-reduction primes $\ell\ne p$ satisfying \eqref{unit}. Suppose $E(K)[p]=0$ and the geometric component groups at bad primes over $K$ have orders prime to $p$. Then
+\begin{equation}\label{exactdescent}
+\Sel_p(E/K)\xrightarrow{\sim}\Sel_p(E/F)^G.
+\end{equation}
+\end{corollary}
+\begin{proof}
+At each finite place unramified in $F$, Proposition \ref{unram} applies. At each ramified prime, \eqref{count} and Proposition \ref{silent} apply. Infinite places of $K$ are complex and give no defect. The local groups in \eqref{defseq} are therefore zero.
+\end{proof}
+\section{Proof of the ring class generation theorem}\label{proofmain}
+Ring class fields of squarefree conductor $n$ are abelian over $K$ and unramified outside primes dividing $n$; in particular $F$ in Theorem \ref{main} satisfies the ramification hypothesis of Corollary \ref{localcor}. Since $D_K\ne-3,-4$, the units of $\mathcal O_K$ are $\{\pm1\}$, and the usual inert-prime distribution relation takes the form
+\begin{equation}\label{trace}
+\Tr_{K[c\ell]/K[c]}y_{c\ell}=a_\ell(E)y_c\qquad(\ell\nmid cND_K).
+\end{equation}
+Here $\ell$ is inert and the points are chosen compatibly along the usual system of CM isogenies. This standard relation comes from the Hecke correspondence at $\ell$ and its action by $a_\ell(E)$ on the elliptic quotient \cite{BD,Gross}. Iterating \eqref{trace}, and applying trace transitivity, gives the integral identity
+\begin{equation}\label{basetrace}
+N_{F/K}z_F=\Tr_{K[n]/K}y_n=\left(\prod_{\ell\mid n}a_\ell(E)\right)P_K.
+\end{equation}
+The scalar is a $p$-adic unit. Hence the norm Kummer class of $z_F$ is a basis of the one-dimensional base Selmer group by \eqref{base}. Corollary \ref{localcor} gives $d=1$. Theorem \ref{rigidity}, with $s=1$, now gives \eqref{mainiso} and the vanishing of $\Sha(E/F)[p^\infty]$. The Kummer sequence for $p^m$ identifies $\Sel_{p^m}(E/F)$ with $M_F/p^mM_F$, giving \eqref{mainresults}. Norm surjectivity follows either directly from \eqref{basetrace} or from Corollary \ref{certificate}. This proves Theorem \ref{main}.
+\section{Existence, density and large-degree fields}\label{exist}
+The local and global hypotheses of Theorem \ref{main} can be fulfilled in an infinite family without assuming BSD. First we record a density statement at a fixed prime $p$.
+\begin{theorem}[Density of eligible auxiliary primes]\label{density}
+Assume $p\ge5$, $p\nmid D_K$, and $\rho_{E,p^\infty}(G_\Q)=\GL_2(\Zp)$. For every integer $b\ge1$, the set of primes $\ell\nmid pND_K$ inert in $K$, with $\ell\equiv-1\pmod{p^b}$ and $a_\ell(E)\not\equiv0\pmod p$, has natural density
+\begin{equation}\label{densityformula}
+\delta_b=\frac{1}{2\varphi(p^b)}\frac{p-2}{p-1}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $T_b=\Q(E[p^b])$. The only quadratic quotient of $\GL_2(\mathbb Z/p^b\mathbb Z)$ is the quadratic character of the determinant. Indeed, the special linear group over this local ring is generated by elementary matrices, which are commutators in the general linear group (conjugate by a diagonal matrix with one diagonal entry $2$). The determinant is the cyclotomic character by the Weil pairing. Its unique quadratic subfield is ramified at $p$, so $K\cap T_b=\Q$ because $p\nmid D_K$.
+
+The independent inertness requirement supplies a factor $1/2$. The determinant condition $-1$ supplies a factor $1/\varphi(p^b)$. Conditional on that determinant, reduction modulo $p$ is uniform on the determinant-$-1$ fiber, of cardinality $|\SL_2(\Fp)|=p(p^2-1)$. The trace-zero matrices in this fiber have two distinct eigenvalues $1,-1$, and form one conjugacy class, of size
+\[ \frac{|\GL_2(\Fp)|}{(p-1)^2}=p(p+1). \]
+Their proportion is $1/(p-1)$, leaving proportion $(p-2)/(p-1)$ for the unit-trace matrices. All these conditions are conjugacy invariant, so Chebotarev proves \eqref{densityformula}.
+\end{proof}
+\begin{corollary}[Unbounded rank and vanishing in actual fields]\label{infinite}
+Assume $E/\Q$ is non-CM, $D_K\ne-3,-4$, the Heegner hypothesis holds and $P_K$ is non-torsion. For every sufficiently large prime $p$ and every pair $b,t\ge1$, there are infinitely many ring class subextensions $L/K$ with
+\begin{equation}\label{product}
+\Gal(L/K)\simeq(C_{p^b})^t,\qquad \rk E(L)=p^{bt},\qquad \Sha(E/L)[p^\infty]=0.
+\end{equation}
+The integral Mordell--Weil module is free of rank one over the group ring, and the conclusions descend to every intermediate field.
+\end{corollary}
+\begin{proof}
+The non-torsion hypothesis and Kolyvagin's theorem give rank one and finite $\Sha(E/K)$ \cite{Kol,Gross}. Exclude the finitely many primes dividing the torsion, the Heegner index, the order of $\Sha$, $h_KD_K$, and the geometric component groups. Serre's open image theorem supplies the full $p$-adic image for all sufficiently large $p$ \cite{Serre}. Thus the base and local hypotheses hold. Choose $t$ distinct primes from Theorem \ref{density}. The ring class group calculation on the following page gives a quotient $(C_{p^b})^t$, and Theorem \ref{main} applies. Varying the auxiliary primes yields infinitely many distinct fields because each chosen factor contributes nontrivial inertia in that quotient.
+\end{proof}
+\subsection{The ring class quotient and ramification}
+For squarefree $n$ of inert primes and $D_K\ne-3,-4$, the standard exact sequence (see \cite{Cox}) for the order $\mathcal O_n=\mathbb Z+n\mathcal O_K$ is
+\begin{equation}\label{classseq}
+1\to (\mathcal O_K/n\mathcal O_K)^\times/(\mathbb Z/n\mathbb Z)^\times
+\to\operatorname{Pic}(\mathcal O_n)\to\operatorname{Pic}(\mathcal O_K)\to1.
+\end{equation}
+The unit quotient is trivial because $\mathcal O_K^\times=\{\pm1\}$ is contained in the image of $(\mathbb Z/n\mathbb Z)^\times$. The Chinese remainder theorem identifies the left group with
+\[ \prod_{\ell\mid n}\mathbb F_{\ell^2}^\times/\mathbb F_\ell^\times\simeq\prod_{\ell\mid n}C_{\ell+1}. \]
+If $p\nmid h_K$, its $p$-primary subgroup is precisely the $p$-primary subgroup of the full ring class group, which is finite abelian. If $p^b\mid\ell+1$ for each factor, quotienting each $p$-primary factor gives $(C_{p^b})^t$. Class field theory identifies the local factor with the image of inertia at the corresponding prime of $K$; hence the constructed fields are ramified at every chosen prime. Any surjective homomorphism from the product to $C_{p^b}$ defines a cyclic diagonal subextension, including the maps with each coefficient a unit. Theorem \ref{main} applies to all these quotients.
+\section{Integral compensation and analytic rank equality}\label{analytic}
+Let $F/K$ be a cyclic member of the family with $G=C_{p^b}$, $M=E(F)\otimes\Zp$, generator $\sigma$, and $T=\sigma-1$. Put $L=\ker N_G$. Over $\Qp$ write
+\[ M\otimes\Qp\simeq \Qp^{m_0}\oplus\bigoplus_{j=1}^b\Qp(\zeta_{p^j})^{m_j}. \]
+Cyclic cohomology and the determinant of $T$ on $L$ give the exact identity
+\begin{equation}\label{comp}
+\length_{\Zp}H^1(G,M)=\sum_{j=1}^b m_j-
+\length_{\Zp}\left(N_GM/p^bM^G\right).
+\end{equation}
+Indeed, $H^1(G,M)=L/TM$ and $\length(L/TL)=\sum_j m_j$, because $\Phi_{p^j}(1)=p$. The map $T$ identifies $TM/TL$ with $M/(L+M^G)$, which the norm identifies with $N_GM/p^bM^G$. The short exact sequence with middle term $L/TL$ proves \eqref{comp}.
+\begin{corollary}[Zero compensation defect]\label{zerodefect}
+For every cyclic member of the unit-trace family, $m_j=1$ for all $0\le j\le b$, $N_GM=M^G$, and the two terms on the right of \eqref{comp} both equal $b$. In particular $H^1(G,M)=0$. More generally all positive-degree cohomology of $M$ vanishes for $G$ and each subgroup, and the corresponding Tate cohomology vanishes in every degree.
+\end{corollary}
+\begin{proof}
+Theorem \ref{main} identifies $M$ with the integral regular representation. Restriction to any subgroup is a direct sum of regular representations of that subgroup. Induced/coinduced modules from the trivial subgroup have zero Tate cohomology by Shapiro's lemma. The rational character and norm statements are immediate from the regular basis.
+\end{proof}
+\subsection{Analytic rank in the unit-trace family}
+\begin{theorem}[Analytic--algebraic rank equality]\label{gzrank}
+Under the hypotheses of Theorem \ref{main}, for every eligible $F/K$,
+\begin{equation}\label{analyticrank}
+\ord_{s=1}L(E/F,s)=[F:K]=\rk E(F).
+\end{equation}
+In fact, each ring class character $\chi$ of $\Gal(F/K)$ has $\ord_{s=1}L(E/K,\chi,s)=1$.
+\end{theorem}
+\begin{proof}
+Because the orbit map \eqref{mainiso} is an isomorphism, the orbit of $z_F$ is a basis of the rational Mordell--Weil vector space (linear independence over $\Qp$ implies independence over $\Q$). Thus every complex character projection $e_\chi z_F$ is nonzero in $E(F)\otimes\mathbb C$. Inflate $\chi$ to $\Gal(K[n]/K)$, and let $c\mid n$ be its exact ring class conductor. In the character sum at conductor $n$, group the terms over $\Gal(K[n]/K[c])$ and apply \eqref{trace}. This gives the identity, for unnormalized character sums,
+\[ \sum_{g\in\Gal(K[n]/K)}\overline\chi(g)g y_n
+=\left(\prod_{\ell\mid n/c}a_\ell(E)\right)
+\sum_{g\in\Gal(K[c]/K)}\overline\chi(g)g y_c. \]
+The left sum is also $\sum_{g\in G}\overline\chi(g)g z_F$, which is nonzero. All the removed Euler factors are nonzero. Hence the character Heegner point of exact conductor $c$ is nonzero.
+
+The ring-class-character Gross--Zagier formula for the modular elliptic quotient \cite{GZ,Zhang} identifies the central derivative $L'(E/K,\chi,1)$ with a nonzero explicit multiple of the N\'eron--Tate Hermitian height of this character point. The assumptions that every prime dividing $N$ splits in $K$ and $c$ is prime to $ND_K$ place these characters in the classical Heegner sign $-1$ setting. The Hermitian height is positive on a nonzero element of the complexified Mordell--Weil space: extend the positive-definite real height pairing by $\langle x,\overline x\rangle$. Thus $L(E/K,\chi,1)=0$ and $L'(E/K,\chi,1)\ne0$. The same reasoning includes the trivial character and $c=1$.
+
+Artin formalism for the abelian extension $F/K$ gives
+\[ L(E/F,s)=\prod_{\chi\in\widehat G}L(E/K,\chi,s). \]
+These Rankin--Selberg factors have analytic continuation and functional equations, and each has a simple zero. There are $|G|$ factors, proving \eqref{analyticrank}.
+\end{proof}
+\begin{remark}[Relation to BSD]
+Theorem \ref{gzrank} is the rank equality predicted by BSD in the eligible family. Theorem \ref{main} independently gives vanishing of the $p$-primary Tate--Shafarevich group. Neither proves the full leading-term formula or the finiteness of every primary component of $\Sha(E/F)$. In particular no integral comparison of periods, local constants and the regulator determinant is asserted. The proof of the algebraic rank is independent of Gross--Zagier; the latter is invoked only for the analytic rank statement.
+\end{remark}
+\section{Compatible norm generators and completed group rings}\label{tower}
+The family can be organized into a directed system rather than treated as unrelated finite extensions. Fix $E,K,p$ satisfying the base hypotheses, and choose a countably infinite sequence $\ell_1,\ell_2,\ldots$ of distinct eligible primes. Put $n_i=\ell_1\cdots\ell_i$ and let $F_i$ be the maximal $p$-power subextension of $K[n_i]/K$. Class field theory makes $F_i\subset F_{i+1}$. Let $F_0=K$, $\mathcal F=\bigcup_iF_i$, and $\Gamma=\Gal(\mathcal F/K)$. The restriction maps on the finite groups $G_i=\Gal(F_i/K)$ are onto. We make no assertion that $\Gamma$ is a finite-dimensional $p$-adic Lie group.
+\begin{theorem}[Coherent integral generators]\label{coherent}
+Define $u_i=\prod_{\ell\mid n_i}a_\ell(E)$, with $u_0=1$, and
+\begin{equation}\label{normalized}
+x_i=u_i^{-1}\Tr_{K[n_i]/F_i}y_{n_i}\in E(F_i)\otimes\Zp,
+\qquad x_0=P_K.
+\end{equation}
+Then the $x_i$ freely generate $M_i=E(F_i)\otimes\Zp$ over $\Zp[G_i]$, and
+\begin{equation}\label{compat}
+N_{F_j/F_i}x_j=x_i\qquad(j\ge i).
+\end{equation}
+The orbit maps induce an isomorphism of completed group-ring modules
+\begin{equation}\label{completed}
+\Zp[[\Gamma]]\xrightarrow{\sim}\varprojlim_{i,N} M_i,
+\qquad a\longmapsto (a_i x_i)_i.
+\end{equation}
+Moreover, restriction $M_i\to M_j$ corresponds to the integral transfer map sending a group element $g\in G_i$ to the sum of its lifts in $G_j$.
+\end{theorem}
+\begin{proof}
+Every $u_i$ is a $p$-adic unit, so the freeness follows from Theorem \ref{main}. By trace transitivity and \eqref{trace},
+\[ N_{F_j/F_i}\Tr_{K[n_j]/F_j}y_{n_j}
+=\frac{u_j}{u_i}\Tr_{K[n_i]/F_i}y_{n_i}. \]
+Dividing by $u_j$ gives \eqref{compat}. The norm of $a_jx_j$ is $\overline a_j x_i$, where $\overline a_j$ is the image in $\Zp[G_i]$. This verifies that the finite orbit isomorphisms commute with the transition maps. By the definition of the completed group ring as the inverse limit of finite group rings, \eqref{completed} follows without a noetherian assumption. Finally $x_i$ viewed in $M_j$ equals the sum of the $\Gal(F_j/F_i)$-conjugates of $x_j$ by \eqref{compat}; multiplying by any lift of $g$ proves the transfer statement.
+\end{proof}
+\begin{corollary}
+The direct limit of the modules $M_i/p^m M_i$ under restriction is identified with the direct limit of $(\mathbb Z/p^m\mathbb Z)[G_i]$ under transfer. These maps are injective, because distinct basis elements have disjoint sets of lifts. For every finite layer and all $m$, the Kummer map identifies this finite module with $\Sel_{p^m}(E/F_i)$.
+\end{corollary}
+\noindent This is an integral statement, including all finite precisions, over a tower with increasingly many auxiliary primes. It is a norm-limit result, not an assertion about a Selmer group defined directly over the infinite field $\mathcal F$ without specifying its local conditions.
+\section{Arithmetic CM-divisor generation in the modular Jacobian}\label{jac}
+Let $J=J_0(N)$ and let $\varphi:J\to E$ be the quotient induced by the modular parametrization (choose the cusp $\infty$ as origin). Its dual with respect to the canonical polarizations is $\iota:E\to J$, and $\varphi\iota=[d]$ for a fixed positive integer $d$. For an optimal quotient this is the associated modular degree. Define the rational idempotent $e=d^{-1}\iota\varphi$ and the saturated elliptic component
+\begin{equation}\label{isotypic}
+J_{E,F}=(J(F)\otimes\Zp)\cap e(J(F)\otimes\Qp).
+\end{equation}
+In \eqref{isotypic} the intersection is taken after passing to the torsion-free image of $J(F)\otimes\Zp$ in $J(F)\otimes\Qp$; denote that image by $J_F^{\mathrm{tf}}$. Let $D_n=[x_n^{\mathrm{CM}}]-[\infty]\in J(K[n])$ be a CM divisor class, so that $\varphi(D_n)=y_n$. Put $D_F=\Tr_{K[n]/F}D_n$.
+\begin{theorem}[Uniform modular-degree saturation]\label{moddeg}
+Let $F$ be in Theorem \ref{main}, and put $\mu=v_p(d)$. Then the $E$-isotypic CM-divisor orbit satisfies
+\begin{equation}\label{modbound}
+p^\mu J_{E,F}\subseteq \Zp[G]\,\iota\varphi(D_F)\subseteq J_{E,F}.
+\end{equation}
+If $p\nmid d$, then $e$ acts integrally on $J_F^{\mathrm{tf}}$ and
+\[ J_{E,F}=eJ_F^{\mathrm{tf}}=\Zp[G]eD_F\simeq\Zp[G]. \]
+\end{theorem}
+\begin{proof}
+For $P\in J_{E,F}$, $dP=\iota\varphi(P)$ in the rational space, hence also in its torsion-free lattice. Theorem \ref{main} implies $\varphi(P)=az_F$ for some $a\in\Zp[G]$, because $E(F)[p]=0$. As $z_F=\varphi(D_F)$, this gives $dP=a\iota\varphi(D_F)$. Multiplication by the unit part of $d$ is invertible on the lattice, proving the first inclusion. The second inclusion is immediate from the image of the idempotent. If $d$ is a unit, $e$ preserves the lattice and its image equals the saturated component; \eqref{modbound} gives the equality and the orbit is free because its image under $\varphi$ is a free orbit in $M_F$.
+\end{proof}
+\subsection{Consequence for CM reduction}
+At any finite prime $v$ of simultaneous good reduction of $J$ and $E$, the reduction of $\varphi$ and $\iota$ respects the composition identity. In particular, for $p\nmid d$, every reduction of an $E$-isotypic point in $eJ_F^{\mathrm{tf}}$ is generated modulo $p^m$ by the corresponding projected CM-divisor reductions, provided we use a lift in the integral $e$-image (torsion classes are ignored in \eqref{isotypic}). On $E$ itself this has no torsion qualification: every reduction of $E(F)$ modulo $p^m$ lies in the span of reductions of the orbit of $z_F$. This follows by applying the reduction homomorphism to the equality $M_F=\Zp[G]z_F$ and then reducing modulo $p^m$. Thus the required CM-reduction inclusion holds simultaneously at all good primes, with precision loss zero on the elliptic curve. The bound $\mu$ on the Jacobian is a bound on the global torsion-free lattice; when $p\mid d$ no assertion is made about reduction of arbitrary lifts of that lattice modulo torsion. No equidistribution hypothesis is needed for this family.
+\section{The boundary of the argument: Kolyvagin primes}\label{boundary}
+It is necessary to distinguish the unit-trace primes from the classical Kolyvagin primes for which $p\mid(\ell+1,a_\ell)$, as used in higher derivative constructions. At the latter primes two independent issues occur: local Selmer descent can fail, and the ordinary Heegner trace norm vanishes modulo $p$. The following proposition quantifies the first issue without assuming any finiteness of $\Sha$.
+\begin{proposition}[Local defect at totally ramified primes]\label{defect}
+Let $F/K$ be cyclic of degree $p^b$ with $b\ge1$, and suppose its ramified places are $t$ inert primes of good reduction away from $p$, each totally ramified. Suppose $E(K)[p]=0$ and the component group hypothesis of Corollary \ref{localcor} holds. Write $r=\dim_k\Sel_p(E/K)$. Then
+\begin{equation}\label{defbound}
+\dim_k\Sel_p(E/F)^G\le r+\sum_{v\ \mathrm{ram}}\dim_k\widetilde E(\kappa(v))[p]
+\le r+2t.
+\end{equation}
+If each ramified prime satisfies $\ell+1\equiv a_\ell\equiv0\pmod p$ and $p$ is odd, each local summand in the first bound has dimension two. Consequently
+\[ \rk E(F)+\dim_k\Sha(E/F)[p]\le p^b(r+2t). \]
+\end{proposition}
+\begin{proof}
+At an unramified place the local group in \eqref{defseq} is zero. At a totally ramified good prime of residue characteristic different from $p$, multiplication by $p$ is invertible on the formal group, and its positive-degree $G$-cohomology vanishes. The good reduction sequence identifies $H^1(G,E(F_w))$ with $H^1(G,\widetilde E(\kappa(v)))$, since the residue action is trivial. For the cyclic group this is $\Hom(C_{p^b},\widetilde E(\kappa(v)))$, whose $p$-torsion is naturally isomorphic to $\widetilde E(\kappa(v))[p]$. Thus \eqref{defseq} proves the first bound. The second follows from $\dim E[p]=2$.
+
+At a classical Kolyvagin prime, rational Frobenius on $E[p]$ has polynomial $X^2-1$ with distinct roots, hence its square is the identity. Therefore $E[p]$ is rational over the residue field $\mathbb F_{\ell^2}$ of $K$. This proves the asserted dimension two. The final bound follows from Theorem \ref{block} and \eqref{kummer}.
+\end{proof}
+\subsection{What would a higher-derivative extension require?}
+The norm of the ordinary trace is $\prod a_\ell(E)\,P_K$ by \eqref{basetrace}; for a conductor containing even one Kolyvagin prime, this is zero modulo $p$. Hence the regular-block argument cannot start with that trace. Derivative operators may produce cohomological classes with different local behavior, but proving they are Kummer classes of global points with independent primitive norms, and that their images exhaust the local defect in \eqref{defseq}, requires an additional arithmetic theorem. A bound for individual character ranks does not give this theorem. The statements proved here therefore do not settle uniform normalized Heegner saturation at general Kolyvagin primes, nor do they imply universal finiteness of $\Sha$.
+\section{An explicit application: the curve \texorpdfstring{$37\mathrm{a}1$}{37a1} at \texorpdfstring{$p=5$}{p=5}}\label{example}
+Consider $E:y^2+y=x^3-x$, of conductor $37$, and $K=\Q(\sqrt{-7})$. The field has class number one, $37$ splits in $K$, and $2$ splits in $K$. Kriz--Li \cite[Example 6.1]{KL} identify the basic Heegner point as $P_K=(0,0)$, up to the compatible choice of sign. We verify the required base and local hypotheses at $p=5$ without using BSD over any of the extension fields.
+\begin{proposition}\label{concrete}
+For this curve and quadratic field, Theorem \ref{main} holds at $p=5$ for all squarefree conductors built from eligible primes. In particular there is a ring class subextension $L/K$ of conductor $199\cdot349$ with
+\begin{equation}\label{625}
+\Gal(L/K)\simeq C_{25}\times C_{25},\qquad
+\rk E(L)=\ord_{s=1}L(E/L,s)=625,
+\qquad\Sha(E/L)[5^\infty]=0.
+\end{equation}
+\end{proposition}
+\begin{proof}
+The invariants of the displayed minimal equation are $c_4=48$ and $\Delta=37$. Thus at $37$ the curve has multiplicative reduction of type $I_1$, so its geometric component group is trivial. The point $P_K$ is not divisible by $5$: at a prime over $2$ the residue field is $\mathbb F_2$, the reduction has five points, and $(0,0)$ is nonidentity. Reduction of a $5$-multiple would be zero in that group.
+
+The mod-$5$ representation over $\Q$ is surjective. Indeed, counting points at $3$ gives $a_3=-3$ and characteristic polynomial $X^2+3X+3$ with nonsquare discriminant $2$ modulo $5$. Thus the representation is irreducible. At $37$, Tate uniformization for multiplicative reduction with minimal discriminant valuation one supplies a nontrivial transvection in the inertia image on $E[5]$ (unramified quadratic base change, if needed, does not alter inertia). Irreducibility supplies a conjugate transvection with a different fixed line. In a basis of the two fixed lines, powers of the two transvections generate the upper and lower elementary matrices over $\mathbb F_5$, hence generate $\SL_2(\mathbb F_5)$. The determinant is surjective by the Weil pairing, proving the claim. The index at most two of the image over $K$ ensures it still contains $\SL_2(\mathbb F_5)$, so $E(K)[5]=0$.
+
+Since $5\nmid2D_K$ and $P_K\notin5E(K)$, the classical primitive-Heegner form of Kolyvagin's theorem (see \cite[Theorem (0.5)]{MN} and \cite{Gross}) gives $E(K)\otimes\mathbb Z_5=\mathbb Z_5P_K$ and $\Sha(E/K)[5^\infty]=0$. The Kummer sequence establishes \eqref{base}. The point counts on the next page verify \eqref{unit} for $199$ and $349$. Both primes have $v_5(\ell+1)=2$. Sequence \eqref{classseq} thus gives the $25\times25$ quotient, and Theorems \ref{main} and \ref{gzrank} prove \eqref{625}.
+\end{proof}
+\noindent The ranks and $5$-primary vanishing here are consequences of the proved criterion and the cited base Heegner theorem; they are not numerical estimates of regulators or a direct descent in a degree-$625$ number field.
+\subsection{Reproducible point counts and diagonal subfields}
+For an odd prime of good reduction, completing the square gives $(2y+1)^2=1+4(x^3-x)$. Consequently the point count is given exactly by a finite sum of Legendre symbols:
+\begin{equation}\label{legendre}
+a_\ell=-\sum_{x=0}^{\ell-1}\left(\frac{1+4(x^3-x)}{\ell}\right).
+\end{equation}
+The following table was calculated by \eqref{legendre}. Each row is inert in $K$ and satisfies $5\mid\ell+1$; the last column distinguishes the unit-trace family from classical Kolyvagin-type primes.
+\begin{center}
+\begin{tabular}{rrrrl}
+\toprule
+$\ell$&$a_\ell$&$v_5(\ell+1)$&$\#E(\mathbb F_{\ell^2})$&Type\\
+\midrule
+19&0&1&400&Excluded\\
+59&8&1&3536&Eligible\\
+89&4&1&8084&Eligible\\
+139&4&1&19584&Eligible\\
+199&2&2&39996&Eligible\\
+229&7&1&52851&Eligible\\
+269&$-6$&1&72864&Eligible\\
+349&6&2&122464&Eligible\\
+409&20&1&167700&Excluded\\
+\bottomrule
+\end{tabular}
+\end{center}
+\noindent For independent reproduction, the following Python code needs only the standard library. Euler's criterion calculates the Legendre symbol; the listed inputs are primes, so no primality test is needed.
+\begin{verbatim}
+def legendre(u, ell):
+    r = pow(u % ell, (ell - 1)//2, ell)
+    return -1 if r == ell-1 else r
+
+def a(ell):
+    return -sum(legendre(1+4*(x*x*x-x), ell)
+                for x in range(ell))
+
+for ell in [19,59,89,139,199,229,269,349,409]:
+    assert legendre(-7, ell) == -1 and (ell+1)%5 == 0
+    t = a(ell)
+    print(ell, t, (ell+1)**2-t*t, t%5 != 0)
+\end{verbatim}
+For $n=199\cdot349=69451$, the ring class group has order $(199+1)(349+1)=70000$ and its maximal $5$-primary quotient has order $625$. The full maximal $5$-subextension is the field in Proposition \ref{concrete}. Every cyclic diagonal quotient of order $25$ (for example the homomorphism $(x,y)\mapsto x+y$) gives a subfield $F/K$ with rank and analytic order exactly $25$, with $\Sha(E/F)[5^\infty]=0$ and $E(F)\otimes\mathbb Z_5\simeq\mathbb Z_5[C_{25}]$. These conclusions concern the specified ring class fields themselves, not merely a model representation with the same character ranks.
+\section{Conclusion and scope of the results}
+The argument establishes exact integral generation in a family characterized by the simultaneous absence of residual local torsion at ramified primes and the existence of a primitive Heegner norm. This gives a finite-level perspective on familiar Selmer-theoretic rigidity phenomena and produces a concrete arithmetic family in which the original compensation defect is zero.
+
+The stronger conclusions are summarized below. Each is proved from explicitly stated hypotheses; no conjectural uniform generation assumption is used.
+\begin{center}
+\begin{tabular}{@{}p{0.45\textwidth}p{0.47\textwidth}@{}}
+\toprule
+Result&Scope\\\midrule
+Regular block and remainder bound & Any finite $p$-group representation (Theorem \ref{block})\\[2pt]
+Integral Selmer--norm rigidity & Abelian varieties over finite Galois $p$-extensions (Theorem \ref{rigidity})\\[2pt]
+Exact CM generation and $p$-primary vanishing & Unit-trace ring class family (Theorem \ref{main})\\[2pt]
+Explicit prime density and arbitrary product degree & Full residual tower image and the base hypotheses (Theorem \ref{density}, Corollary \ref{infinite})\\[2pt]
+Analytic rank equality & Via the ring-class Gross--Zagier formula (Theorem \ref{gzrank})\\[2pt]
+Norm-compatible integral basis & Directed squarefree conductor composita (Theorem \ref{coherent})\\[2pt]
+Uniform CM-divisor saturation & Elliptic component of $J_0(N)$ (Theorem \ref{moddeg})\\[2pt]
+Rank $625$ and trivial $5$-primary $\Sha$ & $37\mathrm{a}1$ over the specified ring class subextension (Proposition \ref{concrete})\\
+\bottomrule
+\end{tabular}
+\end{center}
+The key limitation is genuinely arithmetic. At primes with $p\mid a_\ell(E)$ the primitive norm and silent local conditions both disappear. The local defect bound of Proposition \ref{defect} does not prove the missing global generation or annihilation theorem. More generally, even a proof of normalized Heegner generation would not automatically prove cohomological compensation without controlling integral norm maps. The regular module in the present family avoids that difficulty because the norms are proven surjective.
+
+The present manuscript uses established Gross--Zagier, Kolyvagin, Serre, class field and finite-group algebra results; the finite-extension synthesis, its consequences, and the explicit example are proposed as candidates for further study. The literature comparison is not an exhaustive priority determination. No claim is made that every consequence is new, that the numerical example was previously unknown, or that the general BSD conjecture has been proved. Independent mathematical review and a broader priority search are necessary before submission. In particular, work on anticyclotomic towers \cite{MN,MNcorr} provides important precedents and should be compared in detail with the away-from-$p$ composita treated here.
+\begin{thebibliography}{99}\small
+\bibitem{BD} M. Bertolini and H. Darmon, \emph{Kolyvagin's descent and Mordell--Weil groups over ring class fields}, J. Reine Angew. Math. \textbf{412} (1990), 63--74. \url{https://www.math.mcgill.ca/darmon/pub/Articles/Research/04.Kolyvagin-descent/paper.pdf}
+\bibitem{Cox} D. A. Cox, \emph{Primes of the Form $x^2+ny^2$: Fermat, Class Field Theory, and Complex Multiplication}, 2nd ed., Wiley, 2013.
+\bibitem{GZ} B. H. Gross and D. B. Zagier, \emph{Heegner points and derivatives of $L$-series}, Invent. Math. \textbf{84} (1986), 225--320. \href{https://doi.org/10.1007/BF01388809}{doi:10.1007/BF01388809}.
+\bibitem{Gross} B. H. Gross, \emph{Kolyvagin's work on modular elliptic curves}, in $L$-functions and arithmetic, LMS Lecture Note Ser. 153, Cambridge Univ. Press, 1991, 235--256.
+\bibitem{Kol} V. A. Kolyvagin, \emph{Euler systems}, in The Grothendieck Festschrift, Vol. II, Progress in Math. 87, Birkh\"auser, 1990, 435--483.
+\bibitem{KL} D. Kriz and C. Li, \emph{Goldfeld's conjecture and congruences between Heegner points}, Forum Math. Sigma \textbf{7} (2019), e15. \href{https://doi.org/10.1017/fms.2019.9}{doi:10.1017/fms.2019.9}.
+\bibitem{MN} A. Matar and J. Nekov\'a\v{r}, \emph{Kolyvagin's result on the vanishing of $\Sha(E/K)[p^\infty]$ and its consequences for anticyclotomic Iwasawa theory}, J. Th\'eor. Nombres Bordeaux \textbf{31} (2019), 455--501. \href{https://doi.org/10.5802/jtnb.1091}{doi:10.5802/jtnb.1091}; corrected version \href{https://arxiv.org/abs/1808.09544}{arXiv:1808.09544v2}.
+\bibitem{MNcorr} A. Matar and J. Nekov\'a\v{r}, \emph{Correction to the paper ``Kolyvagin's result on the vanishing of $\Sha(E/K)[p^\infty]$ and its consequences for anticyclotomic Iwasawa theory''}, J. Th\'eor. Nombres Bordeaux \textbf{33} (2021), 627--628. \href{https://doi.org/10.5802/jtnb.1172}{doi:10.5802/jtnb.1172}.
+\bibitem{MRgrowth} B. Mazur and K. Rubin, \emph{Finding large Selmer rank via an arithmetic theory of local constants}, Ann. of Math. \textbf{166} (2007), 579--612. \url{https://annals.math.princeton.edu/2007/166-2/p08}
+\bibitem{Serre} J.-P. Serre, \emph{Propri\'et\'es galoisiennes des points d'ordre fini des courbes elliptiques}, Invent. Math. \textbf{15} (1972), 259--331. \href{https://doi.org/10.1007/BF01405086}{doi:10.1007/BF01405086}.
+\bibitem{Zhang} S.-W. Zhang, \emph{Gross--Zagier formula for GL(2), II}, in Heegner Points and Rankin $L$-Series, MSRI Publications 49, Cambridge Univ. Press, 2004, 191--241.
+\end{thebibliography}
+\end{document}
