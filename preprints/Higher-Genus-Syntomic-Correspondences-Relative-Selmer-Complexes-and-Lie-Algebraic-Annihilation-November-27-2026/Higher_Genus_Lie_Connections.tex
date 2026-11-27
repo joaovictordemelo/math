@@ -1,0 +1,255 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=24mm,top=23mm,bottom=24mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathrsfs,mathtools,microtype,xcolor,booktabs,fancyhdr}
+\usepackage[colorlinks=true,linkcolor=teal!65!black,citecolor=teal!65!black,urlcolor=teal!65!black]{hyperref}
+\definecolor{ink}{HTML}{153C40}\definecolor{muted}{HTML}{53646B}
+\usepackage{titlesec}
+\titleformat{\section}{\Large\bfseries\color{ink}}{\thesection.}{0.65em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{ink}}{\thesubsection.}{0.6em}{}
+\titlespacing*{\section}{0pt}{1.3ex}{0.8ex}
+\setlength{\parindent}{0pt}\setlength{\parskip}{5pt}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\color{muted} Higher-genus correspondences and relative Selmer theory}\fancyhead[R]{\small\color{muted} Research manuscript}\fancyfoot[L]{\small\color{muted} J. V. de Mello}\fancyfoot[R]{\small\thepage}\renewcommand{\headrulewidth}{0.3pt}
+\newtheorem{theorem}{Theorem}[section]\newtheorem{proposition}[theorem]{Proposition}\newtheorem{corollary}[theorem]{Corollary}\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Zp}{\mathbb Z_p}\newcommand{\Qp}{\mathbb Q_p}\newcommand{\Q}{\mathbb Q}\newcommand{\Sha}{\mathop{\mathrm{\mathit{\mathstrut Ш}}}} % use textual Sha below for portability
+\renewcommand{\Sha}{\operatorname{Sha}}
+\newcommand{\Sel}{\operatorname{Sel}}\newcommand{\rk}{\operatorname{rank}}\newcommand{\len}{\operatorname{length}}\newcommand{\coker}{\operatorname{coker}}\newcommand{\im}{\operatorname{im}}\newcommand{\Div}{\operatorname{Div}}\newcommand{\Ext}{\operatorname{Ext}}\newcommand{\Ann}{\operatorname{Ann}}\newcommand{\Tr}{\operatorname{tr}}\newcommand{\Fib}{\operatorname{Fib}}\newcommand{\Cone}{\operatorname{Cone}}
+\newcommand{\key}[1]{\begin{center}\fcolorbox{ink!45}{ink!4}{\parbox{0.91\linewidth}{#1}}\end{center}}
+\begin{document}
+\thispagestyle{plain}
+{\color{ink}\rule{\linewidth}{1.2pt}}\\[9pt]
+{\small\scshape Arithmetic geometry \quad / \quad Research manuscript}\\[12pt]
+{\LARGE\bfseries\color{ink} Higher-Genus Syntomic Correspondences,\\[3pt] Relative Selmer Complexes and\\[3pt] Lie-Algebraic Annihilation}\\[9pt]
+{\large A determinant-theoretic approach to the divisible Tate--Shafarevich obstruction}\\[14pt]
+{\large Jo\~ao V\'ictor de Mello}\\[3pt]
+{\small 27 November 2026}
+\vspace{9pt}
+\section*{Abstract}
+We develop a correspondence-based framework for the divisible $p$-primary Tate--Shafarevich obstruction of an elliptic curve over $\Q$. Under explicit local saturation assumptions, a relative perfect complex is obtained by removing the Mordell--Weil lattice and its strict local dual from global Galois cohomology. Its two cohomology groups are the Tate module of the primary Tate--Shafarevich group and its Pontryagin dual. We construct curves of arbitrarily large genus admitting elliptic factors and complete-intersection curves whose Jacobians contain powers of a given elliptic curve. Their pullback and norm maps are compatible with Kummer and syntomic realizations. A regular connection on an independently realized relative cyclotomic module of a Jacobian compresses to a connection on its elliptic retract. The Weyl commutator then forces that finite-length obstruction to vanish. An integral approximate variant gives explicit divisibility and annihilation bounds. We identify the missing global regulator comparison and explain why local syntomic functoriality or multiplicity symmetries alone do not prove it.
+
+\textbf{Keywords.} Tate--Shafarevich group; Selmer complex; Jacobian; syntomic regulator; cyclotomic Iwasawa theory; Lie connection; arithmetic duality.
+
+\key{\textbf{Scope of the results.} The relative complex, geometric correspondences and connection-transfer theorems are proved under the stated hypotheses. The existence of a regular relative cyclotomic connection for arbitrary elliptic curves is not proved. This manuscript is not a proof of the Birch and Swinnerton-Dyer conjecture. No claim of priority is made.}
+\vspace{4pt}
+\textbf{Organization.} Sections 1--2 construct the integral obstruction and its finite specializations; Section 3 treats cyclotomic control; Section 4 builds higher-genus correspondences; Sections 5--6 prove regulator compatibility and Lie transfer; Section 7 describes the remaining arithmetic problem.
+\newpage
+\section{Arithmetic hypotheses and local saturation}
+Fix an elliptic curve $E/\Q$ of positive rank $r$, an odd prime $p\geq5$, and a finite set $\Sigma$ consisting of $p$, the primes of bad reduction and infinity. Write $G_\Sigma=G_{\Q,\Sigma}$, $T=T_pE$, $V=T\otimes\Qp$, and $A_p=V/T$. For a discrete $p$-primary group $B$ write $B^\vee=\operatorname{Hom}(B,\Qp/\Zp)$; for a finite free $\Zp$-module use $B^*=\operatorname{Hom}_{\Zp}(B,\Zp)$. Let
+\[
+ S=\Sha(E/\Q)[p^\infty],\quad D=\Div(S),\quad F=S/D,\quad U=T_pS,
+ \qquad W=E(\Q)\otimes\Zp.
+\]
+Assume (H1) $E[p]$ is an irreducible, surjective residual representation; (H2) $E$ has good ordinary non-anomalous reduction at $p$ ($E(\mathbb F_p)[p]=0$); (H3) $E(\Q_\ell)[p]=0$ at every bad prime $\ell\ne p$; (H4) a global point generates the pro-$p$ completion $W_p=\varprojlim E(\Q_p)/p^n E(\Q_p)\simeq\Zp$; (H5) $C=R\Gamma(G_\Sigma,T)$ is perfect with cohomology in degrees 1 and 2. The perfection and amplitude assumption is stated explicitly to delimit the derived construction. Set $W^0=\ker(W\to W_p)$.
+
+\begin{proposition}[Global Kummer saturation]\label{prop:sat}
+For every $n\geq1$, $H^1(G_\Sigma,E[p^n])=\Sel_{p^n}(E/\Q)$.
+\end{proposition}
+\begin{proof}
+Outside $\Sigma$, the unramified condition is the Kummer condition at good primes away from $p$. At a bad prime different from $p$, local Tate duality and the local Euler characteristic give $H^1(\Q_\ell,E[p^n])=0$ because $H^0$ and its dual vanish by (H3). At infinity the relevant positive-degree cohomology vanishes for odd $p$. For a global class $c$, pair it with the Kummer class of the point in (H4) via the Weil pairing. Global reciprocity makes the sum of local invariants zero. At every place other than $p$ the summand vanishes (the local Kummer subgroup is isotropic). At $p$ the point generates the Kummer subgroup, which is its own annihilator under local Tate duality. Thus $c_p$ is Kummer. The reverse inclusion follows from unramifiedness outside $\Sigma$.
+\end{proof}
+
+Passing to limits in the Kummer sequences (finite groups in the inverse system satisfy the Mittag--Leffler condition) yields
+\begin{equation}\label{eq:kummer}
+0\longrightarrow W\longrightarrow H^1(C)\longrightarrow U\longrightarrow0,
+\qquad H^1(G_\Sigma,A_p)=\Sel_{p^\infty}(E/\Q).
+\end{equation}
+Cofinite generation of the Selmer group implies that $S$ is cofinitely generated. Thus $D\simeq(\Qp/\Zp)^{d_p}$, $U\simeq\Zp^{d_p}$, and $F$ is finite. The Cassels--Tate pairing has divisible radical; for this principally polarized elliptic curve its reduced $p$-primary pairing is perfect and alternating. In particular, $F\simeq\bigoplus_i(\Zp/p^{e_i})^2$ for positive integers $e_i$ (see \cite{milne}). No finiteness assumption on $S$ is made.
+\newpage
+\section{The integral relative complex}
+\begin{proposition}[Poitou--Tate comparison]\label{prop:pt}
+There is an exact sequence
+\begin{equation}\label{eq:pt}
+0\longrightarrow S^\vee\longrightarrow H^2(C)\longrightarrow (W^0)^*\longrightarrow0.
+\end{equation}
+In particular, $H^2(C)_{\mathrm{tors}}\simeq F^\vee$.
+\end{proposition}
+\begin{proof}
+Let $X=\Sel_{p^\infty}(E/\Q)^\vee$. The dual Kummer sequence is $0\to S^\vee\to X\to W^*\to0$. Poitou--Tate duality for $T$ identifies $H^2(C)$ with the quotient of $X$ by the image of $\bigoplus_{v\in\Sigma}H^1(\Q_v,T)$. Indeed, $H^2(\Q_v,T)=0$ at the finite places in $\Sigma$ by local duality and (H2)--(H3), and the infinite place contributes nothing in these degrees. By Proposition~\ref{prop:sat}, the local image on the Selmer side is contained in the local Kummer condition at $p$ and is zero at the other places. Hypothesis (H4) gives surjectivity onto $W_p\otimes\Qp/\Zp$. Local duality therefore identifies the image in $X$ with a copy of $W_p^*$. Its composite into $W^*$ is the dual of $W\twoheadrightarrow W_p$, a primitive injection. Taking quotients gives \eqref{eq:pt}. Since $(W^0)^*$ is free and $S^\vee$ is an extension of a free module by $F^\vee$, the torsion assertion follows.
+\end{proof}
+
+\begin{theorem}[Relative arithmetic realization]\label{thm:relative}
+In the derived category of $\Zp$-modules, define
+\begin{equation}\label{eq:cone}
+C_1=\Cone(W[-1]\longrightarrow C),\qquad
+C_{\rm rel}=\Fib\bigl(C_1\longrightarrow (W^0)^*[-2]\bigr).
+\end{equation}
+The first map is induced by the integral Kummer inclusion; the second is induced by the canonical degree-two truncation and \eqref{eq:pt}. Then $C_{\rm rel}$ is perfect, with
+\[
+\boxed{H^1(C_{\rm rel})=U,\qquad H^2(C_{\rm rel})=S^\vee,}
+\]
+and no other cohomology.
+\end{theorem}
+\begin{proof}
+Since $W$ is projective, its Kummer inclusion uniquely determines the first morphism in the derived category. The long exact sequence of the cone gives $H^1(C_1)=U$ and $H^2(C_1)=H^2(C)$, all other groups being zero. The second map is surjective on degree-two cohomology with kernel $S^\vee$. The long exact sequence of the fiber gives the claim. Perfectness follows by closure under cones and shifts.
+\end{proof}
+\begin{remark}
+The construction is canonical at the level of the indicated derived maps (one may use functorial cones in an enhanced derived category). It does not assert a canonical $\Zp[[t]]$-deformation of the cone. In particular, rationalizing gives cohomology $U\otimes\Qp$ and $U^*\otimes\Qp$, not a proof that either vanishes. The determinant of the inverse cohomological complex carries the extra factor $(\det(U\otimes\Qp))^{\otimes2}$; the finite torsion contributes $p^{\len F}$ to its integral lattice. These assertions follow from \eqref{eq:kummer} and \eqref{eq:pt} by the determinant functor.
+\end{remark}
+\newpage
+\section{Finite precision and cyclotomic control}
+Set $R_n=\Zp/p^n$ and $C_{\rm rel,n}=C_{\rm rel}\otimes^{\mathbf L}_{\Zp}R_n$. The universal coefficient exact sequence for Theorem~\ref{thm:relative} gives
+\begin{align}
+0\to U/p^n U\to H^1(C_{\rm rel,n})\to S^\vee[p^n]\to0,\qquad
+H^2(C_{\rm rel,n})&=S^\vee/p^nS^\vee.\label{eq:finite}
+\end{align}
+Hence both cohomology groups have order $p^{nd_p+2\sum_i\min(n,e_i)}$. In particular,
+\begin{equation}\label{eq:depth}
+\lim_{n\to\infty}\frac{\len H^2(C_{\rm rel,n})}{n}=d_p.
+\end{equation}
+If $\tau=\len F$ is independently known, every $e_i\leq\tau/2$. For $n\geq\max(1,\tau/2)$, one has the exact formula $d_p=(\len H^2(C_{\rm rel,n})-\tau)/n$. This is a finite test, but not a uniform bound on $\tau$.
+
+\subsection{A natural relative Iwasawa module}
+Let $\Q_\infty/\Q$ be the cyclotomic $\Zp$-extension with layers $\Q_j$. Write $\Lambda=\Zp[[t]]$, $t=\gamma-1$, and take direct limits along restriction of the $p^\infty$-Kummer sequences over the layers. Their Pontryagin duals give
+\[
+0\to Y_\infty\to X_\infty\to M_\infty\to0,
+\]
+where $Y_\infty=(\varinjlim_j\Sha(E/\Q_j)[p^\infty])^\vee$, $X_\infty$ is the corresponding Selmer dual, and $M_\infty$ is the dual of the direct limit of the divisible Mordell--Weil terms. Let $R=\widehat{\Lambda_{(t)}}\simeq\Qp[[t]]$. In the following comparison assume ordinary rational control and the augmentation-local description $M_R\simeq(R/(t))^r$ (e.g. under bounded Mordell--Weil rank in the tower and the usual control identifications). Assume $X_R$ has finite length, and $\dim_{\Qp}X_R/tX_R=r+d_p$.
+\begin{proposition}[Specialization defect]\label{prop:spec}
+The genuine relative base obstruction is the image of $Y_R/tY_R\to X_R/tX_R$. More precisely,
+\begin{equation}\label{eq:defect}
+\dim Y_R/tY_R=d_p+\dim\im\bigl(M_R[t]\xrightarrow{\partial}Y_R/tY_R\bigr).
+\end{equation}
+\end{proposition}
+\begin{proof}
+Flat base change and the long exact Tor sequence for $R/(t)$ give
+\[
+X_R[t]\to M_R[t]\xrightarrow{\partial}Y_R/tY_R\to X_R/tX_R\to M_R/tM_R\to0.
+\]
+The last surjection has kernel of dimension $d_p$, which proves the formula. Under the compatible ordinary control identifications this kernel is the rationalized base Sha dual.
+\end{proof}
+For example, $0\to tR/(t^2)\to R/(t^2)\to R/(t)\to0$ has a nonzero relative tower module but zero relative base image. Consequently the base cone of Section 2 and the tower module are not automatically specializations of one another. A compatible relative cyclotomic realization must account for this Tor correction; eliminating the entire tower module is sufficient but may be stronger than necessary.
+\newpage
+\section{Higher-genus algebraic correspondences}
+\subsection{Explicit covers of an elliptic curve}
+Choose a model $E:y^2=f(x)$ with $f$ a separable monic cubic and $a\in\Q$ with $f(a)\ne0$. For any $m\geq2$ let $C_m$ be the smooth projective curve defined by
+\[
+ C_m:y^2=f(z^m+a),\qquad \pi_m:C_m\longrightarrow E,\quad (z,y)\mapsto(z^m+a,y).
+\]
+The defining polynomial is square-free: a repeated root would give either a repeated root of $f$ or $z=0$ and $f(a)=0$. Its degree is $3m$, so $g(C_m)=\lfloor(3m-1)/2\rfloor$. The morphism has degree $m$: the induced function-field extension is obtained by adjoining an $m$th root of $x-a$, and $x-a$ has a simple zero at each of the two geometric points above $a$. The valuation there forces degree $m$. On $J_m=\operatorname{Jac}(C_m)$ the pullback and norm maps satisfy
+\begin{equation}\label{eq:norm}
+\pi_{m,*}\pi_m^*=[m].
+\end{equation}
+Thus for $p\nmid m$ the normalized correspondence is an integral idempotent on $T_pJ_m$. Its elliptic summand is isomorphic to $T_pE$.
+
+\subsection{Jacobians of higher Mordell--Weil rank}
+Let $h\geq2$, $n\geq3$ and $L=\bigotimes_{i=1}^h \operatorname{pr}_i^*\mathcal O_E(n[0])$ on $E^h$. Since $L$ is very ample, Bertini over the infinite field $\Q$ gives a smooth geometrically connected complete intersection $C$ of $h-1$ general members of $|L|$ (connectedness follows from ampleness). Let $f_i:C\to E$ be the projections, $q=(f_{i,*})_i:J(C)\to E^h$, and $i=\sum_i f_i^*:E^h\to J(C)$.
+\begin{theorem}[Higher-rank correspondence]\label{thm:geo}
+Put $m=(h-1)!n^{h-1}$. Then $qi=[m]_{E^h}$ and
+\[
+g(C)=1+\tfrac12(h-1)h!n^h,\qquad \rk J(C)(\Q)\geq hr.
+\]
+If $h\leq p$ and $p\nmid n$, then $p\nmid m$.
+\end{theorem}
+\begin{proof}
+With $D_i=\operatorname{pr}_i^*[0]$, the class of $C$ is $(n\sum_iD_i)^{h-1}$. Since $D_i^2=0$ and $\deg(D_1\cdots D_h)=1$, each projection has degree $m$. For $i\ne j$, the mixed pairing of $f_i^*H^1(E)$ and $f_j^*H^1(E)$ on $C$ is zero: multiplying the product of the two degree-one classes by $[C]$ cannot produce degree two in each factor. Thus $f_{i,*}f_j^*=0$ on rational cohomology and hence as a homomorphism of abelian varieties. The diagonal terms are multiplication by $m$. Adjunction, using $K_{E^h}=0$, gives $\deg K_C=(h-1)L^h=(h-1)h!n^h$. The rank inequality follows from $qi=[m]$ after tensoring rational points with $\Q$.
+\end{proof}
+This construction produces arbitrarily large rational rank as $h$ increases; at a fixed $p$ the specified prime-to-$p$ splitting is guaranteed only for $h\leq p$. The rational $p$-adic splitting exists for every $h$.
+\newpage
+\section{Syntomic compatibility and arithmetic annihilators}
+Let $J=\operatorname{Jac}(C)$ for a smooth projective curve with a morphism to $E$. Rational syntomic cohomology over $\Qp$ has a period map to rational \'{e}tale cohomology compatible with descent and cycle classes \cite{nn,niziol}. For a degree-zero divisor class defined over $\Q$, its syntomic first Chern class in $H^2_{\mathrm{syn}}(C_{\Qp},1)$ maps to the local \^{e}tale cycle class. The degree-zero part, through the Hochschild--Serre filtration and Abel--Jacobi realization, yields the local Kummer class of its Jacobian point. We use this rational comparison, not a claimed integral isomorphism for all higher motivic groups.
+\begin{equation}\label{eq:diagram}
+\begin{array}{ccc}
+\operatorname{Pic}^0(E) &\xrightarrow{\ \pi^*\ }&\operatorname{Pic}^0(C)\\
+\downarrow c_{1,\mathrm{syn}}&&\downarrow c_{1,\mathrm{syn}}\\
+H^2_{\mathrm{syn}}(E_{\Qp},1)&\xrightarrow{\ \pi^*\ }&H^2_{\mathrm{syn}}(C_{\Qp},1)\\
+\downarrow\mathrm{per}&&\downarrow\mathrm{per}\\
+H^2_{\mathrm{\acute et}}(E_{\Qp},\Qp(1))&\xrightarrow{\ \pi^*\ }&H^2_{\mathrm{\acute et}}(C_{\Qp},\Qp(1)).
+\end{array}
+\end{equation}
+The analogous pushforward diagram and the projection formula yield $\pi_*c_{1,\mathrm{syn}}(\pi^*D)=m c_{1,\mathrm{syn}}(D)$ for a degree-$m$ cover and a divisor $D$. On the associated Galois realizations the induced maps obey the same identity. The corresponding integral Kummer maps are functorial directly in the abelian varieties; they do not require integral syntomic comparison.
+
+\begin{theorem}[Sha retract and annihilator]\label{thm:ann}
+Let $i_j:E\to J_j$ and $q_j:J_j\to E$ be homomorphisms over $\Q$ with $q_ji_j=[m_j]$, $m_j\ne0$. If $p^{b_j}\Sha(J_j/\Q)[p^\infty]=0$ for some independently established $b_j\geq0$, then
+\[
+\boxed{p^{\min_j(b_j+v_p(m_j))}\Sha(E/\Q)[p^\infty]=0.}
+\]
+In particular, $S$ is finite. If $p\nmid m_j$, then $S$ is a direct summand of $\Sha(J_j/\Q)[p^\infty]$ and the same splitting holds for its Tate module.
+\end{theorem}
+\begin{proof}
+The correspondence identity acts on global and local $H^1$ and hence on the kernel defining Sha. For any $\xi\in S$, applying $q_j$ to $p^{b_j}i_j\xi=0$ gives $p^{b_j}m_j\xi=0$. The prime-to-$p$ part of $m_j$ acts invertibly on $S$, proving the bound. A cofinitely generated primary group of bounded exponent is finite. For a unit degree, $m_j^{-1}q_j$ is a retraction, also after taking Tate modules.
+\end{proof}
+The theorem transports a genuine independent annihilator, not one obtained by assuming finiteness for the elliptic factor. In fact, for a unit-degree retract the Jacobian inherits the elliptic obstruction exactly.
+\newpage
+\section{Lie connections and finite-precision compression}
+Let $R=\Qp[[t]]$ with derivation $\partial=d/dt$. For this section let $Y_E,Y_J$ be finite-length $R$-modules with $R$-linear maps $i:Y_E\to Y_J$, $q:Y_J\to Y_E$ satisfying $qi=mI$, $m\ne0$. To apply the theorem arithmetically one must realize these as compatible relative cyclotomic modules; it is not enough to have the base-field complex of Section 2.
+\begin{definition}
+A regular connection on an $R$-module $Y$ is a $\Qp$-linear operator $\nabla$ satisfying $\nabla(fv)=f'v+f\nabla(v)$ for all $f\in R$. In particular $[\nabla,t]=I$.
+\end{definition}
+\begin{theorem}[Higher-genus connection transfer]\label{thm:lie}
+If $Y_J$ admits a regular connection $\nabla_J$, the operator $\nabla_E=m^{-1}q\nabla_Ji$ is a regular connection on $Y_E$. Consequently $Y_E=0$.
+\end{theorem}
+\begin{proof}
+By $R$-linearity of the two correspondence maps,
+\[
+\nabla_E(fv)=m^{-1}q(f'i(v)+f\nabla_Ji(v))=f'v+f\nabla_E(v).
+\]
+Taking traces over $\Qp$ in $[\nabla_E,t]=I$ yields $0=\dim_{\Qp}Y_E$. This proves the claim. The argument needs no invariance of the elliptic summand under $\nabla_J$.
+\end{proof}
+The same trace argument makes $Y_J=0$ if it too has finite length. The compression statement is more general: the ambient differential module may have infinite dimension, whereas the elliptic retract is finite-dimensional. This is the meaningful setting for a connection induced from a larger geometric object.
+
+\begin{theorem}[Integral approximate transfer]\label{thm:approx}
+Let $\mathscr Y_E,\mathscr Y_J$ be finite free $\Zp$-modules with endomorphisms $t$ and integral maps $i,q$ commuting with them, $qi=mI$. If $[\nabla_J,t]\equiv aI\pmod{p^k}$ for an integral operator $\nabla_J$, then
+\[
+ am\rk_{\Zp}\mathscr Y_E\equiv0\pmod{p^k}.
+\]
+For $am\ne0$, writing $v=v_p(am)$, if $k>v$ this implies $p^{k-v}\mid\rk\mathscr Y_E$. If that rank is bounded above by $C<p^{k-v}$, then $\mathscr Y_E=0$.
+\end{theorem}
+\begin{proof}
+Compress the commutator by $q$ and $i$ to get $[q\nabla_Ji,t]\equiv amI\pmod{p^k}$. Trace on the finite free lattice gives the asserted congruence. Divisibility and the rank bound imply vanishing.
+\end{proof}
+\textbf{Illustration.} If a genuine relative lattice is known to have rank at most $14$, $p=5$, and both $a,m$ are units, a verified congruence modulo $25$ would force rank zero. This is a numerical illustration of the criterion, not an arithmetic calculation on an elliptic curve.
+\newpage
+\section{The obstruction class and the remaining BSD step}
+\subsection{Intrinsic obstruction to regular differentiation}
+For $Y=\bigoplus_{i=1}^s R/(t^{c_i})$, $c_i>0$, choose the square diagonal presentation $D=\operatorname{diag}(t^{c_i})$. A connection on the presentation requires matrices $B_1,B_2$ over $R$ with
+\begin{equation}\label{eq:lie}
+D'+B_2D-DB_1=0.
+\end{equation}
+The derivative class $\alpha_Y=[D']$ belongs to $\Ext^1_R(Y,Y)\simeq M_s(R)/(DM_s(R)+M_s(R)D)$. Changes of bases add relation terms by the product rule, so it is intrinsic under the induced identifications. Its diagonal entries are $c_it^{c_i-1}$, nonzero modulo $t^{c_i}$, and multiplication by $t$ kills the class. Thus $\alpha_Y=0$ iff $Y=0$; if nonzero, $\Ann_R(\alpha_Y)=(t)$. In particular a logarithmic connection for $t\partial_t$ is not sufficient: every such diagonal module admits one. Compatibility in \eqref{eq:lie} modulo $t^J$ forces each $c_i\geq J+1$ by comparing the first nonzero term in the diagonal equation.
+
+\subsection{Why ordinary syntomic regulators cannot close the gap}
+At the base put $H_E=H^1_f(\Q,V)$ and $W_E=E(\Q)\otimes\Qp$. The Kummer quotient $H_E/W_E$ is $U\otimes\Qp$. A prime-to-$p$ geometric correspondence transports this quotient to a retract of the analogous quotient for $J$. But ordinary global degree-zero divisor classes land in $W_E$ under the norm, so their image in the relative quotient is zero. Also $\operatorname{loc}_p W_E=H_f^1(\Qp,V)$ by (H4). Consequently the induced map from the relative quotient to $H_f^1(\Qp,V)/\operatorname{loc}_p W_E$ is zero. Ordinary local regulator compatibility cannot detect the missing global classes.
+
+A second obstruction arises from cyclotomic deformation. For $\rho_t(g)=\rho(g)\exp(t\chi(g))$, a Galois-equivariant connection $\partial_t+B(t)$ on the coefficient representation would require $\chi(g)I+B-\rho_t(g)B\rho_t(g)^{-1}=0$. Taking traces gives $2\chi(g)=0$, impossible for the nontrivial additive cyclotomic character $\chi$. Thus the desired relative connection cannot be inherited simply by differentiating the coefficient representation. Derived Bockstein and Selmer-complex methods \cite{nekovar,mazurrubin,sano,bks} describe related obstructions but do not establish their universal disappearance.
+
+\key{\textbf{Missing arithmetic assertion.} Construct an independently defined global, higher motivic regulator giving a compatible relative cyclotomic realization, including the specialization correction in Proposition~\ref{prop:spec}, on which a regular connection (or the finite-precision congruence of Theorem~\ref{thm:approx}) acts. The regulator must be defined without assuming that the Sha Tate module is zero. Local syntomic comparison alone does not imply this assertion.}
+\newpage
+\section*{Consequences, limitations and conclusion}
+The proved implications can be summarized as follows. Suppose a relative cyclotomic realization has finite length and its specialization surjects onto the genuine rational relative base obstruction. Suppose its maps from a higher-genus realization satisfy the correspondence identity of Theorem~\ref{thm:geo}. Then
+\[
+\begin{gathered}
+\text{independently constructed regular connection on the larger realization}\\
+\Downarrow\quad\text{Theorem~\ref{thm:lie}}\\
+Y_E=0\quad\Longrightarrow\quad T_p\Sha(E/\Q)=0\quad\Longrightarrow\quad\#S<\infty.
+\end{gathered}
+\]
+The finite-precision variant substitutes an independently certified rank bound and approximate connection for the full connection. No such universal connection or bound is proved in this article. If $p$-primary finiteness were established, under the applicable hypotheses of Kim's Selmer structure theorem \cite{kim} the first nonzero Kurihara order would equal the Mordell--Weil rank. This does not itself establish an upper bound for the ordinary cyclotomic $p$-adic $L$-function with an arbitrary degenerate regulator.
+
+\smallskip
+\begin{tabular}{@{}p{0.59\linewidth}p{0.36\linewidth}@{}}
+\toprule
+\textbf{Assertion} & \textbf{Status}\\\midrule
+Relative base-field complex and finite reductions & Proved under (H1)--(H5)\\
+Relative tower specialization correction & Proved under stated control\\
+Higher-genus and higher-rank correspondences & Proved\\
+Syntomic cycle-class functoriality & Established theory applied\\
+Regular and approximate Lie transfer & Proved as algebraic theorems\\
+Independent global regulator and relative deformation & Open\\
+Universal relative Lie flatness and strong BSD & Open\\\bottomrule
+\end{tabular}
+\smallskip
+
+The principal contribution of this synthesis is the exact combination of a relative integral arithmetic realization with a correspondence-based connection transfer. It identifies the geometric and integral hypotheses needed to turn a genuinely new regulator theorem into a Sha finiteness result. Even such finiteness at a fixed prime would not settle strong BSD: analytic rank equality, a classical complex leading-term comparison, and global control of all primary components would remain necessary. No new numerical elliptic-curve computation or independent historical-priority verification is asserted.
+
+\begin{thebibliography}{9}\small\setlength{\itemsep}{1pt}
+\bibitem{milne} J. S. Milne, \emph{Arithmetic Duality Theorems}, 2nd ed., 2006. \href{https://jmilne.org/math/Books/ADTnot.pdf}{Online text}.
+\bibitem{nekovar} J. Nekov\'a\v r, \emph{Selmer complexes}, Ast\'erisque 310 (2006). \href{https://www.numdam.org/item/AST_2006__310__R1_0/}{Numdam}.
+\bibitem{nn} J. Nekov\'a\v r and W. Nizio\l, \emph{Syntomic cohomology and $p$-adic regulators for varieties over $p$-adic fields}, 2016. \href{https://arxiv.org/abs/1309.7620}{arXiv:1309.7620}.
+\bibitem{niziol} W. Nizio\l, \emph{On syntomic regulators I: constructions}. \href{https://arxiv.org/abs/1607.04975}{arXiv:1607.04975}.
+\bibitem{mazurrubin} B. Mazur and K. Rubin, \emph{Organizing the arithmetic of elliptic curves}, Adv. Math. (2007). \href{https://www.math.uci.edu/~krubin/preprints/organization.pdf}{Preprint}.
+\bibitem{sano} T. Sano, \emph{Derived Bockstein regulators and anticyclotomic $p$-adic Birch and Swinnerton-Dyer conjectures}. \href{https://arxiv.org/abs/2308.08875}{arXiv:2308.08875}.
+\bibitem{bks} D. Burns, M. Kurihara and T. Sano, \emph{On derivatives of Kato's Euler system for elliptic curves}, J. Math. Soc. Japan 76 (2024), 855--911. \href{https://arxiv.org/abs/1910.07404}{arXiv:1910.07404}.
+\bibitem{kim} C.-H. Kim, \emph{The structure of Selmer groups and the Iwasawa main conjecture for elliptic curves}. \href{https://arxiv.org/abs/2203.12159}{arXiv:2203.12159}.
+\end{thebibliography}
+\end{document}
