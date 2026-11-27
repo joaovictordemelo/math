@@ -1,0 +1,682 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,mathrsfs,booktabs,tabularx,array}
+\usepackage[a4paper,left=27mm,right=27mm,top=25mm,bottom=25mm]{geometry}
+\usepackage{microtype,xcolor,fancyhdr,hyperref}
+\definecolor{navy}{HTML}{17364B}
+\definecolor{teal}{HTML}{116E70}
+\hypersetup{colorlinks=true,linkcolor=teal,citecolor=teal,urlcolor=teal,pdftitle={Half-Degree Galois Compression and Central Lie-Norm Rigidity},pdfauthor={Joao Victor de Mello}}
+\pagestyle{fancy}\fancyhf{}\fancyhead[L]{\small\textsc{Covector compression and Selmer rigidity}}\fancyhead[R]{\small J. V. de Mello}\fancyfoot[C]{\thepage}\setlength{\headheight}{14pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Sha}{\operatorname{\mathrm{Sha}}}\newcommand{\ZZ}{\mathbb Z}\newcommand{\QQ}{\mathbb Q}\newcommand{\FF}{\mathbb F}\newcommand{\Gal}{\operatorname{Gal}}\newcommand{\Hom}{\operatorname{Hom}}\newcommand{\End}{\operatorname{End}}\newcommand{\Cl}{\operatorname{Cl}}\newcommand{\Sel}{\operatorname{Sel}}\newcommand{\rk}{\operatorname{rank}}\newcommand{\corank}{\operatorname{corank}}\newcommand{\ord}{\operatorname{ord}}\newcommand{\im}{\operatorname{im}}\newcommand{\length}{\operatorname{length}}\newcommand{\GL}{\operatorname{GL}}\newcommand{\NS}{\operatorname{NS}}\newcommand{\Br}{\operatorname{Br}}\newcommand{\Pic}{\operatorname{Pic}}\newcommand{\Sym}{\operatorname{Sym}}\newcommand{\R}{\mathcal R}\newcommand{\A}{\mathcal A}\newcommand{\D}{\mathcal D}\newcommand{\W}{\mathscr W}\newcommand{\Y}{\mathscr Y}\newcommand{\I}{\mathfrak I}
+\numberwithin{equation}{section}
+\setlength{\parindent}{1.1em}\setlength{\parskip}{3pt}
+\allowdisplaybreaks[2]
+\begin{document}
+\thispagestyle{plain}
+\begin{center}
+{\small\color{teal}\textsc{Arithmetic geometry $\bullet$ Research manuscript}}\\[9pt]
+{\LARGE\bfseries\color{navy} Half-Degree Galois Compression, Unipotent Saturation and Central Lie--Norm Rigidity}\\[7pt]
+{\large Exact class-field realizations of elliptic Selmer groups and accelerated principalization}\\[12pt]
+{\large Jo\~ao V\'{\i}ctor de Mello}\\[4pt]
+27 November 2026
+\end{center}
+\begin{abstract}
+Let $E/\QQ$ be an elliptic curve and let $p\geq5$ be a prime with full $p$-adic Galois image. Under specified local hypotheses, we recover the strict finite Selmer group from an explicitly linearized character quotient of the $S$-class group of a covector field of degree $(p^2-1)p^{2n-2}$. The linearization requires only one family of unipotent relations, in addition to scalar-character equivariance. We give compatible norm and transfer formulas, extract a canonical dual of the $p^n$-torsion in the Tate--Shafarevich group, and derive an exact accelerated-principalization threshold. An intermediate field of degree $(p^2-1)p^{m+n-2}$ decomposes the covector extension into two degree-$p^{m-n}$ steps, the upper step cyclic. Its character quotient surjects onto $p^{m-n}$ times the linearized class group at precision $m$. This yields finite certificates for the rank, the exponent of the primary Tate--Shafarevich group, and the vanishing of its divisible radical. We also prove the precise factorization of intermediate-field transfer through the lower-level norm and formulate a relative central annihilator criterion; an annihilator of the entire class module cannot be transverse to the elliptic central character when known fine Mordell--Weil directions survive. Connections to torsor polarizations, integral Brauer obstructions and higher Kato derivatives are described. No universal principalization theorem or proof of BSD is asserted.
+\end{abstract}
+\noindent\textbf{Keywords:} fine Selmer groups, elliptic division fields, covector fields, capitulation, Iwasawa theory, Lie algebras, Tate--Shafarevich groups.\\
+\textbf{MSC 2020:} 11G05, 11R29, 11R23, 11R34, 20G25, 14G25.
+
+\section*{Main results at a glance}
+\small
+\noindent\begin{tabularx}{\textwidth}{@{}p{.39\textwidth}X@{}}
+\toprule
+\textbf{Construction} & \textbf{Principal identity or implication}\\\midrule
+Covector linearization & $(C_n^{\mathrm{lin}})^\vee\simeq\R_n$ (Theorem \ref{th:strict})\\
+Pure Sha submodule & $W_n\simeq\Sha(E/\QQ)[p^n]^\vee$ (Section \ref{sec:pure})\\
+Accelerated transfer & $j_{n,n+a}(W_n)=0$, $a<n\ \Rightarrow\ p^{2a}\Sha[p^\infty]=0$\\
+Half-degree cyclic compression & $\D_{n,m}\twoheadrightarrow p^{m-n}C_m$ (Theorem \ref{th:half})\\
+Deep residual certificate & $r-r_0+d_p+2\#\{i:e_i\ge m\}\le\dim_{\FF_p}\D'_{1,m}$\\
+Relative central criterion & $f(U)\Y_W\subseteq\ker\Pi$, $f(p)\ne0\ \Rightarrow\ d_p=0$\\
+\bottomrule
+\end{tabularx}
+\normalsize
+\clearpage
+\section{Introduction and proof strategy}
+The Birch and Swinnerton--Dyer conjecture relates the rank and arithmetic invariants of an elliptic curve to its complex $L$-function. In particular, it predicts finiteness of the Tate--Shafarevich group. This article isolates a finite arithmetic route to the $p$-primary finiteness assertion in a large-image, non-anomalous ordinary setting. It does not address all primes or the leading coefficient formula.
+
+The starting observation is that restriction of a strict Selmer class to a division field is an unramified homomorphism with values in the standard two-dimensional representation. One can recover this representation by evaluating a single covector and enforcing additivity with a unipotent relation. This replaces an equivariant class-group calculation over a field of degree on the order of $p^{4n}$ by a class group of a non-Galois field of degree on the order of $p^{2n}$. The exact comparison is more useful than an inequality because its elementary divisors have an intrinsic Selmer interpretation.
+
+The second observation concerns the growth of the covector field. At two precisions $n<m$, one can separate the lifting of a covector line from the lifting of a scale on that line. The corresponding intermediate extension has a cyclic upper step of degree $p^{m-n}$. Its trace on the linearized quotient is exactly $p^{m-n}$, not $p^{2(m-n)}$. The residual case $n=1$ therefore provides a smaller field in which to investigate very deep torsion.
+
+The third observation is that central scalar matrices act on the elliptic linearized class groups by their standard scalar character. Their completed module is supported at $U=p$, where $U=(1+p)I-1$. An arithmetic annihilator nonzero at this specialization would bound the exponent of the pure Sha quotient. The annihilator must be relative to the Mordell--Weil component: for rank at least two a transverse annihilator of the entire class module is impossible. This point is important to any proposed proof by Iwasawa theory.
+
+\subsection*{Relation to existing work}
+Hiranouchi and Ohshita \cite{HO} study fine Selmer groups through quotients of elliptic division-field class groups and their Iwasawa asymptotics. The present finite-level construction uses the same underlying reciprocity mechanism but emphasizes covector fields, a generator-and-relation presentation, and a cyclic intermediate transfer. Classical ingredients are the cohomology of finite groups, the Kummer sequence, class field theory, and Cassels--Tate duality. For rank-sensitive conclusions we use the established $p$-parity theorem \cite{DD}. The work of Kim \cite{Kim}, Burungale--Castella--Grossi--Skinner \cite{BCGS}, and Burns--Kurihara--Sano \cite{BKS} supplies the connection to Kolyvagin systems and higher reciprocity. The particular combination of the results below is presented as a research manuscript; historical priority has not been established by an exhaustive literature review.
+
+\subsection*{Logical organization}
+Sections 2--7 prove the exact finite comparison, including the local descent needed for its converse. Sections 8--13 establish compatible transition maps and principalization. Sections 14--17 develop the intermediate cyclic field and finite certificates, including a limitation of the unprojected intermediate class group. Sections 18--22 discuss the central character, actual unit capitulation, implementation and geometric implications. The final section distinguishes these theorems from the remaining universal conjectures.
+
+
+\section{Notation and standing arithmetic hypotheses}
+Let $p\ge5$, and let $E/\QQ$ satisfy the following conditions throughout, except where a weaker set of hypotheses is explicitly indicated:
+\begin{enumerate}
+\item[(H1)] The image of $G_{\QQ}$ on $T_pE$ is $\GL_2(\ZZ_p)$.
+\item[(H2)] $E$ has good ordinary reduction at $p$, and $a_p(E)\not\equiv1\pmod p$.
+\item[(H3)] For every bad prime $\ell\ne p$, $E(\QQ_\ell)[p]=0$.
+\item[(H4)] $r=\rk E(\QQ)>0$ and the localization of $E(\QQ)\otimes\ZZ_p$ surjects onto the $p$-adic completion of $E(\QQ_p)$.
+\end{enumerate}
+Set $R_n=\ZZ/p^n\ZZ$, $T=T_pE$, $V_n=E[p^n]$, and $A=E[p^\infty]$. A basis of $T$ fixes compatible identifications $V_n\simeq R_n^2$ in which the inclusion $V_n\hookrightarrow V_m$ is represented by multiplication by $p^{m-n}$. The coefficient map $V_m\to V_n$ given by multiplication by $p^{m-n}$ is represented by coordinate reduction. Put $K_n=\QQ(V_n)$, $G_n=\Gal(K_n/\QQ)$ and $\Sigma=\{p,\infty\}\cup\{\ell:E\text{ has bad reduction at }\ell\}$. For a number field $L$, $\Cl_\Sigma(L)$ is its ideal class group with primes above finite places in $\Sigma$ inverted; this is the Galois group of the maximal abelian extension unramified everywhere and split above $\Sigma$, in its odd-primary part.
+
+For a finite $p$-group $M$, write $M^\vee=\Hom(M,\QQ_p/\ZZ_p)$. For modules killed by $p^n$ this agrees with the $R_n$-linear dual by the identification $a\mapsto a/p^n\pmod{\ZZ_p}$. For a profinite module, the dual means the continuous Pontryagin dual. We distinguish the strict group
+\begin{equation}\label{eq:strictdef}
+\R_n=\ker\left(H^1(G_{\QQ,\Sigma},V_n)\longrightarrow
+\bigoplus_{v\in\Sigma}H^1(\QQ_v,V_n)\right)
+\end{equation}
+from the usual $p^n$-Selmer group, in which local Kummer conditions replace zero local conditions. We also write $\R_\infty$ for the analogous strict group with coefficients $A$, and
+\[
+S=\Sha(E/\QQ)[p^\infty],\qquad d_p=\corank_{\ZZ_p} S.
+\]
+Finiteness of $\Sel_p(E/\QQ)$ implies that $S^\vee$ is a finitely generated $\ZZ_p$-module, by compact Nakayama. Thus $S$ is cofinitely generated, without any assumption of its finiteness. In particular $S[p^n]$ is finite for every $n$.
+
+We use additive notation for ideal class groups and for cohomology. If $L'/L$ is a finite extension, $N_{L'/L}$ denotes the ideal norm and $j_{L'/L}$ the extension of ideals. These maps act on $\Sigma$-class groups. They are not confused with the group-ring norm, denoted by $\mathcal T$ where appropriate. The letter $U$ is reserved for the variable in the central Iwasawa algebra in Section \ref{sec:center}; the finite covector stabilizer is denoted by $U_n$.
+
+
+\section{Scalar annihilation and exact local descent}
+\begin{lemma}[Central scalar annihilation]\label{lem:scalar}
+Let $D\subseteq\GL_2(R_n)$ have residual image containing a nonidentity scalar $\alpha I$. Then $H^i(D,V_n)=0$ for every $i\ge0$.
+\end{lemma}
+\begin{proof}
+Choose $g\in D$ lifting $\alpha I$, and let $b$ be the order of $\alpha\in\FF_p^\times$. The order of $g$ is $bp^c$ because the reduction kernel is a $p$-group. The element $h=g^{p^c}$ has order $b$, and reduces to $\alpha I$ since $p\equiv1\pmod b$. If $\widetilde\alpha$ is the Teichm\"uller lift in $R_n$, factor $X^b-1=(X-\widetilde\alpha)Q(X)$. The matrix $Q(h)$ reduces to $b\alpha^{b-1}I$ and is therefore invertible. Thus $h=\widetilde\alpha I$ belongs to the center of $D$. The action of a central element on group cohomology, through its action on the coefficient module, is the identity (the inner-automorphism homotopy). Hence $h-1$ annihilates cohomology. It is invertible on $V_n$, so all the cohomology groups vanish.
+\end{proof}
+The global case follows from (H1), using $-I$. For the local case at $p$, the ordinary residual representation has the shape
+\[
+\left.\overline\rho\right|_{G_{\QQ_p}}\sim
+\begin{pmatrix}\omega\psi^{-1}&*\\0&\psi\end{pmatrix},
+\]
+where $\omega$ is the mod-$p$ cyclotomic character and $\psi$ is unramified with Frobenius value $\alpha\equiv a_p(E)\pmod p$. By (H2), $\alpha\ne0,1$. Multiplying a Frobenius lift by an inertia element, whose cyclotomic value can be chosen arbitrarily in $\FF_p^\times$, produces an upper triangular matrix with both diagonal entries $\alpha$. Its $p$th power in characteristic $p$ equals $\alpha I$. Lemma \ref{lem:scalar} therefore applies to the local image at every precision.
+
+At each bad prime $\ell\ne p$, (H3) implies $H^0(\QQ_\ell,V_n)=0$. Local Tate duality, using the perfect Weil pairing $V_n\simeq V_n^*(1)$, gives $H^2(\QQ_\ell,V_n)=0$. The local Euler characteristic formula for $\ell\ne p$ gives $H^1(\QQ_\ell,V_n)=0$. At infinity, the group has order two and $p$ is odd, so positive-degree cohomology vanishes.
+
+Finally, (H2) implies $E(\QQ_p)[p]=0$: the reduction group has order prime to $p$ and the formal group over $p\ZZ_p$ has no $p$-torsion, as seen from the formal logarithm for $p\ge5$. Its $p$-adic completion is a free $\ZZ_p$-module of rank one. Thus (H4) is precisely a local primitivity condition, not a finiteness assertion about $\Sha$.
+
+\begin{corollary}\label{cor:local}
+Restriction on $H^1(\QQ_v,V_n)$ to $H^1((K_n)_w,V_n)$ is injective for every $v\in\Sigma$. At the finite places in $\Sigma$ we also have $E(\QQ_v)[p^\infty]=0$.
+\end{corollary}
+
+
+\section{Equivariant class groups and the strict Selmer group}
+Define the full division-field class module at precision $n$ by
+\[
+A_n=\Cl_\Sigma(K_n)/p^n\Cl_\Sigma(K_n).
+\]
+It is a finite $R_n[G_n]$-module. In the rest of this section abbreviate $R=R_n$, $V=V_n$, and $G=G_n$.
+
+\begin{theorem}[Exact division-field comparison]\label{th:full}
+Under (H1)--(H3), restriction followed by Artin reciprocity yields a natural isomorphism
+\begin{equation}\label{eq:full}
+\R_n\simeq\Hom_{R[G]}(A_n,V).
+\end{equation}
+\end{theorem}
+\begin{proof}
+The elliptic representation is unramified outside $\Sigma$. We use the standard inflation--restriction and local-duality results of \cite{NSW,Serre}. Inflation--restriction for the quotient $G_{\QQ,\Sigma}\twoheadrightarrow G$ provides
+\[
+0\to H^1(G,V)\to H^1(G_{\QQ,\Sigma},V)
+\to H^1(G_{K_n,\Sigma},V)^G\to H^2(G,V).
+\]
+Both outer groups vanish by Lemma \ref{lem:scalar}. Since $G_{K_n}$ acts trivially on $V$, its cohomology in degree one consists of continuous homomorphisms. An element on the right which is trivial on decomposition groups over $\Sigma$ factors, by class field theory, through $A_n$. The action on these homomorphisms is the usual diagonal action: $\Phi(gx)=g\Phi(x)$.
+
+Conversely, an equivariant map $A_n\to V$ inflates to such a homomorphism and hence has a unique global cohomology preimage. Its restriction to every completion of $K_n$ above $\Sigma$ vanishes because these primes split in the defining class field. Corollary \ref{cor:local} implies that the global preimage already has zero localization over $\QQ$. It therefore belongs to $\R_n$. These two constructions are inverse.
+\end{proof}
+
+\subsection*{Why the local converse matters}
+Without the local injectivity, an equivariant class-field map might descend to a global class that becomes trivial only after extension to the local division field. In that case the right side of \eqref{eq:full} could contain a local inflation defect. In this article the non-anomalous ordinary hypothesis and the vanishing of bad-prime torsion remove this defect exactly. No assertion of exactness for an arbitrary elliptic curve or anomalous prime is made.
+
+\subsection*{The finite group-algebra viewpoint}
+The global scalar argument also makes restriction injective for all global classes in $H^1(G_{\QQ,\Sigma},V)$. This is the mechanism used later to prescribe evaluations of independent rational-point classes. The entire matrix algebra $M_2(R)$ is spanned over $R$ by $G$: the off-diagonal matrix units are differences of transvections and the diagonal units follow by multiplying those units. Thus stability under $G$ implies stability under all matrix units. This simple algebraic observation does not require a semisimple group algebra; $p$ divides $\#G$ at every level. Its usefulness is precisely that it survives the wild integral congruence subgroup.
+
+
+\section{Covector fields and character norm saturation}
+Choose the primitive row covector $\lambda_n=(1,0)$ in the coordinates of Section 2. Let
+\[
+U_n=\{g:\lambda_ng=\lambda_n\},\qquad
+P_n=\{g:\lambda_ng\in R_n^\times\lambda_n\}.
+\]
+Set $F_n=K_n^{U_n}$, $L_n=K_n^{P_n}$. Transitivity on primitive rows and on their free rank-one spans gives
+\begin{equation}\label{eq:degrees}
+[F_n:\QQ]=(p^2-1)p^{2n-2},\qquad
+[L_n:\QQ]=(p+1)p^{n-1}.
+\end{equation}
+The character $\chi_n:P_n\to R_n^\times$ defined by $\lambda_ng=\chi_n(g)\lambda_n$ has kernel $U_n$. In particular $F_n/L_n$ is Galois with group $R_n^\times$. Define
+\[
+B_n=\Cl_\Sigma(F_n)/p^n,\quad
+C_{n,\chi}=B_n/\langle\delta b-\chi_n(\delta)b\rangle,
+\quad \pi_n:A_n\xrightarrow{N}B_n\longrightarrow C_{n,\chi}.
+\]
+\begin{theorem}[Character-norm saturation]\label{th:normsurj}
+The map $\pi_n$ is surjective, even though $[K_n:F_n]$ is divisible by $p$.
+\end{theorem}
+\begin{proof}
+Using the norm and reciprocity formalism of \cite{Neukirch}, let $H_\Sigma(F_n)$ be the abelian class field for $\Cl_\Sigma(F_n)$. For any finite Galois extension $L/F$, the norm image on $\Sigma$-class groups is the kernel of restriction to $L\cap H_\Sigma(F)$: containment follows from reciprocity, and every element of the kernel is realized by an Artin symbol of a prime splitting completely in $L$, by Chebotarev in the compositum. Hence the norm cokernel in the present case is a quotient of $U_n^{\mathrm{ab}}$.
+
+The central scalar $z=-I$ acts by conjugation trivially on $U_n$ and therefore on that norm cokernel. Norm commutes with its action on ideal classes. Passing to the character quotient is right exact, and $\chi_n(z)=-1$. Thus every element of the resulting norm cokernel satisfies both $zx=x$ and $zx=-x$. Since two is invertible on the $p$-primary part, the cokernel is zero.
+\end{proof}
+In fact the same proof shows that the norm is surjective on the negative $z$-eigenspace of the $p$-primary class groups, before reduction modulo $p^n$. The idempotent $(1-z)/2$ is integral at odd primes. This will be used for extension and norm calculations between different precisions.
+
+For comparison, the order of $G_n$ is $p^{4n-4}(p^2-1)(p^2-p)$. Thus the covector field has substantially smaller degree than the full division field. The projective field is smaller again, but retaining the scalar character requires the extension $F_n/L_n$; merely using the untwisted class group of $L_n$ would lose the desired representation.
+\clearpage
+\section{Unipotent reconstruction over the finite local ring}
+Fix $n$ and abbreviate $R=R_n$, $G=G_n$. Put
+\[
+t=\begin{pmatrix}1&1\\0&1\end{pmatrix},\qquad
+s=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+\]
+The identity $\lambda t=\lambda+\lambda s$ gives the required additivity relation. The following statement is pure integral representation theory.
+
+\begin{theorem}[Single-relation reconstruction]\label{th:unipotent}
+For any left $R[G]$-module $M$, the map $\Phi\mapsto\lambda\Phi$ identifies $\Hom_{R[G]}(M,R^2)$ with the $R$-linear functionals $\theta:M\to R$ satisfying
+\begin{align}
+\theta(ux)&=\theta(x)\quad(u\in U_n),\\
+\theta(gx)&=\chi_n(g)\theta(x)\quad(g\in P_n),\\
+\theta(tx)&=\theta(x)+\theta(sx).
+\end{align}
+No semisimplicity assumption is necessary.
+\end{theorem}
+\begin{proof}
+The forward implication follows by applying $\lambda$ to equivariance. Conversely, $sts\in U_n$ gives $\theta(stx)=\theta(sx)$. Applying the last displayed relation repeatedly yields $\theta(t^jx)=\theta(x)+j\theta(sx)$ for integers $j\ge0$ and hence for all $j\in R$ (since $t^{p^n}=1$). Let $g\in G$ have first row $(a,b)$. If $a$ is a unit, $g_0=\operatorname{diag}(a,1)t^{a^{-1}b}$ has the same first row, so $gg_0^{-1}\in U_n$. Consequently
+\[
+\theta(gx)=\theta(g_0x)=a\theta(x)+b\theta(sx).
+\]
+If $a$ is not a unit, $b$ is a unit because the row is primitive. Apply the first case to $gs$ and $sx$ to obtain the same formula. The map
+\[
+\Phi_\theta(x)=\begin{pmatrix}\theta(x)\\\theta(sx)\end{pmatrix}
+\]
+is therefore equivariant: apply the formula to $g$ and $sg$ to obtain both rows of $g\Phi_\theta(x)$. This construction is inverse to $\Phi\mapsto\lambda\Phi$, since the second row of an equivariant $\Phi$ is $\lambda\Phi(sx)$.\end{proof}
+
+\subsection*{The presentation as a right module}
+Equivalently, the cyclic right $R[G]$-module with generator $e$ and relations $eu=e$, $eg=\chi_n(g)e$ for $g\in P_n$, and $et=e+es$, is the standard row representation. Indeed every $eg$ reduces to $ae+bes$ by the same first-row argument, and the map $e\mapsto(1,0)$, $es\mapsto(0,1)$ is a surjection onto a free rank-two module. Thus it is an isomorphism. This makes explicit why the single relation enforces the full elliptic representation over $R_n$, rather than merely its residual reduction.
+
+
+\section{The linearized class-group realization}
+Define
+\[
+\mathscr U_n=\pi_n((t-1-s)A_n),\qquad
+C_n=C^{\mathrm{lin}}_{n,\chi}:=C_{n,\chi}/\mathscr U_n.
+\]
+Here $\pi_n$ is the map of Theorem \ref{th:normsurj}. Its invariance under $U_n$ follows because ideal norm to $F_n$ is invariant under $\Gal(K_n/F_n)$; its $P_n$-equivariance follows because $P_n$ normalizes $U_n$ and acts on the character quotient through $\chi_n$.
+
+\begin{theorem}[Exact linearized strict Selmer comparison]\label{th:strict}
+Under (H1)--(H3),
+\begin{equation}\label{eq:linearized}
+\boxed{C_n^\vee\simeq\R_n\simeq\Hom_{R_n[G_n]}(A_n,V_n).}
+\end{equation}
+The isomorphisms are realized by class-field evaluation with the covector $\lambda_n$.
+\end{theorem}
+\begin{proof}
+If $f:C_n\to R_n$ is a functional, $f\pi_n$ satisfies all three conditions of Theorem \ref{th:unipotent}. It therefore reconstructs an equivariant homomorphism $A_n\to V_n$, and Theorem \ref{th:full} gives a unique strict global class.
+
+For the converse, represent $c\in\R_n$ by a continuous cocycle. For $g\in G_{F_n}$ define $\theta_c(g)=\lambda_n(c(g))$. The covector is fixed by $G_{F_n}$, so the cocycle identity implies that $\theta_c$ is a homomorphism. Replacing $c$ by a coboundary does not change it. The unramified and strict local conditions make it an unramified abelian character trivial on decomposition groups above $\Sigma$; hence it factors through $B_n$. For a lift $\delta$ of an element of $P_n/U_n$, conjugation of the cocycle gives
+\[
+\lambda_n c(\delta g\delta^{-1})=\chi_n(\delta)\lambda_n c(g).
+\]
+Indeed the extra coboundary term is killed by $\lambda_n$ since $g$ fixes the covector. Artin reciprocity therefore makes the character factor through $C_{n,\chi}$. Its restriction via the norm is the functional $\lambda_n\Phi_c$ on $A_n$, where $\Phi_c$ is the equivariant class-field map of Theorem \ref{th:full}. The relation $\lambda_n t=\lambda_n+\lambda_ns$ kills $\mathscr U_n$, so the character factors through $C_n$. The two constructions agree after composition with the surjective norm, hence are inverse.\end{proof}
+
+\noindent The local hypotheses enter the converse from equivariant homomorphisms to strict classes. The representation-theoretic statement of Section 6 is unconditional for any $R_n[G_n]$-module. The arithmetic comparison in this section is asserted only under (H1)--(H3). In particular, it does not silently equate a class-field group with a Selmer group having arbitrary local conditions.
+
+
+\section{The fine Kummer sequence and compatible precision}\label{sec:pure}
+Under (H1)--(H4), let $M=E(\QQ)\otimes\ZZ_p$ and let $P^0$ be the kernel of localization to the $p$-adic completion of $E(\QQ_p)$. It is a direct summand of rank $r-1$ in $M\simeq\ZZ_p^r$. Let $P_n^0=P^0/p^nP^0$, viewed inside the strict Selmer group by Kummer theory.
+
+\begin{theorem}[Pure Sha submodule]\label{th:pure}
+There are exact sequences
+\begin{align}
+0\to P_n^0\to\R_n\to S[p^n]\to0,\label{eq:kummer}\\
+0\to W_n\to C_n\to(P_n^0)^\vee\to0,\qquad
+W_n\simeq S[p^n]^\vee.\label{eq:pure}
+\end{align}
+In particular, $C_n\simeq R_n^{r-1}\oplus W_n$ abstractly; the submodule $W_n$ is canonical, but a splitting is not.
+\end{theorem}
+\begin{proof}
+The standard Kummer sequence (see \cite{Silverman,MR}) for the usual Selmer group has quotient $S[p^n]$ and kernel $E(\QQ)/p^nE(\QQ)\simeq R_n^r$. At good primes outside $\Sigma$ the unramified condition equals the local Kummer condition. The local cohomology at the bad primes is zero by Section 3, and positive-degree cohomology at the real place vanishes. Thus the only additional restriction for membership in $\R_n$ is zero localization at $p$. The Kummer subgroup at $p$ is $R_n$, and (H4) makes the localization of rational points surjective onto it. Every Selmer representative of a Sha element can therefore be corrected by a rational point to have zero localization. The kernel is $P_n^0$, proving \eqref{eq:kummer}. Since the finite ring $R_n$ is self-injective (or by elementary-divisor theory), the free submodule splits off. Duality gives \eqref{eq:pure}.\end{proof}
+
+\begin{lemma}[Compatibility with infinite coefficients]\label{lem:infty}
+The inclusion $V_n\hookrightarrow A$ identifies $\R_n$ with $\R_\infty[p^n]$. Under this identification the coefficient inclusion is the natural inclusion, and coefficient reduction $V_m\to V_n$ is multiplication by $p^{m-n}$ on $\R_\infty[p^m]$.
+\end{lemma}
+\begin{proof}
+Global invariants $A(\QQ)$ vanish by (H1). The exact sequence $0\to V_n\to A\xrightarrow{p^n}A\to0$ identifies global $H^1(V_n)$ with the $p^n$-torsion of global $H^1(A)$. At finite places in $\Sigma$ the analogous map is injective by Corollary \ref{cor:local}; at the real place both $H^1$ groups vanish. Hence the strict kernels agree. Compatibility follows from the coefficient diagrams, with the coordinate conventions of Section 2.\end{proof}
+Consequently $C_n$ is canonically the quotient $\R_\infty^\vee/p^n\R_\infty^\vee$. This description will be used to distinguish natural submodules from abstract isomorphism types.
+
+
+\section{Prime-triple relations and effective Mordell--Weil subtraction}
+The definition of $\mathscr U_n$ uses the full division-field class group, but a complete presentation of that group is not necessary to exhibit its relations. If $\ell\notin\Sigma$ splits completely in $K_n$, choose a prime $\mathfrak w$ above $\ell$. Let $\mathfrak q_0,\mathfrak q_t,\mathfrak q_s$ be the contractions to $F_n$ of $\mathfrak w,t\mathfrak w,s\mathfrak w$. In $C_{n,\chi}$ define
+\begin{equation}
+\mathfrak r(\mathfrak w)=[\mathfrak q_t]-[\mathfrak q_0]-[\mathfrak q_s].
+\end{equation}
+\begin{lemma}\label{lem:prime}
+These prime-triple relations generate $\mathscr U_n$ as $\ell$ and $\mathfrak w$ vary.
+\end{lemma}
+\begin{proof}
+Every ideal class in $\Cl_\Sigma(K_n)$ has a prime representative lying above a rational prime split completely in $K_n$: apply Chebotarev to its $\Sigma$-class field, which is Galois over $\QQ$, and choose the prime above the rational prime with the prescribed relative Artin element. All residue degrees in the norm to $F_n$ are one. The formula is exactly $\pi_n((t-1-s)[\mathfrak w])$, so such formulas generate the image.\end{proof}
+
+\begin{lemma}[Prescribed Kummer evaluations]\label{lem:kummer}
+If $P\subseteq\R_n$ is a free submodule of rank $k$, the simultaneous evaluation map over $K_n$ realizes every element of $\Hom_R(P,V_n)$.
+\end{lemma}
+\begin{proof}
+The translation image $U$ of $G_{K_n}$ in $\Hom_R(P,V_n)$ is stable under $G_n$, hence under all matrix units of $M_2(R_n)$. Thus $U=D\oplus D$ for some $D\subseteq P^*$. If $D$ is proper, finite-module duality supplies a nonzero element of $P$ annihilating $D$. Its restriction to $G_{K_n}$ would vanish, contradicting the global scalar-annihilation injection. Thus $D=P^*$ and the assertion follows. Chebotarev realizes each translation in a finite affine extension by Frobenius at primes split in $K_n$, after choosing a prime above the rational prime.\end{proof}
+For a basis of $P_n^0$ choose $r-1$ prime classes with covector evaluations the standard coordinate functionals. Their evaluations on $P_n^0$ form an identity matrix, so the annihilator of these classes in $\R_n$ is a complement of $P_n^0$. Quotienting $C_n$ by their span yields a finite module $\mathscr Q_n$ with $\mathscr Q_n^\vee\simeq S[p^n]$. Although the auxiliary-prime quotient is not canonical across $n$, the submodule $W_n$ in \eqref{eq:pure} is canonical and has the same elementary divisors.
+
+A finite subset of verified prime-triple relations gives a possibly larger quotient of $C_{n,\chi}$ mapping onto $C_n$. Thus it can still certify an upper bound, without proving completeness of the prime search. The same principle applies after the known Mordell--Weil directions are removed.
+
+
+\section{Elementary divisors and finite-level saturation}
+Cassels--Tate duality for elliptic curves gives an alternating perfect pairing on $S/\operatorname{Div}(S)$; see \cite{PS,Milne}. Consequently the finite reduced part has paired cyclic factors. Since $S^\vee$ is finitely generated, write
+\begin{equation}\label{eq:structure}
+S\simeq(\QQ_p/\ZZ_p)^{d_p}\oplus\bigoplus_{i=1}^{u}(\ZZ/p^{e_i}\ZZ)^2,
+\qquad e_i\ge1.
+\end{equation}
+This is an abstract decomposition and does not select a canonical finite complement to the divisible subgroup.
+
+Theorem \ref{th:pure} gives the exact finite-level elementary-divisor formula
+\begin{equation}\label{eq:Wstructure}
+W_n\simeq R_n^{d_p}\oplus\bigoplus_i(\ZZ/p^{\min(n,e_i)}\ZZ)^2.
+\end{equation}
+The same structure holds for $\mathscr Q_n$. In particular
+\begin{equation}\label{eq:beta}
+\boxed{\beta_n:=\dim_{\FF_p}p^{n-1}\mathscr Q_n
+=d_p+2\#\{i:e_i\ge n\}.}
+\end{equation}
+This yields a decreasing sequence of integers, with $\beta_n-\beta_{n+1}=2\#\{i:e_i=n\}$ and eventual constant value $d_p$. No inference that this constant is zero can be made from monotonicity alone.
+
+\begin{corollary}[Finite saturation certificate]\label{cor:finite}
+If $p^{n-1}\mathscr Q_n=0$, then $p^{n-1}S=0$ and $S$ is finite. If the root number satisfies $w(E)=(-1)^r$, it suffices to show $\beta_n\le1$.
+\end{corollary}
+\begin{proof}
+The first assertion follows directly from \eqref{eq:beta}. For the second use the unconditional $p$-parity theorem over $\QQ$ of Dokchitser and Dokchitser \cite{DD}, which gives $(-1)^{r+d_p}=w(E)$. Under the stated sign condition $d_p$ is even; hence $\beta_n$ is even. A nonnegative even integer bounded by one must be zero.\end{proof}
+
+If only $r_0$ independent rational points are known, they may be used instead of the entire Mordell--Weil group provided their span is $p$-saturated and contains a locally primitive point. Their fine submodule is free of rank $r_0-1$, and subtracting just these directions leaves an abstract module with dual
+\[
+R_n^{r-r_0}\oplus S[p^n].
+\]
+The corresponding maximal elementary-divisor count is $r-r_0+\beta_n$. If $w(E)=(-1)^{r_0}$ and this count is at most one, then both $r-r_0$ and $d_p$ vanish and $p^{n-1}S=0$. Thus the criterion can determine the Mordell--Weil rank simultaneously, without assuming the full rank beforehand. Saturation of the known rational-point subgroup must be verified independently.
+\clearpage
+\section{Norm transport between different precision levels}\label{sec:norm}
+Let $m=n+a$ with $a\ge1$. The coordinate conventions make the covector stabilizers compatible, giving $F_n\subseteq F_m$ with $[F_m:F_n]=p^{2a}$. The extension need not be Galois. Denote the ideal norm $N_{F_m/F_n}$ by $N_{m,n}$ and extension of ideals by $j_{n,m}$.
+
+\begin{theorem}[Exact norm transport]\label{th:norm}
+Norm descends to a surjection $C_m\to C_n$ whose dual is the natural coefficient inclusion $\R_n\hookrightarrow\R_m$. It maps $W_m$ onto $W_n$, and
+\begin{equation}\label{eq:normker}
+\ker(N_{m,n}:C_m\to C_n)=p^nC_m,\qquad
+\ker(N_{m,n}:W_m\to W_n)=p^nW_m.
+\end{equation}
+\end{theorem}
+\begin{proof}
+For $c\in\R_n$, write $\theta_{c,n}$ for its Artin character on the covector field, with values $\lambda_n(c)/p^n$ in $\QQ_p/\ZZ_p$. The restriction of this character from $G_{F_n}$ to $G_{F_m}$ is precisely the covector evaluation of the included cocycle in $V_m$: multiplying its coordinates by $p^a$ and dividing by $p^m$ gives the original fraction. Class-field reciprocity gives
+\[
+(N_{m,n}x,c)_n=(x,\operatorname{inc}_{n,m}c)_m.
+\]
+This identity for all $c$ proves that norm descends to $C_m$ and identifies its dual. By Lemma \ref{lem:infty}, $\R_n=\R_m[p^n]$. The annihilator of this subgroup in the perfect duality is $p^nC_m$, which proves surjectivity and the first kernel formula.
+
+The coefficient inclusion respects rational-point Kummer classes and induces the inclusion $S[p^n]\hookrightarrow S[p^m]$ on their quotients. Dualizing the diagram of \eqref{eq:pure} proves the claims for $W_m$, including its kernel formula.\end{proof}
+
+\subsection*{An exact compatibility diagram}
+\[
+\begin{array}{ccccccccc}
+0&\to&W_m&\to&C_m&\to&(P_m^0)^\vee&\to&0\\
+&&\downarrow N&&\downarrow N&&\downarrow N&&\\
+0&\to&W_n&\to&C_n&\to&(P_n^0)^\vee&\to&0.
+\end{array}
+\]
+All three vertical arrows are surjective; the right one is dual to the coefficient inclusion on the fine rational-point subgroup. This natural diagram is the reason for preferring $W_n$ to the auxiliary-prime quotient $\mathscr Q_n$ in transition-map arguments. In particular, it avoids making incompatible choices of complements at different levels.
+
+
+\section{Ideal extension and the two-dimensional transfer factor}
+\begin{theorem}[Exact covector transfer]\label{th:transfer}
+Ideal extension descends to $j_{n,m}:C_n\to C_m$. Its dual is
+\[
+\R_m\longrightarrow\R_n,\qquad c\longmapsto p^a\operatorname{red}_{m,n}(c),
+\]
+where $\operatorname{red}$ is coefficient multiplication by $p^a$. On the pure Sha submodules, the dual map is multiplication by $p^{2a}:S[p^m]\to S[p^n]$. Equivalently, for $y\in C_m$,
+\begin{equation}\label{eq:jfactor}
+j_{n,m}(N_{m,n}y)=p^{2a}y.
+\end{equation}
+\end{theorem}
+\begin{proof}
+To calculate the pairing of $j_{n,m}x$ with $c\in\R_m$, it suffices to treat prime classes of $F_n$ above rational primes split completely in $K_m$, after projecting to the negative eigenspace of $z=-I$. Indeed the norm from $K_m$ to $F_n$ is surjective on that eigenspace: its cokernel is a quotient of $\Gal(K_m/F_n)^{\rm ab}$ on which $z$ acts trivially. Chebotarev then represents the norm generators by split primes. All pairings with $C_n,C_m$ kill the positive eigenspace.
+
+For one such prime, fix a prime above it in $K_m$ and write $v\in R_m^2$ for the cocycle value at its Frobenius. The primes of $F_m$ above the chosen prime of $F_n$ correspond to the $p^{2a}$ row covectors reducing to the chosen row at precision $n$. By changing coordinates for that row, their values can be written $\lambda_m+p^nu$ with $u\in(\ZZ/p^a)^2$. Their sum modulo $p^m$ is
+\[
+\sum_u (\lambda_m+p^nu)=p^{2a}\lambda_m,
+\]
+since each coordinate sum of the $u$'s is divisible by $p^a$ for odd $p$. Thus the evaluated character on the extended ideal is $p^{2a}\lambda_m(v)/p^m$ modulo $\ZZ_p$, which equals $p^a\lambda_n(\operatorname{red} v)/p^n$. By generation it follows that
+\begin{equation}\label{eq:pairtransfer}
+(j_{n,m}x,c)_m=(x,p^a\operatorname{red}_{m,n}c)_n.
+\end{equation}
+The coefficient reduction preserves strict conditions, proving descent of ideal extension. It maps the Kummer subgroup to the Kummer subgroup, and acts as multiplication by $p^a$ on the Sha quotient. The additional factor in \eqref{eq:pairtransfer} gives multiplication by $p^{2a}$ on Sha. Finally dualize the composition with norm, using Theorem \ref{th:norm} and Lemma \ref{lem:infty}, to obtain \eqref{eq:jfactor}.\end{proof}
+In particular, $j_{n,m}(W_n)=p^{2a}W_m$. The factor $p^{2a}$ arises from summing over the two independent coordinates of a lifted covector; it is not an arithmetic annihilation by units. This distinction will be essential in the following section.
+
+
+\section{Accelerated principalization and its critical threshold}
+Using \eqref{eq:Wstructure} and Theorem \ref{th:transfer}, we obtain
+\begin{theorem}[Projected principalization law]\label{th:threshold}
+For $m=n+a$,
+\begin{equation}\label{eq:threshold}
+\log_p\#j_{n,m}(W_n)=d_p\max(n-a,0)+
+2\sum_i\max(\min(m,e_i)-2a,0).
+\end{equation}
+In particular if $a<n$, then
+\begin{align}
+\#j_{n,m}(W_n)&\ge p^{d_p(n-a)},\\
+\dim_{\FF_p}p^{n-a-1}j_{n,m}(W_n)&=d_p+2\#\{i:e_i\ge m\}.
+\end{align}
+\end{theorem}
+\begin{proof}
+The image is $p^{2a}W_m$. For a cyclic factor of order $p^b$, multiplication by $p^{2a}$ has image of order $p^{\max(b-2a,0)}$. Substituting $b=m$ for a divisible direction and $b=\min(m,e_i)$ for a finite direction gives the first identity. When $a<n$ the maximum possible order is $p^{m-2a}=p^{n-a}$, attained precisely by the factors with $b=m$. This proves the remaining statements.\end{proof}
+\begin{corollary}[Accelerated certificate]\label{cor:accel}
+If $1\le a<n$ and $j_{n,n+a}(W_n)=0$, then $p^{2a}S=0$. More generally,
+\[
+d_p\le \left\lfloor\frac{\log_p\#j_{n,n+a}(W_n)}{n-a}\right\rfloor.
+\]
+\end{corollary}
+\begin{proof}
+Vanishing and $n-a>0$ force $d_p=0$. Each remaining term of \eqref{eq:threshold} vanishes, so $\min(m,e_i)\le2a$. Since $m>2a$, all $e_i\le2a$. The inequality follows from the first term of the same formula.\end{proof}
+
+\begin{center}
+\small
+\begin{tabular}{@{}rrrrrrr@{}}
+\toprule
+Initial $n=6$; step $a$&0&1&2&3&4&5\\\midrule
+Divisible direction: exponent &6&5&4&3&2&1\\
+Finite direction ($e=5$): exponent&5&3&1&0&0&0\\
+\bottomrule
+\end{tabular}
+\end{center}
+The entries are the exponents of $p$ in the surviving cyclic factors, not measured class-group data. For $a\ge n$ even a divisible direction disappears in this projected transfer. Therefore a proof using extension to an unrestricted large field cannot establish the desired finiteness by that disappearance alone.
+
+The word ``principalization'' in Corollary \ref{cor:accel} refers to vanishing in the linearized quotient. Actual ideal principalization is stronger and will be treated separately in Section \ref{sec:units}. Conflating these notions would make the proposed unit-regulator argument circular.
+
+\section{The intermediate half-degree field}\label{sec:half}
+We now separate the two coordinates of covector lifting. For $m=n+a$ define subgroups of $G_m=\GL_2(R_m)$ by
+\begin{align*}
+U_m&=\{g:\lambda_mg=\lambda_m\},\\
+J_{n,m}&=\{g:\lambda_mg=u\lambda_m,\quad u\in1+p^nR_m\}.
+\end{align*}
+Let $M_{n,m}=K_m^{J_{n,m}}$. The subgroup $J_{n,m}$ is contained in the inverse image of $U_n$ under $G_m\to G_n$, and it contains $U_m$. This gives $F_n\subset M_{n,m}\subset F_m$.
+
+\begin{theorem}[Cyclic half-degree decomposition]\label{th:field}
+The degrees and Galois group are
+\begin{align}
+[M_{n,m}:F_n]=[F_m:M_{n,m}]&=p^a,\\
+\Gal(F_m/M_{n,m})&\simeq 1+p^nR_m,\\
+[M_{n,m}:\QQ]&=(p^2-1)p^{m+n-2}.
+\end{align}
+In particular the upper extension is cyclic, and for $n=1$ the intermediate degree grows like $p^m$.
+\end{theorem}
+\begin{proof}
+The scale map $J_{n,m}\to1+p^nR_m$ is surjective with kernel $U_m$ (use diagonal matrices). Thus $U_m$ is normal in $J_{n,m}$ and the upper extension has the claimed group. For odd $p$ this unit subgroup is cyclic of order $p^{m-n}$. Since the entire covector extension has degree $p^{2a}$, the lower degree is $p^a$. Multiplication by the degree of $F_n$ in \eqref{eq:degrees} completes the calculation.\end{proof}
+
+\begin{center}
+\setlength{\fboxsep}{7pt}
+\begin{tabular}{c}
+\fbox{$K_m=\QQ(E[p^m])$}\\[-1pt]
+$\Big\downarrow\quad [K_m:F_m]=p^{2m-1}(p-1)$\\[2pt]
+\fbox{$F_m=K_m^{U_m}$}\\[-1pt]
+$\Big\downarrow\quad \text{cyclic of degree }p^a$\\[2pt]
+\fbox{$M_{n,m}=K_m^{J_{n,m}}$}\\[-1pt]
+$\Big\downarrow\quad \text{degree }p^a$\\[2pt]
+\fbox{$F_n=K_n^{U_n}$}
+\end{tabular}
+\end{center}
+The lower extension need not be Galois. On the other hand $P_m$ normalizes both $U_m$ and $J_{n,m}$, and $P_m/J_{n,m}\simeq R_n^\times$. Thus the intermediate field retains the lower scalar character. The full $p^m$-precision information is present in its embedding in $K_m$, even though its scalar quotient has precision only $p^n$. The next section makes this statement precise by a trace calculation.
+
+
+\section{Exact scalar trace and intermediate-field saturation}
+Write $M=M_{n,m}$, $F=F_m$, $\Gamma=\Gal(F/M)$, and
+\[
+B_M=\Cl_\Sigma(M)[p^\infty],\quad B_F=\Cl_\Sigma(F)[p^\infty].
+\]
+Let $j:B_M\to B_F$, $N:B_F\to B_M$ be extension and norm. Write $\pi:B_F\twoheadrightarrow C_m$ for the full linearized quotient map.
+\begin{lemma}[Cyclic scalar trace]\label{lem:trace}
+On $C_m$, the group-ring trace $\mathcal T=\sum_{\gamma\in\Gamma}\gamma$ acts as multiplication by $p^a$.
+\end{lemma}
+\begin{proof}
+By its character relations, each $\gamma$ acts on $C_m$ as $\chi_m(\gamma)$, and these values range exactly over $1+p^n j$ for $0\le j<p^a$. Their sum is $p^a+p^{n+a}(p^a-1)/2$, congruent to $p^a$ modulo $p^m$.
+\end{proof}
+\begin{lemma}\label{lem:neg}
+Norm is surjective from $B_F^-$ to $B_M^-$, where $-$ denotes the $-1$ eigenspace for the central involution $z=-I$.
+\end{lemma}
+\begin{proof}
+The cokernel of norm on $\Sigma$-class groups is a quotient of $\Gal(F/M)$ by class-field reciprocity, as in Theorem \ref{th:normsurj}. The central involution acts trivially there. The negative eigenspace functor on $p$-primary modules is exact, hence the negative norm cokernel vanishes.\end{proof}
+Define the intermediate character quotient
+\[
+\D_{n,m}=(B_M/p^nB_M)/\langle\delta b-\chi_n(\delta)b\rangle,
+\qquad \delta\in P_m/J_{n,m}.
+\]
+\begin{theorem}[Half-degree class-field saturation]\label{th:half}
+Extension of ideals followed by projection induces a surjection
+\begin{equation}\label{eq:half}
+\boxed{\D_{n,m}\twoheadrightarrow p^a C_m.}
+\end{equation}
+\end{theorem}
+\begin{proof}
+The identity $jN=\mathcal T$ holds on $B_F$, including primes ramified in $F/M$, by the usual decomposition-group multiplicities in the ideal norm and extension. Since $C_m$ has negative central character, Lemmas \ref{lem:trace} and \ref{lem:neg} give $\pi(jB_M)=p^aC_m$. This image is killed by $p^n$. Extension and projection commute with the action of $P_m$, and on $p^a C_m$ its scalar character reduces to $\chi_n$. Hence the map factors through the indicated quotient and is surjective.\end{proof}
+This is a surjection, not an isomorphism in general. Its kernel includes genuine capitulation classes, but may include additional classes killed by projection and linearization. It is this quotient, not the unprojected class group, whose structure detects the deep Selmer directions exactly.
+
+
+\section{A necessary refinement: factorization through lower norm}
+The preceding surjection admits a stronger structural description. Let $\eta_{n,m}:\D_{n,m}\to C_n$ be induced by the norm from $M_{n,m}$ to $F_n$ followed by linearization at $n$. This map is well defined: $P_m$ stabilizes the lower field, the reduction of its character is $\chi_n$, and $C_n$ is killed by $p^n$.
+
+\begin{theorem}[Factorization and exact projected kernel]\label{th:factor}
+The map $\eta_{n,m}$ is surjective. Define $\alpha:C_n\to p^aC_m$ by
+\[
+\alpha(N_{m,n}y)=p^ay\qquad(y\in C_m).
+\]
+This is well defined and surjective. The map of Theorem \ref{th:half} equals $\alpha\eta_{n,m}$. Moreover
+\begin{equation}\label{eq:factorker}
+\ker\alpha=N_{m,n}(C_m[p^a]),\qquad
+\ker(\alpha\eta_{n,m})=\eta_{n,m}^{-1}\bigl(N_{m,n}(C_m[p^a])\bigr).
+\end{equation}
+\end{theorem}
+\begin{proof}
+The composite norm $B_F\to B_M\to\Cl_\Sigma(F_n)[p^\infty]$, followed by projection, agrees with $N_{m,n}\pi$. Both $N_{m,n}$ and $\pi$ are surjective, so $\eta$ is surjective. By \eqref{eq:normker} two lifts of an element of $C_n$ differ by $p^nC_m$, killed by $p^a$ since $m=n+a$. This proves that $\alpha$ is well defined. For a class $b\in B_M^-$ choose $x\in B_F^-$ with $Nx=b$ by Lemma \ref{lem:neg}. The image under extension is $\pi(jNx)=p^a\pi(x)$, while $\eta(b)=N_{m,n}\pi(x)$. Thus the two maps agree. A lift $y$ has $\alpha(N_{m,n}y)=0$ precisely when $y\in C_m[p^a]$, which gives both kernel statements.\end{proof}
+
+\begin{corollary}[Limit of unprojected compression]\label{cor:limit}
+For every $m\ge n$,
+\[
+\dim_{\FF_p}(\D_{n,m}/p\D_{n,m})\ge\dim_{\FF_p}(C_n/pC_n).
+\]
+At $n=1$, an upper bound on the entire $\D_{1,m}$ can never improve the exact residual bound from $C_1$ alone. To distinguish higher elementary divisors one must actually compute the projected transfer image or add certified relations in its kernel.
+\end{corollary}
+The corollary follows from the surjection $\eta$. This corrects an overly optimistic interpretation of the half-degree method: the field-degree saving is real, but merely computing the whole intermediate character component does not automatically sharpen a lower-level exact Selmer calculation. The exact factorization identifies the extra quotient needed for deep detection. This is a useful constraint on any proposed computational or regulator-based implementation.
+
+
+\section{Deep residual detection and finite certificates}
+Duality gives $(p^aC_m)^\vee\simeq\R_m/\R_m[p^a]\simeq p^a\R_m$, where the last isomorphism is induced by multiplication by $p^a$. Thus Theorem \ref{th:half} supplies an injection $p^a\R_m\hookrightarrow\D_{n,m}^\vee$. The splitting in Theorem \ref{th:pure} gives the abstract structure
+\begin{equation}\label{eq:deep}
+p^a\R_m\simeq R_n^{r-1+d_p}\oplus
+\bigoplus_i(\ZZ/p^{\max(\min(m,e_i)-a,0)}\ZZ)^2.
+\end{equation}
+At $n=1$, $a=m-1$, this yields
+\begin{equation}\label{eq:resbound}
+\boxed{r-1+d_p+2\#\{i:e_i\ge m\}\le\dim_{\FF_p}\D_{1,m}.}
+\end{equation}
+Unlike the ordinary transfer of Section 12, each divisible direction survives with full order $p^n$. The exact target $p^aC_m$ discards finite factors of exponent at most $a$. By Corollary \ref{cor:limit}, the upper bound using the entire source $\D_{n,m}$ may be less sharp than the exact target.
+
+\begin{theorem}[Finite rank and exponent certificate]\label{th:certificate}
+Suppose $r_0$ independent rational points span a $p$-saturated subgroup and include a locally primitive point. Remove their $r_0-1$ fine directions from $\D_{1,m}$ by dual evaluation, to obtain a quotient $\D'_{1,m}$. Then
+\[
+r-r_0+d_p+2\#\{i:e_i\ge m\}\le\dim_{\FF_p}\D'_{1,m}.
+\]
+If the right side is at most one and $w(E)=(-1)^{r_0}$, then $r=r_0$ and $p^{m-1}S=0$.
+\end{theorem}
+\begin{proof}
+The known fine subgroup is a direct summand of $P_m^0$, so its image under $p^{m-1}$ has dimension $r_0-1$ in $p^{m-1}\R_m$. The injection into $\D_{1,m}^\vee$ identifies it with independent functionals on the source. Choose elements of the source giving an identity evaluation matrix, and quotient by their span. The annihilator on the dual intersects the deep Selmer subspace in a complement to the known fine directions, giving the bound. Such elements can be found using the prime-triple method or by ordinary class-group linear algebra after identifying the rational-point characters. The parity theorem makes $r-r_0+d_p$ even under the sign assumption. The paired finite-factor contribution is even by \eqref{eq:structure}. Thus every term on the left must vanish.\end{proof}
+The same proof works with any explicitly computed quotient of $\D_{1,m}$ through which the map to $p^{m-1}C_m$ factors. In particular, genuine capitulation relations and other rigorously verified projected-transfer relations can be added before applying the certificate. This is the precise role a future regulator construction could play.
+
+\section{Inverse limits and the central Lie character}\label{sec:center}
+Let
+\[
+\mathscr C=\varprojlim_n C_n,\qquad \W=\varprojlim_n W_n,
+\qquad \mathscr P=\varprojlim_n(P_n^0)^\vee,
+\]
+where all transition maps are norms. Theorem \ref{th:norm} and the exact sequences \eqref{eq:pure} give
+\begin{equation}\label{eq:invseq}
+0\to\W\to\mathscr C\to\mathscr P\to0,
+\qquad \W\simeq S^\vee,\quad \mathscr P\simeq\ZZ_p^{r-1}.
+\end{equation}
+Exactness follows from compactness or the Mittag--Leffler property. All these modules are finitely generated over $\ZZ_p$. The central scalar group $Z=1+p\ZZ_p$ of the Galois image acts on each $C_n$ through its scalar character; consequently it acts on the inverse limits by the same character. In particular, for $\gamma=(1+p)I$ and $U=\gamma-1$, the completed group algebra of $Z$ is $\Lambda_Z=\ZZ_p[[U]]$.
+\begin{theorem}[Central Lie--norm rigidity]\label{th:center}
+On $\mathscr C$, $\W$, and $\mathscr P$ one has $U=pI$. Furthermore,
+\begin{equation}\label{eq:center}
+W_n\simeq W_m/((1+p^n)I-1)W_m
+\simeq\W/p^n\W\qquad(m\ge n).
+\end{equation}
+\end{theorem}
+\begin{proof}
+At every level the defining character relations identify the action of a scalar $vI$ with multiplication by $v$. This passes to the inverse limit. The first quotient in \eqref{eq:center} is therefore $W_m/p^nW_m$, identified with $W_n$ by Theorem \ref{th:norm}. The second follows from $\W=S^\vee$ and duality.\end{proof}
+
+\subsection*{Relation to the Lie algebra}
+For the scalar one-parameter subgroup $\exp(t)I$, $t\in p\ZZ_p$, the action on $\W\otimes\QQ_p$ is multiplication by $\exp(t)$. Differentiating at zero yields the central Lie generator acting as the identity. Equivalently, $\log(\gamma)$ acts as $\log(1+p)$, which is nonzero in $\QQ_p$. This is the central weight-one character, not the trivial character. The full Galois group does not act on a single covector quotient (only the appropriate normalizers act); it is the central scalar action that is canonical here. On the full division-field module the entire Lie algebra of $\GL_2(\ZZ_p)$ is available. The unipotent reconstruction in Section 6 identifies which two-dimensional representation of that algebra survives at finite level. No semisimplicity theorem for arbitrary noncommutative Iwasawa modules is used.
+
+It follows that $\W$ is a torsion $\Lambda_Z$-module even if $d_p>0$, since $(U-p)\W=0$. Thus torsion over this one-variable algebra does not itself prove finiteness over $\ZZ_p$.
+
+
+\section{The relative transverse-annihilator criterion}\label{sec:ann}
+Define the full inverse class module
+\[
+\Y=\varprojlim_n\Cl_\Sigma(K_n)[p^\infty],\qquad
+\Y^-=(1-z)\Y/2.
+\]
+The finite-level norm maps to $C_n$ are surjective by Theorem \ref{th:normsurj}; the diagrams commute with transition norms because ideal norms are transitive. Compactness of the product of the finite groups (every finite set of compatibility conditions can be met by starting at a sufficiently high level) yields a continuous surjection $\Pi:\Y^-\twoheadrightarrow\mathscr C$. Let
+\[
+\mathscr K=\ker\Pi,\qquad \Y_W=\Pi^{-1}(\W).
+\]
+These are closed central-stable submodules and $\Y_W/\mathscr K\simeq\W$.
+\begin{theorem}[Relative central annihilation]\label{th:ann}
+If an element $f(U)\in\Lambda_Z$ satisfies
+\begin{equation}\label{eq:ann}
+f(U)\Y_W\subseteq\mathscr K,\qquad f(p)\ne0,
+\end{equation}
+then $p^{v_p(f(p))}S=0$. In particular $d_p=0$.
+\end{theorem}
+\begin{proof}
+Equation \eqref{eq:ann} says exactly that $f(U)$ kills the relative quotient $\W$. By Theorem \ref{th:center}, $f(U)$ acts on that quotient by the convergent evaluation $f(p)$. Removing its unit factor gives $p^{v_p(f(p))}\W=0$. Duality gives the same annihilation on $S$; since each finite-level $S[p^b]$ is finite, $S$ is finite.\end{proof}
+\begin{corollary}[Obstruction to a full-module annihilator]
+If $r\ge2$, there is no $f\in\Lambda_Z$ satisfying $f(U)\Y^-=0$ and $f(p)\ne0$.
+\end{corollary}
+\begin{proof}
+Such an element would annihilate $\mathscr C$ and its quotient $\mathscr P\simeq\ZZ_p^{r-1}$. The action there is multiplication by $f(p)$, which cannot kill a nonzero free $\ZZ_p$-module unless it is zero.\end{proof}
+This correction is essential: an annihilator of the entire class module necessarily vanishes at the elliptic central character in positive fine Mordell--Weil rank. One must first remove the known rational-point directions, in the sense of the relative subquotient $\Y_W/\mathscr K$.
+
+For completeness, the annihilator ideal of $\W$ itself is exactly $(U-p)$ if $d_p>0$, and $(U-p,p^b)$ if $S$ is finite of exponent $p^b$ (including $b=0$ for $S=0$). Indeed evaluation at $p$ has kernel $(U-p)$, and its image acts on $S^\vee$ with precisely the indicated annihilator. This calculation characterizes the remaining problem; it is not an independent source of the desired transverse element. The research target is to construct such an element from arithmetic reciprocity, without using the elementary divisors of $S$ as input.
+
+
+\section{Actual principalization, unit cohomology and regulators}\label{sec:units}
+Let $F/M$ be the cyclic extension of Section \ref{sec:half}. It is unramified outside $\Sigma$. Put $\mathcal E_F=\mathcal O_{F,\Sigma}^\times$, and let $\mathcal P_F$ denote the group of principal fractional ideals outside $\Sigma$. The following classical argument gives an exact source of genuine capitulation relations.
+\begin{theorem}[Unit--capitulation comparison]\label{th:units}
+If $\Gamma=\Gal(F/M)=\langle\sigma\rangle$, then
+\begin{equation}\label{eq:units}
+\ker(\Cl_\Sigma(M)\xrightarrow{j}\Cl_\Sigma(F))
+\simeq H^1(\Gamma,\mathcal E_F)
+\simeq \frac{\ker N_\Gamma}{(\sigma-1)\mathcal E_F}.
+\end{equation}
+The last expression uses additive notation and $N_\Gamma=\sum_{\gamma\in\Gamma}\gamma$. The isomorphisms are equivariant for the central involution.
+\end{theorem}
+\begin{proof}
+Apply $\Gamma$-invariants to $1\to\mathcal E_F\to F^\times\to\mathcal P_F\to1$. Hilbert 90 gives $H^1(\Gamma,F^\times)=0$, so $H^1(\Gamma,\mathcal E_F)\simeq\mathcal P_F^\Gamma/\mathcal P_M$. Since all primes outside $\Sigma$ are unramified, the invariant group of fractional ideals outside $\Sigma$ is exactly the extension of that ideal group of $M$. Hence the latter quotient is the capitulation kernel. The periodic cyclic resolution gives the last expression. Central equivariance follows from functoriality.\end{proof}
+If $\mathcal K=\ker j$ and $\overline{\mathcal K}$ denotes the image of its $p$-primary part in $\D_{n,m}$, then Theorem \ref{th:half} factors as
+\[
+\D_{n,m}/\overline{\mathcal K}\twoheadrightarrow p^aC_m.
+\]
+Every verified norm-one unit cocycle yields a genuine relation: choose $\alpha\in F^\times$ with $\sigma(\alpha)/\alpha$ equal to the cocycle value, by Hilbert 90. Its principal ideal outside $\Sigma$ is invariant, hence the extension of an ideal of $M$. The ideal class of that downstairs ideal is killed by $j$. This makes a concrete regulator target: produce such cocycles with nontrivial negative central character and bound the residual quotient left after their relations and the rational-point relations are imposed.
+
+Ordinary cyclotomic units in $K_m$ lie in $\QQ(\mu_{p^m})$, fixed by $-I$ because its determinant is one. Their negative projector is zero. Ordinary weight-zero full-level modular functions also identify a level structure with its negative; their usual specializations cannot provide a negative central character directly. These observations rule out a direct equivariant argument from those untwisted unit values, not constructions using elliptic coefficient systems, higher motivic classes, or nontrivial twists. A map from higher elliptic motivic classes to the group in \eqref{eq:units} with enough independently controlled images would be additional arithmetic input. No such general saturation statement is proved here.
+
+
+\section{Arithmetic implementation and worked finite-module tests}
+The construction suggests a practical test at fixed $E,p,m$, even if high division fields remain too large to compute in general. The following table records exact field degrees for $p=5$ under (H1); the last column uses $n=1$.
+\begin{center}\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+$m$&$[K_m:\QQ]$&$[F_m:\QQ]$&$[M_{1,m}:\QQ]$\\\midrule
+1&480&24&24\\
+2&300,000&600&120\\
+3&187,500,000&15,000&600\\
+4&117,187,500,000&375,000&3,000\\
+5&73,242,187,500,000&9,375,000&15,000\\
+6&45,776,367,187,500,000&234,375,000&75,000\\\bottomrule
+\end{tabular}
+\end{center}
+The saving is in field degree, not a proved bound on class-group computation time. A covector field can be described through a fixed field in the division-field representation; a primitive vector and its associated covector under the Weil pairing differ by a determinant twist, which must be retained when constructing defining polynomials.
+
+\subsection*{Certified calculation protocol}
+\begin{enumerate}
+\item Verify (H1)--(H3) and local primitivity; certify a $p$-saturated rational-point subgroup. Determine the root number if a parity certificate is intended.
+\item Construct the relevant covector or intermediate number field, with its scalar automorphisms. Compute the $\Sigma$-class group, and form the character quotient by adding the scalar relations in a Smith normal form presentation.
+\item At fixed covector precision, add prime-triple relations from Lemma \ref{lem:prime}. At intermediate precision, use actual capitulation classes from Theorem \ref{th:units} or other independently verified relations in the projected kernel of Theorem \ref{th:factor}.
+\item Evaluate the known fine rational-point characters, choose independent dual relations, and form the corresponding quotient. Apply the maximal elementary-divisor bound or the parity certificate.
+\end{enumerate}
+All class-group computations used for a certificate must be certified rather than based solely on a conditional class-number algorithm.
+
+\subsection*{Illustrative test}
+Suppose a certified pure quotient at precision $n=3$ is a quotient of $\ZZ/125\oplus\ZZ/25\oplus(\ZZ/5)^2$, with $p=5$. Then there is at most one maximal factor of order $125$. If the rank is known with matching root-number parity, the pure maximal count is zero. Cassels--Tate symmetry bounds the remaining layer dimensions by $4,2,0$, giving $25S=0$ and $\#S\le5^6$. This is an example of the certificate, not a calculation for a specified elliptic curve. No number-field class group has been computed in this article.
+
+
+\section{Geometric implications and Kato reciprocity}
+We record the arithmetic-geometric implications of a successful certificate. Let $H\subseteq S$ be generated by $h$ classes $\xi_1,\ldots,\xi_h$, let $X$ be the corresponding locally soluble torsor under $E^h$, and write $\mu(X)=\min_{L\text{ ample}}\chi(X,L)$ for line bundles defined over $\QQ$. For a non-CM elliptic curve the geometric divisor lattice is $\Sym_h(\ZZ)$. The Picard connecting map sends $B$ to $B\xi$, up to sign, because translation by a point changes a line bundle by its associated polarization homomorphism. Local solubility removes the Brauer descent obstruction by global Brauer reciprocity. Thus a symmetric matrix descends precisely when its rows lie in the relation lattice $\{a:\sum a_i\xi_i=0\}$ of index $\#H$. Riemann--Roch gives $\chi(L)=\det B$. If the relation lattice is $UD\ZZ^h$ in Smith coordinates, $UDU^{\mathsf T}$ is a positive definite descended matrix with determinant $\#H$. Hence $\mu(X)=\#H$.
+
+A dominant morphism $X\to B$ to an abelian variety of dimension $h$ corresponds to an isogeny $E^h\to B$ killing $\xi$. The $p$-primary kernel is stable under the full integral matrix algebra by (H1); it therefore has the form $D'\oplus D'$ in a Tate-module basis, and can be realized by an integral matrix isogeny of $E^h$ whose determinant is divisible by $\#H$. The prime-to-$p$ part cannot kill a $p$-primary torsor class. Conversely a matrix of relation-lattice rows gives a descent isogeny of degree $(\#H)^2$. Thus the minimum descent degree $\I(X)$ equals $\mu(X)^2$. For independent generators of orders $q_i$, the minimum canonical-height energy for morphisms to $E^h$ with product principal polarization is $\sum_i q_i^2$: each column of the descent matrix is divisible by $q_i$, and the diagonal matrix attains the bound. These are the geometric comparisons from the earlier arithmetic-geometric framework.
+
+The Picard obstruction $D_X=\im(B\mapsto B\xi)$ is finite, and the algebraic Brauer group modulo constants with locally constant restrictions identifies with $\Sha(E^h/\QQ)/D_X$. Requiring zero local restrictions rather than constant ones imposes a finite-image Brauer--Manin functional (its image is killed by the degree of a global zero-cycle). Therefore the Tate module of the locally trivial algebraic Brauer group has rank $hd_p$. In particular, once a certificate proves $S$ finite of order $M_0$, the bounds $\mu(X)\le M_0$, $\I(X)\le M_0^2$ and vanishing of that Brauer Tate module hold uniformly for these $p$-primary torsors. This statement does not bound torsors involving other primes.
+
+For the connection to Kato, under the additional hypotheses of the Kolyvagin-system structure theorem in \cite{BCGS}, the first nonzero derivative order of the Beilinson--Kato system (cf. the original Euler-system construction \cite{Kato}) equals the fine Selmer corank, which is $r-1+d_p$ here by \eqref{eq:kummer}. The finite arithmetic certificates in Sections 10 and 17 therefore establish order $r-1$ whenever those hypotheses hold. Kim's modular-symbol invariants \cite{Kim} give related Selmer structure comparisons. Neither identity alone supplies the missing higher motivic reciprocity law in \cite{BKS}.
+\clearpage
+\section{Conclusions, limitations and research targets}
+The results of this manuscript give an exact representation-theoretic saturation of a covector class group, a compatible pure Sha submodule, and a two-stage transfer that detects deep torsion through smaller fields. The principal distinction is between formal transfer divisibility and independent arithmetic annihilation. The former is established here; the latter remains the central problem.
+
+\small
+\noindent\begin{tabularx}{\textwidth}{@{}p{.48\textwidth}X@{}}
+\toprule
+\textbf{Assertion} & \textbf{Status in this article}\\\midrule
+Character norm surjectivity and unipotent reconstruction & Proved (Sections 5--6)\\
+Exact strict Selmer comparison and pure Sha realization & Proved under (H1)--(H4)\\
+Norm and ordinary transfer formulas & Proved (Sections 11--12)\\
+Half-degree cyclic decomposition and scalar trace & Proved (Sections 14--15)\\
+Factorization through lower norm and projected kernel & Proved (Section 16)\\
+Finite rank and Sha exponent certificates & Proved under stated hypotheses\\
+Relative central annihilator implication & Proved (Section 19)\\
+Construction of transverse arithmetic annihilators & Open\\
+Uniform accelerated principalization & Open\\
+Higher elliptic motivic regulator saturation & Open\\
+Full Birch--Swinnerton--Dyer conjecture & Open\\\bottomrule
+\end{tabularx}
+\normalsize
+
+There are two particularly concrete future targets. First, construct an arithmetic presentation of the kernel of the projected transfer using unit cohomology and elliptic motivic classes, and prove that after removal of known fine Mordell--Weil directions the residual quotient is at most one-dimensional when parity permits. Second, construct a relative annihilator $f(U)$ as in \eqref{eq:ann} and prove $f(p)\ne0$ independently of Sha finiteness. Either would imply the desired primary finiteness in the present setting. The first must confront the factorization theorem: an upper bound on the entire unprojected intermediate class group cannot improve the exact lower-level bound. The second must confront the forced central root from nonzero fine Mordell--Weil rank; an annihilator of the whole class module is not a viable substitute for a relative annihilator.
+
+The projected accelerated-principalization assertion is equivalent to $p$-primary finiteness under the standing hypotheses. Indeed Corollary \ref{cor:accel} proves one implication; if $S$ has exponent $p^b$, choose $a$ with $2a\ge b$ and $n>a$ to obtain vanishing. This equivalence clarifies the remaining difficulty rather than solving it.
+
+Even a proof at every prime satisfying (H1)--(H4) would not prove the full BSD conjecture: exceptional primes, other reduction types, complex analytic rank equality and the exact leading coefficient must also be addressed. The results are unconditional implications within their explicit hypotheses. Numerical illustrations are not class-group computations, and historical originality of the particular constructions remains to be independently assessed.
+\clearpage
+\begin{thebibliography}{99}
+\bibitem{HO} T. Hiranouchi and T. Ohshita, Asymptotic behavior of class groups and cyclotomic Iwasawa theory of elliptic curves, \emph{J. Th\'{e}or. Nombres Bordeaux} (2023). \href{https://doi.org/10.5802/jtnb.1258}{doi:10.5802/jtnb.1258}; \href{https://arxiv.org/abs/2203.16039}{arXiv:2203.16039}.
+\bibitem{DD} T. Dokchitser and V. Dokchitser, On the Birch--Swinnerton-Dyer quotients modulo squares, \emph{Ann. of Math.} 172 (2010), 567--596. \href{https://doi.org/10.4007/annals.2010.172.567}{doi:10.4007/annals.2010.172.567}.
+\bibitem{Kim} C.-H. Kim, The structure of Selmer groups and the Iwasawa main conjecture for elliptic curves, \href{https://arxiv.org/abs/2203.12159}{arXiv:2203.12159}.
+\bibitem{BCGS} A. Burungale, F. Castella, G. Grossi and C. Skinner, Non-vanishing of Kolyvagin systems and Iwasawa theory, \href{https://arxiv.org/abs/2312.09301}{arXiv:2312.09301}.
+\bibitem{BKS} D. Burns, M. Kurihara and T. Sano, On derivatives of Kato's Euler system for elliptic curves, \emph{J. Math. Soc. Japan} 76 (2024), 855--908. \href{https://doi.org/10.2969/jmsj/90699069}{doi:10.2969/jmsj/90699069}.
+\bibitem{PS} B. Poonen and M. Stoll, The Cassels--Tate pairing on polarized abelian varieties, \emph{Ann. of Math.} 150 (1999), 1109--1149.
+\bibitem{Milne} J. S. Milne, \emph{Arithmetic Duality Theorems}, second edition, BookSurge, 2006. \href{https://www.jmilne.org/math/Books/ADT.html}{Author's online edition}.
+\bibitem{NSW} J. Neukirch, A. Schmidt and K. Wingberg, \emph{Cohomology of Number Fields}, second edition, Springer, 2008.
+\bibitem{Serre} J.-P. Serre, \emph{Galois Cohomology}, Springer, 1997.
+\bibitem{MR} B. Mazur and K. Rubin, \emph{Kolyvagin Systems}, Memoirs of the American Mathematical Society 168, no. 799, 2004.
+\bibitem{Kato} K. Kato, $p$-adic Hodge theory and values of zeta functions of modular forms, \emph{Ast\'{e}risque} 295 (2004), 117--290.
+\bibitem{Silverman} J. H. Silverman, \emph{The Arithmetic of Elliptic Curves}, second edition, Springer, 2009.
+\bibitem{Neukirch} J. Neukirch, \emph{Algebraic Number Theory}, Springer, 1999.
+\end{thebibliography}
+\vfill
+\noindent\textcolor{teal}{\rule{\textwidth}{0.5pt}}\\[-2pt]
+\small\textbf{Reproducibility and scope.} The finite-module identities, trace formulas and field degrees are explicit. The proposed computational certificates require independently certified class groups or projected relations. The manuscript does not assert an unconditional solution of the Birch--Swinnerton-Dyer conjecture.
+\end{document}
