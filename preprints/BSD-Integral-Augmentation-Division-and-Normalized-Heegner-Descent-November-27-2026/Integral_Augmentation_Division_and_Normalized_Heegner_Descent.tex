@@ -1,0 +1,342 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=1.03in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools,mathrsfs}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern,microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{enumitem}
+\setlist{nosep}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Zp}{\mathbb Z_p}\newcommand{\Qp}{\mathbb Q_p}
+\newcommand{\OO}{\mathcal O}\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Gal}{\operatorname{Gal}}\newcommand{\Res}{\operatorname{Res}}
+\newcommand{\red}{\operatorname{red}}\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\Sel}{\operatorname{Sel}}\newcommand{\ShaG}{\mathrm{\mathit{Sha}}}
+\newcommand{\Frob}{\operatorname{Fr}}\newcommand{\HH}{\mathrm H}
+\title{\bfseries Integral Augmentation Division and Normalized Heegner Descent on Faithful Cyclotomic Abelian Varieties}
+\author{Jo\~ao V\'ictor de Mello}
+\date{27 November 2026\\\small Research manuscript --- draft for mathematical review}
+\begin{document}
+\maketitle
+\begin{abstract}
+Fix a squarefree inert Heegner conductor with $h<p$ prime factors satisfying Kolyvagin congruences modulo $p^a$. We study an arbitrary all-unit diagonal cyclic quotient of degree $p^a$ of its $p$-primary ring class extension. An integral divided-power identity gives a canonical augmentation division of the diagonal trace-zero Heegner point, simultaneously at every auxiliary conductor. Projection onto the faithful cyclotomic abelian variety produces an integral norm-compatible family whose common divisibility reflects the lower cyclotomic characters absent throughout the family. For auxiliary primes satisfying the usual Kolyvagin congruences with one additional power of $p$, the normalized derivatives descend to global classes with ordinary and transverse geometric local conditions and an explicit modified finite--singular law. The proof keeps track of the prime-to-$p$ degrees arising from ring class traces. We distinguish these conclusions from a sharp Kolyvagin-system length bound: the latter requires an additional global comparison for the modified reciprocity operators and the ramified twist. No unrestricted rank-one or Birch--Swinnerton-Dyer assertion is made.
+\end{abstract}
+\noindent\textbf{Keywords:} Heegner points; cyclotomic lattices; Kolyvagin derivatives; ring class fields; Selmer groups.\\
+\textbf{MSC 2020:} 11G05, 11G18, 11R23, 11G40.
+
+\section{Introduction}
+The classical Heegner-point Euler system combines trace relations and reduction congruences. These furnish global Kolyvagin classes whose local behavior is essential for controlling Selmer groups; see Bertolini--Darmon \cite{BD}, Howard \cite{Howard}, and Mazur--Rubin \cite{MRKS}. The effect of integral division on the reduction congruences is subtler than its effect on trace relations. In particular, the existence of a divisible initial point does not imply the divisibility of an entire system.
+
+This article studies a fixed conductor, rather than choosing replacement conductor primes. Its main device is a polynomial identity in the trace-zero quotient of a cyclic group ring. The identity permits simultaneous division in the actual Mordell--Weil lattices and produces points on a faithful cyclotomic abelian variety of the type considered in \cite{MRLC}. A second device is to absorb a possible reduction error by increasing the auxiliary-prime precision. Modified finite--singular laws are already a feature of the classical Heegner construction and of more general anticyclotomic systems \cite{Howard,MZ}; our focus is the integral normalization preceding such a law.
+
+The principal statements are Theorems \ref{thm:division}, \ref{thm:faithful}, and \ref{thm:descent}. Their proofs do not assume the finiteness of the Tate--Shafarevich group. The final section specifies the extra input required for a quantitative Euler-system bound. The novelty of the specific normalization identities relative to all existing literature remains to be checked.
+
+\section{Arithmetic setup and conventions}
+Let $E/\mathbb Q$ have conductor $N_E$, let $K$ be an imaginary quadratic field of discriminant less than $-4$, and suppose every prime dividing $N_E$ splits in $K$. Fix a prime $p\geq5$. We impose the following hypotheses throughout:
+\begin{enumerate}[label=(H\arabic*)]
+\item $p\nmid h_K$ and the representation on $E[p]$ restricted to $G_K$ has image containing $\mathrm{SL}_2(\mathbb F_p)$.
+\item $E$ has good reduction at $p$. At every bad reduction prime its geometric N\'eron component group has order prime to $p$.
+\item The Heegner points $y_c\in E(K[c])$ are chosen compatibly for squarefree conductors $c$ supported on inert primes prime to $pN_E\operatorname{disc}(K)$. They obey the standard norm and reduction relations below.
+\end{enumerate}
+Here $K[c]$ is the ring class field of conductor $c$, and $K[1]$ is the Hilbert class field. Write $a_\ell=\ell+1-\#E(\mathbb F_\ell)$ at a good prime. For an inert prime $\ell\nmid c$, the classical relations are
+\begin{align}
+ \Tr_{K[c\ell]/K[c]}y_{c\ell}&=a_\ell y_c,\label{eq:norm}\\
+ \red_{w}y_{c\ell}&=F_\ell\red_{w|K[c]}y_c.\label{eq:red}
+\end{align}
+In \eqref{eq:red}, $F_\ell$ is the $\ell$-power Frobenius endomorphism of the reduction of $E/\mathbb Q$, with a compatible choice of CM points and primes. We use the relation equivariantly over the primes above $\ell$. These are the classical distribution and congruence relations, cf. \cite[Prop.~3.2]{BD} and \cite[\S1.7]{Howard}. The discriminant restriction avoids unit corrections in the conductor degree.
+
+For a squarefree inert conductor $c$, denote by $L_c$ the maximal $p$-power subextension of $K[c]/K$. The ring class exact sequence and (H1) give
+\[
+ \Gal(L_c/K)=\prod_{\ell\mid c} C_{p^{v_p(\ell+1)}}.
+\]
+In particular, $L_cL_d=L_{cd}$ and $L_c\cap L_d=K$ for coprime $c,d$; each conductor coordinate is totally ramified at the corresponding prime. Define
+\[
+ t_c=\Tr_{K[c]/L_c}y_c,\qquad L_1=K.
+\]
+Set $n_\ell=p^{v_p(\ell+1)}$ and $c_\ell=(\ell+1)/n_\ell$. Tracing \eqref{eq:norm} gives
+\begin{equation}\label{eq:pnorm}
+ \Tr_{L_{c\ell}/L_c}t_{c\ell}=a_\ell t_c.
+\end{equation}
+Tracing the reduction congruence instead gives, in compatible local reductions,
+\begin{equation}\label{eq:pred}
+ \red(t_{c\ell})=c_\ell F_\ell\red(t_c).
+\end{equation}
+Indeed the prime-to-$p$ trace at conductor $c\ell$ contains $c_\ell$ times as many summands as the trace at $c$, and each extra summand has the same reduction by total ramification. Thus one must not use the unmodified reduction relation for $t_c$ when $c_\ell\ne1$.
+
+Fix now $N=\ell_1\cdots\ell_h$, where $1\le h<p$, and an integer $a\ge1$ such that, with $q=p^a$,
+\begin{equation}\label{eq:old}
+ q\mid \ell_i+1,\qquad q\mid a_{\ell_i}\quad(1\le i\le h).
+\end{equation}
+Write $G=\Gal(L_N/K)=\prod_i\langle\sigma_i\rangle$, where $\sigma_i$ has order $n_i=n_{\ell_i}$. Fix any surjection
+\[
+ G\longrightarrow C_q=\langle\tau\rangle,\qquad \sigma_i\longmapsto\tau^{u_i},\quad u_i\in(\mathbb Z/q)^\times.
+\]
+Let $J$ be the fixed field of its kernel $H$. For an auxiliary conductor $m$ coprime to $N$, set $F_m=L_m$, $\mathcal M_m=E(L_NF_m)\otimes\Zp$, and $M_m=E(JF_m)\otimes\Zp$. For any finite abelian extension of $K$, the residual image on its Galois group contains the commutator $\mathrm{SL}_2(\mathbb F_p)$, which has no nonzero fixed vectors. Thus all these Mordell--Weil completions are torsion-free. Invariants commute with tensoring by $\Zp$ (flatness and the finite number of group equations), so $M_m=\mathcal M_m^H$ is saturated in $\mathcal M_m$.
+
+Put $Q_m=\Tr_Ht_{Nm}\in M_m$, $X=\tau-1$, and $\mathcal N=\sum_{i=0}^{q-1}\tau^i$. Repeated application of \eqref{eq:pnorm} gives
+\begin{equation}\label{eq:fulltrace}
+ \mathcal N Q_m=\left(\prod_{i=1}^h a_{\ell_i}\right)t_m\in q^h(E(F_m)\otimes\Zp).
+\end{equation}
+The integral trace-zero point is
+\begin{equation}\label{eq:W}
+ W_m=Q_m-q^{-1}\mathcal NQ_m\in M_m^0:=\ker(\mathcal N|M_m).
+\end{equation}
+All field traces here are unnormalized sums. The expression $q^{-1}\mathcal NQ_m$ is integral by \eqref{eq:fulltrace}.
+
+\section{Integral divided powers and simultaneous division}
+Define $D_i=\sum_{r=0}^{n_i-1}r\sigma_i^r$, $P_m=D_1\cdots D_ht_{Nm}$, and
+\[
+ B_h(T)=\sum_{r=0}^{q-1}\binom rhT^r,\qquad u=\prod_i u_i\in\Zp^\times,
+\]
+where each $u_i$ is lifted to a $p$-adic unit integer. The relation $(\sigma_i-1)D_i=n_i-\sum_r\sigma_i^r$ and \eqref{eq:old} show that $P_m$ is $G$-invariant modulo $q\mathcal M_m$.
+
+\begin{lemma}[Diagonal polarization]\label{lem:polar}
+For every auxiliary conductor $m$,
+\[
+ B_h(\tau)W_m\equiv uP_m\pmod{q\mathcal M_m}.
+\]
+\end{lemma}
+\begin{proof}
+Since $h<p$, the polynomial $\binom{x}{h}$ has coefficients in $\Zp$ and is periodic modulo $q$ with period $q$. Expand $\binom{\sum_i u_i k_i}{h}$ as a polynomial in the conductor coordinates. Its unique monomial involving every coordinate is $u\prod_i k_i$, because the degree is $h$ and the leading coefficient is $1/h!$. Each other monomial omits at least one coordinate $i$. Summation over that coordinate introduces the norm $\sum_r\sigma_i^r$, which sends $t_{Nm}$ to $a_{\ell_i}t_{(N/\ell_i)m}$, divisible by $q$. Expanding $B_h(\tau)Q_m$ as a sum over $G$ therefore gives the assertion with $Q_m$ in place of $W_m$.
+
+The subtracted term in \eqref{eq:W} is invariant and belongs to $q^{h-1}M_m$. If $h\ge2$, it is already divisible by $q$. If $h=1$, use $B_1(1)=q(q-1)/2$. In either case the change vanishes modulo $q$.
+\end{proof}
+
+\begin{lemma}[Cyclic divided-power identity]\label{lem:unit}
+In $\mathcal A=\Zp[T]/(1+T+\cdots+T^{q-1})$ one has
+\begin{equation}\label{eq:unit}
+ (T-1)^hB_h(T)=qU_h(T),
+\end{equation}
+where the following polynomial defines a unit of $\mathcal A$:
+\[
+ U_h(T)=\sum_{r=1}^h\frac{\binom qr}{q}(-1)^{h-r}T^{h-r}(T-1)^{r-1}.
+\]
+\end{lemma}
+\begin{proof}
+For a nontrivial $q$-th root $\xi$, extract the coefficient of $Y^h$ in
+\[
+ \sum_{k=0}^{q-1}\xi^k(1+Y)^k=\frac{(1+Y)^q-1}{\xi(1+Y)-1}.
+\]
+Expansion of the denominator gives \eqref{eq:unit} at $T=\xi$. Since all nontrivial roots are distinct in characteristic zero, and the norm polynomial is monic, the identity holds in $\mathcal A$. For $1\le r\le h<p$, $\binom qr/q=\binom{q-1}{r-1}/r\in\Zp$. The reduction of the norm polynomial is $(T-1)^{q-1}$, so $\mathcal A$ is local with maximal ideal $(p,T-1)$. As $U_h(1)=(-1)^{h-1}$, it is a unit.
+\end{proof}
+
+\begin{theorem}[System-wide augmentation division]\label{thm:division}
+For every $m$ there is a unique $V_m\in M_m^0$ such that
+\begin{equation}\label{eq:V}
+ W_m=X^{h-1}V_m.
+\end{equation}
+For each new inert auxiliary prime $\ell$ prime to $Nm p N_E$,
+\begin{equation}\label{eq:Vnorm}
+ \Tr_{F_{m\ell}/F_m} V_{m\ell}=a_\ell V_m.
+\end{equation}
+The trace in \eqref{eq:Vnorm} acts on points over $JF_{m\ell}$ using disjointness.
+\end{theorem}
+\begin{proof}
+Lemma \ref{lem:polar} and the invariance of $P_m$ give $XB_h(\tau)W_m\in q\mathcal M_m$. The saturated lattice $M_m^0$ contains this element, so its quotient by $q$ is in $M_m^0$. Define
+\[
+ V_m=U_h(\tau)^{-1}\frac{XB_h(\tau)W_m}{q}.
+\]
+Lemma \ref{lem:unit} gives \eqref{eq:V}; uniqueness follows from injectivity of $X$ on $M_m^0$, since the only rational vectors fixed by $\tau$ and killed by the norm are zero. The traces of $Q_m$ and $q^{-1}\mathcal NQ_m$ both satisfy \eqref{eq:pnorm}. Their difference therefore does as well. Trace commutes with $X$, and applying injectivity of $X^{h-1}$ proves \eqref{eq:Vnorm}.
+\end{proof}
+
+\section{Projection to the faithful abelian variety}
+Let $J_-$ be the unique subfield of $J$ of degree $q/p$ over $K$. Define
+\[
+ A=\ker\big(\Res_{J/K}E\xrightarrow{\Tr}\Res_{J_-/K}E\big).
+\]
+Over an algebraic closure the norm map is a product of summation maps $E^p\to E$, so the kernel is connected and has dimension $e=\varphi(q)$. The integral endomorphism $\tau$ of $A$ satisfies $\Phi_q(\tau)=0$; the $p$-adic coefficient ring is $\OO=\Zp[\zeta_q]$ with uniformizer $\pi=\zeta_q-1$ acting as $X$, and $v_\pi(p)=e$. We use $A(F_m)\otimes\Zp$ as the actual faithful lattice, not the potentially different lattice obtained by character projectors after scalar extension. The relation $\Phi_q(\tau)=0$ follows from the relative norm, and flatness identifies this lattice with the kernel of $\Phi_q(\tau)$ in $M_m$.
+
+For each $1\le j<a$, let the $j$-th cyclotomic component mean the summand in the rational decomposition cut out by $\Phi_{p^j}(\tau)$. Define
+\[
+ \mathcal Z_\infty=\{j<a:\text{the $j$-th component of $V_m$ is zero for every }m\},
+ \qquad s=h+\sum_{j\in\mathcal Z_\infty}\varphi(p^j).
+\]
+This definition concerns all squarefree auxiliary conductors under consideration; it is not inferred from the initial point alone.
+
+\begin{theorem}[Integral faithful normalization]\label{thm:faithful}
+There is an integral family $Z_m\in A(F_m)\otimes\Zp$ satisfying
+\begin{align}
+ (\tau^{q/p}-1)Q_m&=\pi^s Z_m,\label{eq:faith}\\
+ \Tr_{F_{m\ell}/F_m}Z_{m\ell}&=a_\ell Z_m.\label{eq:Znorm}
+\end{align}
+In particular one always has a common factor $\pi^h$, without any information about persistently missing components.
+\end{theorem}
+\begin{proof}
+Set $F_0(T)=\prod_{j<a,\,j\notin\mathcal Z_\infty}\Phi_{p^j}(T)$ and $F_1(T)=\prod_{j\in\mathcal Z_\infty}\Phi_{p^j}(T)$. Since $V_m$ is trace-zero and every missing component vanishes, $\Phi_q(\tau)F_0(\tau)V_m=0$. Hence $U_m=F_0(\tau)V_m$ is in the faithful lattice. Factor $T^{q/p}-1=(T-1)F_0(T)F_1(T)$ and use \eqref{eq:V}. The invariant correction in $Q_m-W_m$ is annihilated by $\tau^{q/p}-1$. Thus
+\[
+ (\tau^{q/p}-1)Q_m=X^hF_1(\tau)U_m.
+\]
+For $j<a$, $v_\pi(\Phi_{p^j}(\zeta_q))=\varphi(p^j)$, by taking the quotient of $\zeta_q^{p^j}-1$ and $\zeta_q^{p^{j-1}}-1$. Therefore $X^hF_1(\tau)=\pi^s\eta$ on $A$, where $\eta\in\OO^\times$. Set $Z_m=\eta U_m$. Equation \eqref{eq:Znorm} is inherited from \eqref{eq:Vnorm}.
+\end{proof}
+
+\begin{corollary}[Uniform size of the normalization factor]\label{cor:s}
+One has $1\le s\le e$, for all $a\ge1$.
+\end{corollary}
+\begin{proof}
+For $a=1$, $s=h\le p-1=e$. For $a\ge2$, use $s\le h+p^{a-1}-1\le p+p^{a-1}-2\le(p-1)p^{a-1}$.
+\end{proof}
+
+\section{Global derivative classes and geometric local conditions}
+Fix $b\ge1$ and restrict new auxiliary primes $\ell$ to those inert in $K$, prime to $NpN_E\operatorname{disc}(K)$, and satisfying
+\begin{equation}\label{eq:extra}
+ p^{b+1}\mid \ell+1,\qquad p^{b+1}\mid a_\ell.
+\end{equation}
+Infinitely many such primes exist by Chebotarev applied to $\mathbb Q(E[p^{b+1}])K$: a complex conjugation element is inert on $K$, has determinant $-1$ and trace zero on the Tate module. At the prime of $K$ above $\ell$, Frobenius acts by $F_\ell^2$, which is the identity modulo $p^{b+1}$ by its characteristic polynomial and \eqref{eq:extra}.
+
+Let $\sigma_\ell$ generate the conductor coordinate of order $n_\ell$ in $\Gal(F_m/K)$ and choose these generators compatibly under projection. Define
+\[
+ D_\ell=\sum_{r=0}^{n_\ell-1}r\sigma_\ell^r,\qquad D_m=\prod_{\ell\mid m}D_\ell,\qquad R_m=D_mZ_m.
+\]
+The formula $(\sigma_\ell-1)D_\ell=n_\ell-N_\ell$ together with \eqref{eq:Znorm} shows that $R_m$ is invariant modulo $p^b$ over $F_m/K$. We use the Kummer map on the $p$-adic completion of $A(F_m)$, which at finite precision equals the ordinary Kummer map on $A(F_m)/p^b A(F_m)$. Since $A(F_m)[p]$ injects into $E(JF_m)[p]$, it is zero. Inflation--restriction then gives a unique class
+\begin{equation}\label{eq:kappa}
+ \kappa_{m,b}\in\HH^1(K,A[p^b]),\qquad
+ \operatorname{res}_{F_m/K}\kappa_{m,b}=\delta_{p^b}(R_m).
+\end{equation}
+No Hilbert class group representative sum is needed, because the full trace was already taken in $t_c$.
+
+Define $\mathcal F(m)$ to be the local structure imposing geometric Kummer conditions away from $m$, and at $v\mid\ell\mid m$ the transverse condition
+\[
+ \HH^1_{\mathrm{tr}}(K_v,A[p^b])=
+ \ker\big(\HH^1(K_v,A[p^b])\to\HH^1((F_\ell)_w,A[p^b])\big).
+\]
+The extension on the right is the totally ramified $p$-part of the local ring class conductor extension. The prime $v$ splits in $F_{m/\ell}$ and $J$, because its underlying ideal $(\ell)$ is principal and prime to their conductors.
+
+\begin{theorem}[Geometric local applicability]\label{thm:local}
+Under (H1)--(H3) and \eqref{eq:old}, \eqref{eq:extra}, the classes \eqref{eq:kappa} satisfy
+\[
+ \kappa_{m,b}\in\HH^1_{\mathcal F(m)}(K,A[p^b]).
+\]
+\end{theorem}
+\begin{proof}
+At $v\mid N$, the extension $F_m/K$ splits completely at $v$, again by principality of the inert prime. Hence the restriction in \eqref{eq:kappa} already implies the geometric Kummer condition over $K_v$, even when $A$ has bad reduction there.
+
+At $v\nmid Nm$, the extension $F_m/K$ is unramified. The variety $A$ has good reduction whenever $E$ does, because $J/K$ is unramified there and the defining kernel splits over an unramified extension as a product of copies of $E$. At a bad reduction prime outside $N$, the geometric component group of $A$ is a product of those of $E$, and has order prime to $p$ by (H2). For a finite unramified local extension $L/F$, the connected part of the N\'eron reduction and the formal group have vanishing first cyclic cohomology. The former follows from Lang's theorem and the latter by the additive residue-field filtrations (pass to the inverse limit of the finite quotients). A prime-to-$p$ component group contributes no $p$-primary obstruction. Consequently $\HH^1(\Gal(L/F),A(L))[p^\infty]=0$ at the indicated primes. The image of $\kappa_{m,b}$ in $\HH^1(K_v,A)[p^b]$ restricts to zero by \eqref{eq:kappa}, hence is zero. The local Kummer exact sequence proves the ordinary condition.
+
+At $v\mid\ell\mid m$, $A$ is split and has good reduction. All the local inertia conjugates of a point have the same reduction, and the reduction of $D_\ell Z_m$ is a multiple of $n_\ell(n_\ell-1)/2$, which is divisible by $p^b$. This calculation commutes with the remaining derivative operators. The kernel of reduction of a good reduction abelian variety at $\ell\ne p$ is uniquely $p$-divisible, so $R_m$ is locally divisible by $p^b$ over $(F_m)_w=(F_\ell)_w$. Its Kummer class vanishes after that restriction. This is precisely the transverse condition. Archimedean places of $K$ are complex and contribute no condition.
+\end{proof}
+
+\section{One-extra-power compensation and modified reciprocity}
+The preceding construction requires only geometric Kummer conditions. To compare two adjacent auxiliary vertices, one needs the reduction relation for the normalized family. We prove a weighted relation sufficient for the classical cocycle computation.
+
+Fix $m$ and an auxiliary prime $\ell\nmid m$ satisfying \eqref{eq:extra}. Let $v$ be the prime of $K$ over $\ell$. Since $v$ splits completely in $J$ and $F_m$, the reduction of $A$ is the kernel of the split summation maps on copies of $\widetilde E$. Use the componentwise $\ell$-power Frobenius endomorphism $F=F_\ell$ on this kernel. It commutes with the conductor action and with the $\OO$-action. In particular
+\begin{equation}\label{eq:fpoly}
+ F^2-a_\ell F+\ell=0,
+ \qquad F^2\equiv1\pmod{p^{b+1}}\text{ on }T_p(A).
+\end{equation}
+We use compatible reduction maps at primes over $v$ and extend them to the $p$-adic completions by projection to the $p$-primary reduction group.
+
+\begin{lemma}[Weighted reduction after normalization]\label{lem:weighted}
+With the preceding conventions,
+\begin{equation}\label{eq:error}
+ \pi^s\bigl(\red Z_{m\ell}-c_\ell F\red Z_m\bigr)=0.
+\end{equation}
+If \eqref{eq:extra} holds, then
+\begin{equation}\label{eq:weighted}
+ \frac{n_\ell}{p^b}\red Z_{m\ell}
+ =\frac{\ell+1}{p^b}F\red Z_m.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Equation \eqref{eq:pred} commutes with the fixed diagonal trace and the endomorphism $\tau^{q/p}-1$. Applying \eqref{eq:faith} at $m$ and $m\ell$ gives \eqref{eq:error}. At a split good prime the inclusion of the faithful kernel remains an inclusion after reduction, so this is an equality in the reduction of $A$, not just an equality in an ambient rational character space.
+
+Since $v_p(n_\ell)\ge b+1$, the scalar $n_\ell/p^b$ is divisible by $p$. Corollary \ref{cor:s} implies that it is divisible by $\pi^s$ in $\OO$. Multiplication of \eqref{eq:error} by the appropriate scalar annihilates the error, and $n_\ell c_\ell=\ell+1$ gives \eqref{eq:weighted}.
+\end{proof}
+
+Choose a local inertia lift $\widetilde\sigma_\ell$ of the generator of $\Gal((F_\ell)_w/K_v)$, and a lift $\Frob_v$ of the arithmetic Frobenius of $K_v$. The latter acts on the reduction by $F^2$; by \eqref{eq:fpoly} both inertia and Frobenius act trivially on $A[p^b]$. We identify $A[p^b]$ with its reduction using good reduction at $v$. The unramified and transverse local modules each identify with $A[p^b]$ by evaluation at these generators (for the transverse module use its singular projection). The chosen generators fix the convention for the following formula.
+
+\begin{theorem}[Modified finite--singular law]\label{thm:descent}
+For every adjacent pair $m,m\ell$ of auxiliary conductors at precision $p^b$, the normalized global classes of \eqref{eq:kappa} satisfy
+\begin{equation}\label{eq:fs}
+ \kappa_{m\ell,b}(\widetilde\sigma_\ell)
+ =-\ell F^{-1}\kappa_{m,b}(\Frob_v)
+ \quad\text{in }A[p^b].
+\end{equation}
+In particular the modified finite--singular comparison is an isomorphism. The precision condition $p^{b+1}\mid\ell+1,a_\ell$ suffices uniformly in the degree $p^a$ of the prescribed diagonal quotient.
+\end{theorem}
+\begin{proof}
+We recall the elementary derivative cocycle argument, cf. \cite[Lemma 1.7.2 and Prop.~1.7.4]{Howard}. For a point $R$ invariant modulo $p^b$ in the field of definition, the descended cocycle is represented by
+\[
+ g\longmapsto (g-1)\frac{R}{p^b}-\frac{(g-1)R}{p^b},
+\]
+where the first division is chosen over an algebraic closure and the second is the unique division in the torsion-free field lattice. For a completed point the same formula is interpreted at finite precision: choose a representative congruent modulo $p^b$ in the actual Mordell--Weil group, and use the Kummer class of that representative. Changing the representative by $p^b$ times a point changes neither the descended class nor the displayed inertia evaluation. Reduction of this formula at good primes of residue characteristic different from $p$ is well defined.
+
+For $R_{m\ell}=D_\ell D_m Z_{m\ell}$, the derivative identity gives
+\[
+ (\sigma_\ell-1)R_{m\ell}
+ =n_\ell D_mZ_{m\ell}-a_\ell R_m.
+\]
+Both terms have scalar factors divisible by $p^b$. On reduction, the first term in the cocycle formula vanishes for inertia. Lemma \ref{lem:weighted}, applied equivariantly to all the $D_m$-translates, therefore yields
+\begin{equation}\label{eq:sing}
+ \kappa_{m\ell,b}(\widetilde\sigma_\ell)
+ =\frac{a_\ell-(\ell+1)F}{p^b}\red R_m.
+\end{equation}
+Here division of the displayed endomorphism is integral on the $p$-adic Tate module because of \eqref{eq:extra}, and hence defines an endomorphism on the geometric $p$-primary reduction group.
+
+For the unramified class at the lower vertex, the prime splits in $F_m$, so the localization is the ordinary Kummer class of $R_m$. Its evaluation is
+\begin{equation}\label{eq:finite}
+ \kappa_{m,b}(\Frob_v)=\frac{F^2-1}{p^b}\red R_m.
+\end{equation}
+The quotient of endomorphisms in \eqref{eq:finite} is again integral by \eqref{eq:fpoly}. More explicitly, apply $F^2-1$ to a $p^b$-division point of the reduction; since the endomorphism is divisible by $p^b$ on the Tate module, this agrees with the action of $(F^2-1)/p^b$ on the original reduction point.
+
+The characteristic polynomial gives the exact identity
+\[
+ a_\ell-(\ell+1)F=-\ell F^{-1}(F^2-1)
+\]
+on the geometric $p$-primary group. Frobenius is invertible there because its degree is a power of $\ell\ne p$. Substituting into \eqref{eq:sing} and using \eqref{eq:finite} proves \eqref{eq:fs}. Since $-\ell F^{-1}$ is an automorphism, the asserted local comparison is an isomorphism. The bound $s\le e$ is independent of the auxiliary conductor and was the only size requirement in the compensation argument.
+\end{proof}
+
+\begin{remark}
+The automorphism $-\ell F^{-1}$ in \eqref{eq:fs} acts on the local representation. This is a modified reciprocity law, not an assertion that this operator is a scalar or a global $G_K$-equivariant endomorphism. It is essential to keep these two statements distinct when invoking a Kolyvagin-system structure theorem.
+\end{remark}
+
+\section{Consequences, limitations, and further arithmetic comparison}
+The construction gives a uniform norm-compatible integral family on the faithful variety for the prescribed conductor. At each precision $p^b$, the derivative classes are geometric away from the new auxiliary primes, transverse at those primes, and satisfy the invertible edge relation \eqref{eq:fs}. The proof needs neither a nonzero initial Heegner point nor finiteness of $\ShaG$. If the faithful projection vanishes throughout the family, the resulting system is simply zero; there is no implicit assertion of primitivity or nonvanishing.
+
+\subsection{A conditional length bound and its precise missing input}
+Suppose $A(K)\otimes\Zp$ is free of rank one over $\OO$ and the initial point $(\tau^{q/p}-1)Q_1$ is nonzero. Set
+\[
+ \lambda=\operatorname{length}_{\OO}\frac{A(K)\otimes\Zp}{\OO\, (\tau^{q/p}-1)Q_1}.
+\]
+Theorem \ref{thm:faithful} implies the exact geometric identity
+\begin{equation}\label{eq:index}
+ \operatorname{length}_{\OO}\frac{A(K)\otimes\Zp}{\OO Z_1}=\lambda-s.
+\end{equation}
+Indeed multiplication by $\pi^s$ in a free rank-one lattice changes the length by $s$. This calculation by itself says nothing about the finite or divisible parts of $\ShaG(A/K)[\pi^\infty]$.
+
+If a suitable integral rank-one Kolyvagin-system comparison applies to the normalized classes, with the required self-duality, local conditions and a compatible choice of transition maps, and yields the standard factor-two bound in this normalization, then it would imply
+\begin{equation}\label{eq:conditional}
+ \operatorname{length}_{\OO}\ShaG(A/K)[\pi^\infty]\le 2(\lambda-s).
+\end{equation}
+This is a conditional implication only; \eqref{eq:conditional} is not claimed as a theorem of this article. In particular, a theorem for the untwisted elliptic curve does not immediately imply it for a faithful cyclotomic variety, where the coefficient involution, polarization and integral local conditions must be checked. A comparison theorem must also justify that the strengthened auxiliary-prime sets suffice for rigidity at every required precision. Frameworks for modified systems such as \cite{MZ} are relevant, but we do not claim that all their hypotheses have been verified here.
+
+\subsection{Why persistent absence is a separate issue}
+Let $\mathcal Z_0$ be the set of lower cyclotomic components absent from $V_1$. Then $\mathcal Z_\infty\subseteq\mathcal Z_0$, but equality does not follow from the norm relations. If a character projection vanishes at a lower conductor, its projection at a larger conductor is merely constrained to have norm zero. For example, in an abstract integral representation of an auxiliary group $C_p$, the augmentation ideal has zero norm and nonzero elements. Tensoring this ideal with a fixed lower-character lattice produces nonzero points in a norm kernel without changing the lower-level trace. This is a lattice obstruction to an attempted formal proof, not a counterexample for actual Heegner points.
+
+Thus the geometric normalization factor captures the characters persistently absent from the system, not necessarily all characters absent from the initial point. Establishing their equality requires additional arithmetic information. Nor does the present construction exclude a divisible Tate--Shafarevich direction in a faithful Selmer representation with no known nonzero geometric point.
+
+\subsection{Summary}
+The new normalization mechanism can be summarized by
+\[
+ \boxed{\begin{gathered}
+ W_m=(\tau-1)^{h-1}V_m,\\
+ (\tau^{q/p}-1)Q_m=\pi^s Z_m,\\
+ \Tr_{F_{m\ell}/F_m}Z_{m\ell}=a_\ell Z_m,\\
+ \kappa_{m,b}\in\HH^1_{\mathcal F(m)}(K,A[p^b]),\\
+ \kappa_{m\ell,b}(\widetilde\sigma_\ell)=-\ell F_\ell^{-1}\kappa_{m,b}(\Frob_v).
+ \end{gathered}}
+\]
+The hypotheses are explicit and concern the original conductor, not a substitute conductor constructed by Chebotarev. Chebotarev is used only for the additional descent primes. The principal arithmetic objective for further work is the global integral comparison necessary for \eqref{eq:conditional}. The unrestricted multiplicity-one statement and the Birch--Swinnerton-Dyer conjecture remain open in this manuscript.
+
+\begin{thebibliography}{9}
+\bibitem{BD} M. Bertolini and H. Darmon, \emph{Kolyvagin's descent and Mordell--Weil groups over ring class fields}, J. Reine Angew. Math. \textbf{412} (1990), 63--74. \href{https://www.math.mcgill.ca/darmon/pub/Articles/Research/04.Kolyvagin-descent/paper.pdf}{Author's copy}.
+\bibitem{Howard} B. Howard, \emph{The Heegner point Kolyvagin system}, Compos. Math. \textbf{140} (2004), 1439--1472. \href{https://doi.org/10.1112/S0010437X04000569}{doi:10.1112/S0010437X04000569}; \href{https://arxiv.org/abs/1202.6340}{arXiv:1202.6340}.
+\bibitem{MRKS} B. Mazur and K. Rubin, \emph{Kolyvagin systems}, Mem. Amer. Math. Soc. \textbf{168} (2004), no. 799.
+\bibitem{MRLC} B. Mazur and K. Rubin, \emph{Finding large Selmer rank via an arithmetic theory of local constants}, Ann. of Math. \textbf{166} (2007), 579--612. \href{https://annals.math.princeton.edu/2007/166-2/p08}{Journal article}.
+\bibitem{MZ} L. Mastella and F. Zerman, \emph{On anticyclotomic Euler and Kolyvagin systems}, preprint, \href{https://arxiv.org/abs/2505.08710}{arXiv:2505.08710}.
+\end{thebibliography}
+\end{document}
