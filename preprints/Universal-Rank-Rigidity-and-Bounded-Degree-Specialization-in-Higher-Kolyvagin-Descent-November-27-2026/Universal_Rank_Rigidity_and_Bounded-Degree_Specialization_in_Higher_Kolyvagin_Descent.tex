@@ -1,0 +1,324 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,amsmath,amssymb,amsthm,mathtools,booktabs,microtype}
+\usepackage[a4paper,margin=27mm]{geometry}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Universal rigidity in higher descent}
+\fancyhead[R]{\small Research manuscript}
+\fancyfoot[C]{\thepage}
+\setlength{\headheight}{14pt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\Zp}{\mathbb Z_p}
+\newcommand{\Sha}{\operatorname{Sha}}
+\newcommand{\Qp}{\mathbb Q_p}
+\newcommand{\Fp}{\mathbb F_p}
+\newcommand{\rk}{\operatorname{rank}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\Gal}{\operatorname{Gal}}
+\newcommand{\Tr}{\operatorname{Tr}}
+\newcommand{\Ann}{\operatorname{Ann}}
+\newcommand{\ord}{\operatorname{ord}}
+\newcommand{\N}{\mathcal N}
+\newcommand{\D}{\mathcal D}
+\title{\bfseries Universal Rank Rigidity and Bounded-Degree\protect\\ Specialization in Higher Kolyvagin Descent}
+\author{Jo\~ao V\'ictor de Mello}
+\date{November 2026}
+\hypersetup{pdftitle={Universal Rank Rigidity and Bounded-Degree Specialization in Higher Kolyvagin Descent},pdfauthor={Joao Victor de Mello}}
+\begin{document}
+\maketitle
+\thispagestyle{plain}
+\begin{abstract}
+We study integral higher derivative operators for finite abelian $p$-groups. For $G=\prod_{i=1}^h C_{q_i}$, $q_i$ a power of an odd prime $p$, a primitive first-order product derivative of a point in a $\Zp[G]$-lattice forces its rational Galois orbit to have dimension at least $|G|(1-h/\min_i q_i)$. The argument uses the Frobenius pairing on the truncated modular group algebra and extends to arbitrary binomial derivatives. Independent primitive derivative values also force integral regular summands upon restriction to $pG$. A separate norm-factorization identity realizes every derivative modulo $p^k$ in the fixed lattice of $p^kG$, yielding a bounded-degree realization of truncated descent classes over varying number fields. For elliptic curves in abelian $p$-extensions ramified at a bounded number of additional primes, this gives uniform arithmetic bounds at each fixed precision. Tensor products of augmentation ideals demonstrate asymptotic sharpness of the rank estimate and show that the resulting uniformity cannot, in general, be upgraded to a precision-independent annihilator. Applications to derived Heegner points are discussed, with the additional arithmetic input required for Tate--Shafarevich finiteness made explicit.
+\end{abstract}
+\noindent\textbf{Keywords:} Kolyvagin derivatives; Heegner points; integral Galois modules; Mordell--Weil groups; modular group algebras; descent.\par
+\noindent\textbf{MSC 2020:} 11G05, 11G40, 11R34, 20C10.
+
+\section{Introduction}
+Kolyvagin's derivative construction converts norm relations for Euler systems into cohomological classes. In the Heegner setting the operators act on points over ring class fields; the resulting cohomological classes can constrain Selmer groups and Tate--Shafarevich groups. See Kolyvagin \cite{kolyvagin}, Bertolini--Darmon \cite{bd}, and Howard \cite{howard} for the classical setting, and Kim \cite{kim} for a recent investigation of derived Heegner points and primary Tate--Shafarevich finiteness.
+
+The present paper isolates a representation-theoretic question independent of the arithmetic generating properties of an Euler system: how large must a Galois orbit be in order for a higher derivative to survive reduction modulo $p$, and how much of the ambient field is needed to realize a truncated descent obstruction? The two questions have distinct answers. The first is governed by the proximity of the derivative to the socle of the modular group algebra. The second is governed by the periodicity of its coefficients in conductor coordinates.
+
+Our main results are Theorems \ref{thm:rank}, \ref{thm:regular}, \ref{thm:norm}, and \ref{thm:trunc}. They yield the following consequences: near-full rational orbit rank for primitive derivatives, integral regular blocks for independent derivative values, and a field of degree at most $p^{hk}$ realizing the order-$p^k$ truncation of any higher descent class at precision $p^m$, $k\le m$. The results are uniform in the conductor-group orders but not, in the last assertion, in the precision $k$. We do not assert a proof of the Birch and Swinnerton-Dyer conjecture or a precision-independent bound for genuine Heegner descent.
+
+\section{Notation and the modular derivative identity}
+Let $p$ be an odd prime, $h\ge1$, and $G=\prod_{i=1}^h\langle\sigma_i\rangle$, with $\ord(\sigma_i)=q_i=p^{a_i}$ and $a_i\ge1$. A lattice means a finite-rank free $\Zp$-module equipped with a $G$-action. Write $M$ for such a lattice, $V=M\otimes_{\Zp}\Qp$, and $\overline M=M/pM$. For $y\in M$ set
+\[
+ R(y)=\dim_{\Qp}\Qp[G]y,\qquad
+ W(y)=M\cap\Qp[G]y.
+\]
+The lattice $W(y)$ is saturated in $M$, so $W(y)/pW(y)$ injects into $\overline M$. Its rank is $R(y)$.
+
+For a multi-index $\mathbf k=(k_1,\ldots,k_h)$ with $0\le k_i<q_i$, put
+\begin{equation}\label{eq:derivatives}
+ D_i^{(k_i)}=\sum_{j=0}^{q_i-1}\binom{j}{k_i}\sigma_i^j,
+ \qquad \D_{\mathbf k}=\prod_{i=1}^h D_i^{(k_i)}.
+\end{equation}
+Write $D_i=D_i^{(1)}$ and $D_G=\prod_iD_i$. Also write $\N_H=\sum_{g\in H}g$ for the norm of a subgroup $H$. The integral cyclic derivative identity is
+\begin{equation}\label{eq:basic}
+ (\sigma_i-1)D_i=q_i-\N_{\langle\sigma_i\rangle}.
+\end{equation}
+
+\begin{lemma}[Truncated algebra identity]\label{lem:identity}
+With $X_i=\sigma_i-1$, the residual group algebra is
+\[
+ A=\Fp[G]\simeq\Fp[X_1,\ldots,X_h]/(X_1^{q_1},\ldots,X_h^{q_h}).
+\]
+In $A$ one has
+\begin{equation}\label{eq:modderiv}
+ \D_{\mathbf k}=(-1)^{\sum_i k_i}\prod_i\sigma_i^{k_i}X_i^{q_i-1-k_i}.
+\end{equation}
+\end{lemma}
+\begin{proof}
+In characteristic $p$, $(1+X_i)^{q_i}=1+X_i^{q_i}$. This gives the presentation by comparing dimensions. For an indeterminate $T$, the polynomial identity $\sum_{j=0}^{q_i-1}Z^j=(Z-1)^{q_i-1}$ yields
+\[
+ \sum_{j=0}^{q_i-1}\sigma_i^j(1+T)^j
+ =(X_i+\sigma_iT)^{q_i-1}.
+\]
+Compare coefficients of $T^{k_i}$. Since $\binom{q_i-1}{k_i}\equiv(-1)^{k_i}\pmod p$, multiplication over all coordinates proves \eqref{eq:modderiv}.
+\end{proof}
+
+\section{Universal rank rigidity}
+For an integer $s\ge0$ define the finite combinatorial constant
+\begin{equation}\label{eq:bound}
+ B_{\mathbf q}(s)=
+ \min_{\substack{0\le b_i<q_i\\\sum_i b_i\le s}}
+ \prod_{i=1}^h(q_i-b_i).
+\end{equation}
+In particular $B_{\mathbf q}(s)\ge |G|(1-s/q_{\min})$, where $q_{\min}=\min_i q_i$. The exact minimum in \eqref{eq:bound} is useful even when the simpler linear estimate is nonpositive.
+
+\begin{lemma}[Principal ideal estimate]\label{lem:ideal}
+If $f\in A$ has a nonzero monomial of total degree at most $s$, then $\dim_{\Fp}Af\ge B_{\mathbf q}(s)$.
+\end{lemma}
+\begin{proof}
+Order monomials by increasing total degree, breaking ties lexicographically. Let $X^{\mathbf b}$ be the first monomial of $f$ with nonzero coefficient. Then $\sum b_i\le s$. For all $\mathbf c$ with $0\le c_i<q_i-b_i$, the first surviving monomial of $X^{\mathbf c}f$ is $X^{\mathbf b+\mathbf c}$. The remaining terms either vanish in the truncated algebra or follow this monomial in the chosen order. These first monomials are distinct, so the products are linearly independent. Their number is $\prod_i(q_i-b_i)$, which is at least \eqref{eq:bound}.
+\end{proof}
+
+\begin{theorem}[Universal derivative rank rigidity]\label{thm:rank}
+Let $s=\sum_i k_i$. If $\D_{\mathbf k}y\notin pM$, then
+\begin{equation}\label{eq:rank}
+ R(y)\ge B_{\mathbf q}(s)\ge |G|\left(1-\frac{s}{q_{\min}}\right).
+\end{equation}
+For $D_G$ this holds with $s=h$.
+\end{theorem}
+\begin{proof}
+Put $W=W(y)$ and $\overline W=W/pW$. The hypothesis implies that $\D_{\mathbf k}\overline y\ne0$. Choose a linear functional $\lambda:\overline W\to\Fp$ with $\lambda(\D_{\mathbf k}\overline y)\ne0$.
+
+Write $\Omega=\prod_iX_i^{q_i-1}$. The pairing $\langle u,v\rangle=[\Omega](uv)$ on $A$ is perfect, as complementary monomials give dual bases. Hence there exists $f\in A$ such that
+\[
+ \lambda(a\overline y)=[\Omega](af)\quad(a\in A).
+\]
+By \eqref{eq:modderiv}, multiplying $f$ by the unit $(-1)^s\prod_i\sigma_i^{k_i}$ gives an element with nonzero coefficient at $\prod_iX_i^{k_i}$. This does not change $Af$. Lemma \ref{lem:ideal} gives $\dim Af\ge B_{\mathbf q}(s)$.
+
+If $a\in\Ann_A(\overline y)$, then $[\Omega](baf)=0$ for every $b\in A$. Perfection of the pairing gives $af=0$. Thus $\Ann_A(\overline y)\subseteq\Ann_A(f)$ and there is a surjection $A\overline y\twoheadrightarrow Af$. It follows that
+\[
+ R(y)=\dim\overline W\ge\dim A\overline y\ge\dim Af\ge B_{\mathbf q}(s).
+\]
+Finally, for any admissible $\mathbf b$ the product inequality $\prod_i(1-b_i/q_i)\ge1-\sum_i b_i/q_i$ proves the second bound in \eqref{eq:rank}.
+\end{proof}
+
+\begin{corollary}[Equal conductor orders]\label{cor:equal}
+Suppose $q_i=q$ for all $i$ and $0\le s<q$. Then $B_{\mathbf q}(s)=q^{h-1}(q-s)$. In particular if $h<q$ and $D_Gy\notin pM$, then $R(y)\ge q^h-hq^{h-1}$.
+\end{corollary}
+\begin{proof}
+The second inequality in \eqref{eq:rank} bounds the minimum below by $q^{h-1}(q-s)$. The vector $(s,0,\ldots,0)$ attains this value in \eqref{eq:bound}.
+\end{proof}
+
+\section{Integral regular-block rigidity}
+The preceding estimate controls the rational orbit of one point. The next theorem identifies integral direct summands forced by independent derivative values. It uses the following general norm criterion.
+
+\begin{theorem}[Norm rank and regular summands]\label{thm:regular}
+For any finite $p$-group $H$ acting on a $\Zp$-lattice $M$, define
+\[
+ f_H(M)=\dim_{\Fp}\N_H(M/pM).
+\]
+Then $f_H(M)$ equals the maximum integer $d$ for which $M$ has a direct summand isomorphic to $\Zp[H]^d$ as an $H$-lattice.
+\end{theorem}
+\begin{proof}
+Choose $z_1,\ldots,z_d\in\overline M$ with $\N_Hz_j$ a basis of the norm image, where $d=f_H(M)$. Map the free module $\Fp[H]^d$ to $\overline M$ by sending its standard generators to the $z_j$. The augmentation ideal of the group algebra of a finite $p$-group is nilpotent. Therefore every nonzero submodule of $\Fp[H]^d$ meets the invariant subspace, which is spanned by the $d$ norm vectors. Independence of the chosen norm images forces the kernel to vanish.
+
+Lift the $z_j$ to $M$. The resulting $\Zp[H]$-map $\Zp[H]^d\to M$ is injective with torsion-free cokernel, by injectivity modulo $p$. The inclusion splits over $\Zp$. Since $\Zp[H]$ is coinduced from the trivial subgroup, it is relatively injective for sequences split over $\Zp$; thus the inclusion splits $H$-equivariantly as well. Conversely, each regular summand contributes one dimension to the residual norm image, proving maximality.
+\end{proof}
+
+\begin{corollary}[Derivative blocks]\label{cor:blocks}
+Put $H=pG=\prod_i\langle\sigma_i^p\rangle$. If $D_Gy_1,\ldots,D_Gy_d$ are independent modulo $pM$, then there is a decomposition of $H$-lattices
+\begin{equation}\label{eq:blocks}
+ M\simeq\Zp[H]^d\oplus M',\qquad
+ \rk_{\Zp} M\ge d|G|/p^h.
+\end{equation}
+\end{corollary}
+\begin{proof}
+In $A$, $\N_H=\prod_iX_i^{q_i-p}$, including the case $q_i=p$, where the corresponding factor is $1$. By Lemma \ref{lem:identity}, $D_G=u\N_H\prod_iX_i^{p-2}$ for a unit $u$. Thus the derivative image modulo $p$ lies in the norm image. Apply Theorem \ref{thm:regular} and $|H|=|G|/p^h$.
+\end{proof}
+
+\section{Universal bounded-degree specialization}
+This section proves a precision-dependent uniformity theorem that is independent of the sizes of the original conductor groups.
+
+For $k\ge1$ put $H_k=p^kG$, and let $r_i=\min(q_i,p^k)$. Representatives for $G/H_k$ may be taken as the elements $\prod_i\sigma_i^{j_i}$ with $0\le j_i<r_i$. Define
+\begin{equation}\label{eq:bk}
+ B_k=\sum_{0\le j_i<r_i}\left(\prod_i j_i\right)\prod_i\sigma_i^{j_i}\in\Zp[G].
+\end{equation}
+
+\begin{theorem}[Norm factorization]\label{thm:norm}
+For every $k\ge1$,
+\begin{equation}\label{eq:norm}
+ D_G\equiv B_k\N_{H_k}\pmod{p^k\Zp[G]}.
+\end{equation}
+In particular, for every lattice $M$ and $y\in M$,
+\begin{equation}\label{eq:fixed}
+ D_Gy\in M^{H_k}+p^kM,\qquad [G:H_k]\le p^{hk}.
+\end{equation}
+\end{theorem}
+\begin{proof}
+The coefficient of $g=\prod_i\sigma_i^{j_i}$ in $D_G$, in the standard exponent ranges $0\le j_i<q_i$, is $\prod_i j_i$. On a coset of $H_k$ each exponent with $q_i\ge p^k$ varies by a multiple of $p^k$ modulo $q_i$; exponents in smaller factors do not vary. Thus the coefficient is constant modulo $p^k$ on each coset. Grouping coefficients by cosets gives \eqref{eq:norm}. Since $\N_{H_k}y\in M^{H_k}$ and $G$ is abelian, $B_k\N_{H_k}y$ is fixed by $H_k$. The index is $\prod_i r_i\le p^{hk}$.
+\end{proof}
+
+\subsection{Descent classes and their truncations}
+The exact sequence $0\to M\xrightarrow{p^m}M\to M/p^mM\to0$ gives a connecting homomorphism
+\[
+ \delta_m:(M/p^mM)^G\longrightarrow H^1(G,M)[p^m].
+\]
+If $P\in M$ is invariant modulo $p^m$, its connecting cocycle is $g\mapsto(gP-P)/p^m$. This is an obstruction to lifting the invariant residual class to $M^G$; precisely,
+\begin{equation}\label{eq:kernel}
+ \delta_m(P\bmod p^mM)=0\quad\Longleftrightarrow\quad P\in M^G+p^mM.
+\end{equation}
+
+\begin{theorem}[Bounded-degree realization of descent truncations]\label{thm:trunc}
+Suppose $P=D_Gy$ is invariant modulo $p^mM$, and set $\xi_m=\delta_m(P\bmod p^mM)$. For $1\le k\le m$ put $P_k=B_k\N_{H_k}y$. Then $P_k$ defines an invariant class modulo $p^kM^{H_k}$ for $G/H_k$, and
+\begin{equation}\label{eq:trunc}
+ p^{m-k}\xi_m=\operatorname{inf}\bigl(\delta_k^{G/H_k}(P_k\bmod p^kM^{H_k})\bigr).
+\end{equation}
+If $\xi_m$ has exact order $p^m$, the class on the right before inflation has exact order $p^k$.
+\end{theorem}
+\begin{proof}
+By Theorem \ref{thm:norm}, $P=P_k+p^kQ$ for some $Q\in M$. Since $P$ is invariant modulo $p^m$, $(g-1)P_k\in p^kM$. The numerator is fixed by $H_k$. The invariant lattice is saturated, so $p^kM\cap M^{H_k}=p^kM^{H_k}$. Hence the cocycle $(g-1)P_k/p^k$ is integral, valued in $M^{H_k}$, and trivial on $H_k$. It descends to the quotient. The difference between this cocycle and $p^{m-k}(g-1)P/p^m$ is the coboundary $(g-1)Q$. This proves \eqref{eq:trunc}. Inflation is injective by inflation--restriction, so exact orders agree.
+\end{proof}
+
+\section{Arithmetic specialization over varying fields}
+Let $E/F$ be an elliptic curve over a fixed number field, and let $L/F$ range over finite abelian $p$-extensions with $G$ as above. Assume $E(L)[p]=0$. Put $M=E(L)\otimes_{\mathbb Z}\Zp$ and $L_k=L^{H_k}$. Finite generation of Mordell--Weil groups makes $M$ a lattice. Flatness of $\Zp$ over $\mathbb Z$, applied to the finite collection of fixed-point equations, gives
+\[
+ M^{H_k}=E(L_k)\otimes_{\mathbb Z}\Zp.
+\]
+Thus \eqref{eq:norm}--\eqref{eq:trunc} identify the relevant truncation over $L_k$ explicitly, with $[L_k:F]\le p^{hk}$.
+
+Fix a finite set $S_0$ containing the archimedean places, the primes above $p$, and all primes of bad reduction of $E$. Assume $L/F$ is unramified outside $S=S_0\cup S_1$, with $|S_1|\le s_0$ and $S_1\cap S_0=\varnothing$. Let $G_{F,S_0}$ denote the Galois group of the maximal extension unramified outside $S_0$ and put
+\[
+ C_0=\dim_{\Fp}H^1(G_{F,S_0},E[p]).
+\]
+This finite constant depends only on the fixed base data.
+
+\begin{theorem}[Uniform arithmetic bounds at fixed precision]\label{thm:arith}
+For every $k\ge1$,
+\begin{align}
+ \rk E(L_k)&\le p^{hk}(C_0+2s_0),\label{eq:arithrank}\\
+ \#\im(D_G:M/p^kM\to M/p^kM)
+ &\le p^{\,kp^{hk}(C_0+2s_0)}.\label{eq:image}
+\end{align}
+The estimates depend neither on the locations of the additional ramified primes nor on the orders of the original conductor groups.
+\end{theorem}
+\begin{proof}
+At each place $v\in S_1$, $E[p]$ is unramified and $v$ has residue characteristic different from $p$. Wild inertia has no nontrivial homomorphism into $E[p]$, and the $p$-primary tame inertia quotient is procyclic. Therefore $\dim_{\Fp}H^1(I_v,E[p])\le2$. Restricting to the inertia groups at the additional places has kernel $H^1(G_{F,S_0},E[p])$, by inflation and the definition of unramified cohomology. This gives
+\[
+ \dim H^1(G_{F,S},E[p])\le C_0+2s_0.
+\]
+Shapiro's lemma identifies $H^1(G_{L_k,S(L_k)},E[p])$ with the cohomology over $G_{F,S}$ of $E[p]\otimes\Fp[G/H_k]$, with diagonal action (using the standard induced-module identification). Every simple factor of the modular regular representation of the finite $p$-group $G/H_k$ is trivial. Tensoring its composition series with $E[p]$ and applying the cohomology exact sequences yields
+\[
+ \dim H^1(G_{L_k,S(L_k)},E[p])
+ \le [L_k:F](C_0+2s_0).
+\]
+The global Kummer injection, unramified away from $S(L_k)$ by good reduction away from $p$, implies \eqref{eq:arithrank}. Theorem \ref{thm:norm} puts the derivative image in the image of $M^{H_k}/p^kM^{H_k}$. The latter has order $p^{k\rk E(L_k)}$, proving \eqref{eq:image}.
+\end{proof}
+
+\begin{corollary}[Independent maximal descent directions]\label{cor:ind}
+Suppose $\xi_{j,m}=\delta_m(D_Gy_j\bmod p^mM)$, $1\le j\le d$, define an injective map $(\mathbb Z/p^m\mathbb Z)^d\to H^1(G,M)$. Then
+\begin{equation}\label{eq:ind}
+ d\le f_{pG}(M)\le \rk E(L_1)\le p^h(C_0+2s_0).
+\end{equation}
+Moreover, $M$ contains $d$ integral regular $pG$-summands as in \eqref{eq:blocks}.
+\end{corollary}
+\begin{proof}
+A nonzero residual linear relation among the $D_Gy_j$ lifts to a combination divisible by $p$, with at least one unit coefficient. The connecting class of that combination is killed by $p^{m-1}$, contrary to the stated injection. Thus the derivatives are independent modulo $p$. Corollary \ref{cor:blocks} gives the first inequality and the summands. The norm image is the reduction of a submodule of $M^{pG}$, so its dimension is bounded by the rank of the latter. Theorem \ref{thm:arith} gives the last inequality.
+\end{proof}
+
+\section{Sharpness and limits of uniformity}
+The following example simultaneously tests the rank bound and the descent-annihilation problem. It is an integral representation example, not an elliptic-curve example.
+
+\begin{example}[Tensor augmentation lattice]\label{ex:sharp}
+Let $q=p^m$, $G=C_q^h$, and $I_i=\ker(\Zp[C_q]\xrightarrow{\mathrm{aug}}\Zp)$. Take
+\[
+ M=I_1\otimes_{\Zp}\cdots\otimes_{\Zp}I_h,\qquad
+ y=\bigotimes_i(\sigma_i-1).
+\]
+Each augmentation ideal is generated by $\sigma_i-1$ as a group-ring module. Hence $y$ generates $M$ and $R(y)=(q-1)^h$. By \eqref{eq:basic},
+\[
+ P=D_Gy=\bigotimes_i(q-\N_i),\qquad \N_i=\N_{\langle\sigma_i\rangle}.
+\]
+Each $q-\N_i$ is primitive in $I_i$ (its nonidentity coefficients are $-1$), so $P$ is primitive in $M$. It is invariant modulo $qM$, since applying $\sigma_i-1$ produces the factor $q(\sigma_i-1)$.
+
+The augmentation sequence $0\to I_1\to\Zp[C_q]\to\Zp\to0$ gives $H^1(C_q,I_1)\simeq\Zp/q\Zp$, with generator represented by the cocycle taking $\sigma_1$ to $\sigma_1-1$. Restriction of $\delta_m(P)$ to the first factor gives that generator tensored with the primitive vector $\bigotimes_{i=2}^h(q-\N_i)$ (the empty tensor is $1$). Thus the restriction has exact order $q$. As the connecting class is killed by $q$, its order is exactly $q$.
+\end{example}
+
+For fixed $h$ and increasing $q=p^m$, this shows that the minimum possible rational orbit rank among integral examples with a primitive product derivative satisfies
+\begin{equation}\label{eq:sharp}
+ q^h-hq^{h-1}\le R_{\min}(q,h)\le(q-1)^h
+ =q^h-hq^{h-1}+O_h(q^{h-2}).
+\end{equation}
+For $h=1$ the lower bound is exact. For $h=2,3$ the numerical comparisons are illustrated below at $p=5$.
+\begin{center}
+\begin{tabular}{rrrrr}
+\toprule
+ & \multicolumn{2}{c}{$h=2$} & \multicolumn{2}{c}{$h=3$}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+$q$ & Lower bound & Example & Lower bound & Example\\
+\midrule
+5 & 15 & 16 & 50 & 64\\
+25 & 575 & 576 & 13,750 & 13,824\\
+125 & 15,375 & 15,376 & 1,906,250 & 1,906,624\\
+\bottomrule
+\end{tabular}
+\end{center}
+The example also rules out a precision-independent annihilator for all integral derivative descent classes: even with $h$ fixed, their orders can be $p^m$ for arbitrarily large $m$. This is consistent with Theorem \ref{thm:trunc}, whose degree bound grows with the truncation precision.
+
+\section{Heegner descent and the remaining arithmetic problem}
+For a ring class conductor $n$, classical Heegner constructions use cyclic conductor groups and the product of cyclic derivative operators; norm relations and appropriate congruences make the derived point invariant modulo powers of $p$. Our results apply whenever these operators act on a torsion-free Mordell--Weil lattice with the stated product-of-cyclic-$p$-groups action. In a given ring class field one must check the actual group structure, the treatment of prime-to-$p$ factors, and any additional trace from the Hilbert class field. No assertion here requires those checks to hold for all Heegner systems.
+
+In this setting, let $P=D_Gy$ be the relevant invariant derivative modulo $p^m$. If its integral connecting class $\xi_m$ has exact order $p^m$, then $P\notin pM$. Consequently, if $q_i\ge p^m$,
+\begin{equation}\label{eq:heegner}
+ \dim_{\Qp}\Qp[G]y\ge |G|(1-h/p^m).
+\end{equation}
+In particular, a rational orbit rank below this threshold implies that $p^{m-1}\xi_m=0$. This is an improvement at a given precision, not a uniform bound on the order of $\xi_m$ as $m$ grows.
+
+The bounded-degree representative is explicitly
+\[
+ P_k=B_k\Tr_{L/L_k}(y),\qquad [L_k:F]\le p^{hk}.
+\]
+One possible further arithmetic objective is to prove a conductor- and precision-independent integer $B$ such that
+\begin{equation}\label{eq:open}
+ p^B\delta_k^{G/H_k}(P_k\bmod p^kM^{H_k})=0
+\end{equation}
+for the derived points in a family that detects the divisible Tate--Shafarevich directions. The tensor example shows that \eqref{eq:open} cannot be deduced from the abstract derivative identities alone. Genuine geometry, local conditions, or arithmetic reciprocity must supply additional input.
+
+For clarity, if a family of connecting classes maps to elements of the divisible subgroup of $\Sha(E/F)[p^\infty]$ in such a way that the images collectively contain every element of that subgroup, then a uniform bound \eqref{eq:open} at $k=m$ would annihilate the subgroup by a fixed power of $p$. A divisible $p$-primary group killed by a fixed power of $p$ is zero. Since $\Sha(E/F)[p^\infty]$ is cofinitely generated, this would imply primary finiteness. The required generating comparison and the uniform arithmetic estimate are not established in this paper. The integral connecting class in $H^1(G,M)$ should not be confused with an arbitrary Selmer class; the comparison with global Weil--Ch\^atelet or Tate--Shafarevich groups requires checking local conditions and descent hypotheses. See \cite{howard,kim} for the arithmetic framework.
+
+\section{Conclusion}
+The results prove a universal rank bound, integral regular-summand rigidity, and norm specialization of higher derivatives and their descent truncations. They give conductor-independent arithmetic estimates at every fixed precision, including over varying finite $p$-extensions with bounded additional ramification. Their strength is that neither a fixed Iwasawa tower nor bounded total Mordell--Weil rank is assumed. Their limitation is equally precise: uniformity at fixed precision does not imply a uniform annihilator across all precisions. The latter, as well as arbitrary-rank complex analytic and leading-term comparisons in BSD, remains open in this approach.
+
+\paragraph{Scope of verification.} The proofs are presented explicitly for independent verification; publication originality has not been established by an exhaustive literature review, and no numerical Heegner-point or Mordell--Weil computation is claimed. The examples and optional repository checks concern finite group rings.
+
+\begin{thebibliography}{9}
+\bibitem{kolyvagin} V. A. Kolyvagin, Euler systems, in \emph{The Grothendieck Festschrift}, Vol. II, Progress in Mathematics 87, Birkh\"auser, 1990, 435--483.
+\bibitem{bd} M. Bertolini and H. Darmon, Kolyvagin's descent and Mordell--Weil groups over ring class fields, \emph{J. Reine Angew. Math.} \textbf{412} (1990). \url{https://air.unimi.it/handle/2434/177696}.
+\bibitem{howard} B. Howard, The Heegner point Kolyvagin system, \emph{Compos. Math.} \textbf{140} (2004), 1439--1472. \url{https://doi.org/10.1112/S0010437X04000569}.
+\bibitem{kim} C.-H. Kim, On the arithmetic of Tate--Shafarevich groups via Kolyvagin's conjecture, preprint, 2026. \url{https://arxiv.org/abs/2609.15328}.
+\end{thebibliography}
+\end{document}
